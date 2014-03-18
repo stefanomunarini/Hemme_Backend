@@ -11,5 +11,7 @@ package com.povodev.hemme.bean;
  * @author Stefano
  */
 public class ClinicalFolder {
-    
+    private int id;
+    private int user_id;
+    private int clinicalEvent_id;
 }
