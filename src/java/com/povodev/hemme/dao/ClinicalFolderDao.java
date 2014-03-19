@@ -9,13 +9,22 @@ package com.povodev.hemme.dao;
 import com.povodev.hemme.bean.ClinicalFolder;
 
 /**
- *
+ * Public interface for ClinicalFolderJdbcDao
  * @author smunarini.stage
  */
 public interface ClinicalFolderDao {
     
-    public ClinicalFolder getClinicalFolder(int user_id);
+    /**
+     * Retrieve a clinical folder for a user
+     * @return the clinical folder
+     * @param user_id
+     */
+    public ArrayList<ClinicalEvent> getClinicalFolder(int user_id);
     
-    public void newClinicalFolder(int user_id);
+    /**
+     * Create and insert a new clinical folder for a given user
+     * @param user_id
+     */
+    public void newClinicalFolder(int user_id, int clinicalEvent_id);
     
 }
