@@ -18,12 +18,19 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
 
     @Override
     public ClinicalFolder getClinicalFolder(int user_id) {
-        jdbcTemplate.update("insert into STUDENT (name) values (?)",new Object[] {student.getName()} );
+        return null;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
     }
+    
+    
     
     private JdbcTemplate jdbcTemplate;
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public void newClinicalFolder(int user_id) {
+        
     }
     
 }

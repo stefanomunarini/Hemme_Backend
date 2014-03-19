@@ -16,4 +16,6 @@ public interface ClinicalFolderDao {
     
     public ClinicalFolder getClinicalFolder(int user_id);
     
+    public void newClinicalFolder(int user_id);
+    
 }

@@ -24,4 +24,20 @@
     <welcome-file-list>
         <welcome-file>redirect.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- Spring Rest  Servlet-->
+    <servlet>  
+        <servlet-name>ServiceRest</servlet-name>  
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>  
+        <init-param>  
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/rest-services-config.xml</param-value>
+        </init-param>  
+    <load-on-startup>4</load-on-startup>  
+    </servlet> 
+    <servlet-mapping>  
+        <servlet-name>ServiceRest</servlet-name>  
+        <url-pattern>/service/*</url-pattern>  
+    </servlet-mapping> 
+    
 </web-app>
