@@ -8,12 +8,18 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.Doctor;
 import com.povodev.hemme.dao.DoctorDao;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- *
+ * JdbcDao implementation for Doctor
  * @author smunarini.stage
  */
 public class DoctorJdbcDao implements DoctorDao{
+    
+    private JdbcTemplate jdbcTemplate;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public Doctor getDoctor(int doctor_id) {
