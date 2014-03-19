@@ -6,7 +6,9 @@
 
 package com.povodev.hemme.dao;
 
+import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.bean.ClinicalFolder;
+import java.util.ArrayList;
 
 /**
  * Public interface for ClinicalFolderJdbcDao
@@ -24,6 +26,7 @@ public interface ClinicalFolderDao {
     /**
      * Create and insert a new clinical folder for a given user
      * @param user_id
+     * @param clinicalEvent_id
      */
     public void newClinicalFolder(int user_id, int clinicalEvent_id);
     
