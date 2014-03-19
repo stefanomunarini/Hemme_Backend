@@ -28,7 +28,7 @@ public class DiaryJdbcDao implements DiaryDao{
     }
 
     @Override
-    public boolean newDiary(int user_id) {
+    public void newDiary(int user_id) {
         throw new UnsupportedOperationException("Not supported yet."); 
         //To change body of generated methods, choose Tools | Templates.
     }
