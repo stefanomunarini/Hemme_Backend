@@ -6,8 +6,10 @@
 
 package com.povodev.hemme.jdbcdao;
 
+import com.povodev.hemme.bean.Result;
 import com.povodev.hemme.bean.Test;
 import com.povodev.hemme.dao.TestDao;
+import java.util.ArrayList;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -23,15 +25,14 @@ public class TestJdbcDao implements TestDao{
     }
     
     @Override
-    public Test getTest(int user_id) {
+    public void newTest(int user_id) {
         throw new UnsupportedOperationException("Not supported yet."); 
         //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void newTest(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<Result> getTest(int user_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

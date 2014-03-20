@@ -8,6 +8,7 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.Doctor;
 import com.povodev.hemme.dao.DoctorDao;
+import java.util.ArrayList;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -28,6 +29,11 @@ public class DoctorJdbcDao implements DoctorDao{
 
     @Override
     public void newDoctor(int user_id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Doctor> getAllDoctors(int user_id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

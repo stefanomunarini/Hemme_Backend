@@ -32,5 +32,10 @@ public class TutorJdbcDao implements TutorDao{
         throw new UnsupportedOperationException("Not supported yet."); 
         //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void registerPatientDevice(String imei) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
