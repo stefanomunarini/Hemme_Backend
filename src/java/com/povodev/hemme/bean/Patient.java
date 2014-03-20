@@ -10,7 +10,7 @@ package com.povodev.hemme.bean;
  *
  * @author gbonadiman.stage
  */
-public class Patient {
+public class Patient extends User {
     
     private int id;
 

@@ -10,7 +10,7 @@ package com.povodev.hemme.bean;
  *
  * @author gbonadiman.stage
  */
-public class Tutor {
+public class Tutor extends User{
 
     private int id;
 

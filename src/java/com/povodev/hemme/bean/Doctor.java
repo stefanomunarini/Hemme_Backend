@@ -10,7 +10,7 @@ package com.povodev.hemme.bean;
  *
  * @author smunarini.stage
  */
-public class Doctor {
+public class Doctor extends User{
     
     private String code;
     private int user_id;
