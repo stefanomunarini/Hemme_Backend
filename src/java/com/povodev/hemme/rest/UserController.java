@@ -10,6 +10,7 @@ import com.povodev.hemme.bean.User;
 import com.povodev.hemme.jdbcdao.UserJdbcDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,12 +21,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class UserController {
     
+    
+//    
+//    @RequestMapping(value = "/index", method= RequestMethod.GET)
+//    public User getUser(){
+//        UserJdbcDao user = new UserJdbcDao();
+//        
+//        System.err.println("heavy metal ");
+//        
+//        return user.getUser(1);
+//    }
+//    
+    
     @RequestMapping("/getUser")
     public @ResponseBody User getUser(
         @RequestParam(value="user_id", required=true) int user_id){
         UserJdbcDao user = new UserJdbcDao();
+        
+        System.err.println("heavy metal");
+        
         return user.getUser(user_id);
     }
+    
     
     @RequestMapping("/newUser")
     public @ResponseBody void newUser(
