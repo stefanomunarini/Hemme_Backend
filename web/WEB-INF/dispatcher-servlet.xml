@@ -19,7 +19,8 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
-
+                <prop key="getUser.htm">userController</prop>
+                <prop key="newUser.htm">userController</prop>
             </props>
         </property>
     </bean>
@@ -35,5 +36,15 @@
     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
+    
+    <!--
+        The user controller.
+    -->
+    <bean name="userController"
+          class="com.povodev.hemme.rest.UserController" />
+    
+    
+    
+    
 
 </beans>
