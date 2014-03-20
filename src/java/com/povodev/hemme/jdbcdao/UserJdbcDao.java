@@ -27,8 +27,14 @@ public class UserJdbcDao implements UserDao{
     }
 
     @Override
-    public void newUser(String imei, String name, String surname, String password, String email, int role) {
+    public boolean registration(String imei, String name, String surname, String password, String email, int role) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public boolean login(String email,String password) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

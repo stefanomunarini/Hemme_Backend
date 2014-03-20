@@ -15,9 +15,8 @@ import com.povodev.hemme.bean.User;
 public interface UserDao {
     
     public User getUser(int user_id);
-    
-    public void newUser(String imei, String name, String surname, String password, String email, int role);
-    
+    public boolean registration(String imei, String name, String surname, String password, String email, int role);
+    public boolean login(String email, String password);
     
     
 }
