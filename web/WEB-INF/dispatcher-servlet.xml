@@ -15,29 +15,47 @@
     for the index controller we are using ParameterizableViewController, so we must
     define an explicit mapping for it.
     -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+ 
+    <bean id="userDao" class="springjdbc.simpledbconnectivity.UserDao">
+      <property name="jdbcTemplate" ref="jdbcTemplate"></property>
+    </bean>
+
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
+              
                 <!--ClinicalEvent-->
                 <prop key="getClinicalEvent.htm">clinicalEventController</prop>
                 <prop key="getClinicalEvents.htm">clinicalEventController</prop>
+
                 <!--ClinicalFolder-->
                 <prop key="getClinicalFolder.htm">clinicalFolderController</prop>
                 <prop key="newClinicalFolder.htm">clinicalFolderController</prop>
+
                 <!--Diary-->
                 <prop key="getDiary.htm">diaryController</prop>
                 <prop key="newDiary.htm">diaryController</prop>
+
                 <!--Doctor-->
                 <prop key="getDoctor.htm">doctorController</prop>
                 <prop key="newDoctor.htm">doctorController</prop>
+
                 <!--Document-->
                 <prop key="getDocument.htm">documentController</prop>
                 <prop key="newDocument.htm">documentController</prop>
                 
                 <!--User-->
                 <prop key="getUser.htm">userController</prop>
-                <prop key="newUser.htm">userController</prop>
+                <prop key="registration.htm">userController</prop>
+                <prop key="login.htm">userController</prop>
+                
+                <!-- Tutor -->
+                <prop key="insertEvent">tutorController</prop>
+                
                 
             </props>
         </property>
