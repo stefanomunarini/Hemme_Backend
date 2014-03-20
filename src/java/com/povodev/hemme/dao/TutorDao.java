@@ -16,6 +16,6 @@ public interface TutorDao {
     
     public Tutor getTutor(int user_id);
     public void newTutor (int user_id);
-
+    public void registerPatientDevice (String imei);
     
 }

@@ -6,12 +6,14 @@
 
 package com.povodev.hemme.dao;
 
+import com.povodev.hemme.bean.Result;
 import com.povodev.hemme.bean.Test;
+import java.util.ArrayList;
 
 
 public interface TestDao {
-       
-    public Test getTest(int user_id);
+    
     public void newTest(int user_id);
+    public ArrayList<Result> getTest(int user_id);
 
 }

@@ -30,4 +30,5 @@ public interface ClinicalFolderDao {
      */
     public void newClinicalFolder(int user_id, int clinicalEvent_id);
     
+    
 }

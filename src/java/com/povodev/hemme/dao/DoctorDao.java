@@ -7,12 +7,14 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.Doctor;
+import java.util.ArrayList;
 
-/**
- * Public interface for DoctorJdbcDao
- * @author smunarini.stage
- */
-public interface DoctorDao {
+
+    /**
+     * Public interface for DoctorJdbcDao
+     * @author smunarini.stage
+     */
+    public interface DoctorDao {
     
     /**
      * Retrieve a doctor
@@ -27,4 +29,11 @@ public interface DoctorDao {
      */
     public void newDoctor(int user_id);
     
+    /**
+     * Retrive the list of doctors of user_id
+     * @param user_id
+     * @return 
+     */
+    public ArrayList<Doctor> getAllDoctors(int user_id);
+
 }
