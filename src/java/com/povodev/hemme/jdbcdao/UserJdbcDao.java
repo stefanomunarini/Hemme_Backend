@@ -23,9 +23,10 @@ public class UserJdbcDao implements UserDao{
 
     @Override
     public User getUser(int user_id) {
-        System.err.println("JDBC TEMPLATE   " + JdbcTemplate);
+        
+        User u = new User();
         throw new UnsupportedOperationException
-        ("Not supported yet. ooooooooooooooooooooooooooooooooo"); 
+        ("Not supported yet. ooooooooooooooooooooooooooooooooo"+"________________________USSUSUS  " + u.getId()); 
         
         //To change body of generated methods, choose Tools | Templates.
     }
