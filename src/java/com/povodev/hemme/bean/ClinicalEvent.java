@@ -15,7 +15,7 @@ import java.sql.Date;
 public class ClinicalEvent {
     
     private int id;
-    private String author;
+    private int author;
     private Date date;
     private String therapy;
     private String note;
@@ -34,19 +34,6 @@ public class ClinicalEvent {
         this.id = id;
     }
 
-    /**
-     * @return the author
-     */
-    public String getAuthor() {
-        return author;
-    }
-
-    /**
-     * @param author the author to set
-     */
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
     /**
      * @return the date
@@ -88,6 +75,20 @@ public class ClinicalEvent {
      */
     public void setNote(String note) {
         this.note = note;
+    }
+
+    /**
+     * @return the author
+     */
+    public int getAuthor() {
+        return author;
+    }
+
+    /**
+     * @param author the author to set
+     */
+    public void setAuthor(int author) {
+        this.author = author;
     }
     
 }

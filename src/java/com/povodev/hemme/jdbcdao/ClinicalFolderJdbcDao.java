@@ -9,6 +9,8 @@ package com.povodev.hemme.jdbcdao;
 import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.dao.ClinicalFolderDao;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -25,30 +27,24 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
+                
+        ArrayList<ClinicalEvent> clinicalFolder = new ArrayList();
+        String sql = "SELECT * FROM clinicalevent";
+	try{
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
+            for (Map row : rows) {
+                    ClinicalEvent clinicalEvent = new ClinicalEvent();
+                    clinicalEvent.setAuthor((int) (row.get("author")));
+                    clinicalEvent.setNote((String) (row.get("note")));
+                    clinicalFolder.add(clinicalEvent);
+            }        
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }    
         
-        System.err.println("Is this null? " + jdbcTemplate==null);
-        
-        ArrayList<ClinicalEvent> cce = new ArrayList();
-        ClinicalEvent ce;
-        for (int i=0;i<2;i++){
-            String sql = "SELECT * FROM clinicalevent WHERE ID = ?";
-            try{
-                ce = (ClinicalEvent) jdbcTemplate.queryForObject(
-                    sql, new Object[] { user_id }, 
-                    new BeanPropertyRowMapper(ClinicalEvent.class));
-            }catch (DataAccessException runtimeException){
-                System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
-                System.err.println(runtimeException);
-                throw runtimeException;
-            }
-                        
-            ce.setNote("fjfd");
-            ce.setTherapy("sdjdj");
-            cce.add(ce);
-            
-        }
-        
-        return cce;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
+        return clinicalFolder;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
     }
     
     @Override

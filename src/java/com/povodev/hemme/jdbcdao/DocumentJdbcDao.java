@@ -109,7 +109,7 @@ public class DocumentJdbcDao implements DocumentDao {
     public ArrayList<Document> getDiary(int user_id) {
 
     	String sql = "SELECT * FROM DOCUMENT";
-	ArrayList<Document> diario = new ArrayList<Document>();
+	ArrayList<Document> diario = new ArrayList();
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
             for (Map row : rows) {
