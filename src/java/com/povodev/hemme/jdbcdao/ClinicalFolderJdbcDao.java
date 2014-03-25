@@ -29,6 +29,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
          
+        
         System.err.println(this.getClass().getName() + "  Is this null?" + jdbcTemplate==null);
         
         ArrayList<ClinicalEvent> cce = new ArrayList();
@@ -36,7 +37,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
         for (int i=0;i<2;i++){
             String sql = "SELECT * FROM clinicalevent WHERE ID = ?";
             try{
-                ce = (ClinicalEvent) this.jdbcTemplate.queryForObject(
+                ce = (ClinicalEvent) jdbcTemplate.queryForObject(
                     sql, new Object[] { user_id }, 
                     new BeanPropertyRowMapper(ClinicalEvent.class));
             }catch (DataAccessException runtimeException){
@@ -44,7 +45,9 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
                 System.err.println(runtimeException);
                 throw runtimeException;
             }
-            ce.setAuthor("wre");
+            
+            System.err.println(" ESEGUITO LA QUERY SENZA ERRORI ");
+            
             ce.setNote("fjfd");
             ce.setTherapy("sdjdj");
             cce.add(ce);
