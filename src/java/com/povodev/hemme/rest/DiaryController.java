@@ -14,13 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class DiaryController {
-  
-    @RequestMapping("/getDiary")
-    public @ResponseBody Diary getDiary(
-        @RequestParam(value="user_id", required=true) int user_id) {
-        DiaryJdbcDao diary = new DiaryJdbcDao();
-        return diary.getDiary(user_id);
-    }
+
     
     @RequestMapping("/newDiary")
     public @ResponseBody Diary newDiary(
