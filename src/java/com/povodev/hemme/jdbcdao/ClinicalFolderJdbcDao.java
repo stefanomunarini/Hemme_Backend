@@ -28,7 +28,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
-        
+         
         System.err.println(this.getClass().getName() + "  Is this null?" + jdbcTemplate==null);
         
         ArrayList<ClinicalEvent> cce = new ArrayList();
