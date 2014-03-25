@@ -29,9 +29,8 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     @Override
     public ClinicalEvent getClinicalEvent(int user_id, int clinicalEvent_id) {
         System.err.println(jdbcTemplate==null);
-        //jdbcTemplate.execute("INSERT INTO clinicalevent (author,therapy,note) VALUES ('dj','fdjf','dfjnfd')");
+        
         return null;
-        //throw new UnsupportedOperationException("Not supported yet. "); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
