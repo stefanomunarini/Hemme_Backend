@@ -8,10 +8,12 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.dao.DocumentDao;
+import com.povodev.hemme.rowmapper.DocumentMapper;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,10 +21,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 public class DocumentJdbcDao implements DocumentDao {
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
     
     /**
      * Return document from its Id
@@ -32,8 +32,9 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public Document getDocument(int document_id) {
         
-        Document document = null;
+        Document document = new Document();
         String sql = "SELECT * FROM DOCUMENT WHERE ID = ?";
+       
         try{
             document = (Document) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { document_id }, 
@@ -46,12 +47,15 @@ public class DocumentJdbcDao implements DocumentDao {
         return document;
     }
 
+    
+    
     /**
      * Insert new document
      * @param document 
      */
     @Override
     public boolean newDocument(Document document) {
+        
         try{
             this.jdbcTemplate.update(
                 "insert into DOCUMENT (date,file) values (?, ?)", 
@@ -74,7 +78,7 @@ public class DocumentJdbcDao implements DocumentDao {
             this.jdbcTemplate.update(
                 "update DOCUMENT set id = ?,date = ?, file = ?  where id = ?", 
                 new Object[] {document.getId(), document.getDate(), document.getFile(),document.getId()});
-        }catch (RuntimeException runtimeException){
+        }catch (DataAccessException runtimeException){
             System.err.println("***Dao:: edit Document FAIL, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
@@ -89,11 +93,13 @@ public class DocumentJdbcDao implements DocumentDao {
      */
     @Override
     public boolean deleteDocument(int document_id) {
+    
         String deleteStatement = "DELETE FROM DOCUMENT WHERE id = ?";
+        
         try{
             this.jdbcTemplate.update(deleteStatement, document_id);
         }catch (RuntimeException runtimeException){
-            System.err.println("***NagiosHostDao::deleteObject, RuntimeException occurred, message follows.");
+            System.err.println("***NagiosHostDao::DELETE DOCUMENT FAILED, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
         }    
@@ -108,22 +114,15 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
 
-    	String sql = "SELECT * FROM DOCUMENT";
-	ArrayList<Document> diario = new ArrayList();
+    	String sql = "SELECT * FROM DOCUMENT where";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
-            for (Map row : rows) {
-                    Document document = new Document();
-                    document.setDate((Date) (row.get("date")));
-                    document.setFile((String)row.get("file"));
-                    diario.add(document);
-            }        
-        }catch (RuntimeException runtimeException){
+            return DocumentMapper.getDiaryMap(rows);
+        }catch (DataAccessException runtimeException){
             System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
         }    
-        return diario;
     }
     
 }

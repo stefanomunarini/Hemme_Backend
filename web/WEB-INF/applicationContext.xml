@@ -37,4 +37,13 @@
     -->
     <bean name="clinicalFolderJdbcDao"
           class="com.povodev.hemme.jdbcdao.ClinicalFolderJdbcDao" />  
+    
+    
+
+    <!--
+        DocumentJdbcDao bean
+    -->
+    <bean name="documentJdbcDao"
+          class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />  
+    
 </beans>

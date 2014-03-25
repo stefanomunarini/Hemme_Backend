@@ -38,6 +38,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
                     clinicalEvent.setNote((String) (row.get("note")));
                     clinicalFolder.add(clinicalEvent);
             }        
+            
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
