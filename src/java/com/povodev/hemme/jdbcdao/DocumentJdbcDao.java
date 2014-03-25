@@ -12,13 +12,11 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- *
- * @author gbonadiman.stage
- */
+
 public class DocumentJdbcDao implements DocumentDao {
 
     private JdbcTemplate jdbcTemplate;
@@ -40,7 +38,7 @@ public class DocumentJdbcDao implements DocumentDao {
             document = (Document) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { document_id }, 
                 new BeanPropertyRowMapper(Document.class));
-        }catch (RuntimeException runtimeException){
+        }catch (DataAccessException runtimeException){
             System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
@@ -53,17 +51,17 @@ public class DocumentJdbcDao implements DocumentDao {
      * @param document 
      */
     @Override
-    public void newDocument(Document document) {
-    
+    public boolean newDocument(Document document) {
         try{
             this.jdbcTemplate.update(
                 "insert into DOCUMENT (date,file) values (?, ?)", 
                 new Object[] {document.getDate(),document.getFile()});
-        }catch (RuntimeException runtimeException){
+        }catch (DataAccessException runtimeException){
             System.err.println("***Dao::fail to CREATE NEW DOCUMENT, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
         }    
+        return true;
     }
 
     /**
@@ -71,7 +69,7 @@ public class DocumentJdbcDao implements DocumentDao {
      * @param document 
      */
     @Override
-    public void editDocument(Document document) {
+    public boolean editDocument(Document document) {
         try{
             this.jdbcTemplate.update(
                 "update DOCUMENT set id = ?,date = ?, file = ?  where id = ?", 
@@ -81,10 +79,16 @@ public class DocumentJdbcDao implements DocumentDao {
             System.err.println(runtimeException);
             throw runtimeException;
         }    
+        return true;
     }
 
+    /**
+     * Delete document from id_document
+     * @param document_id
+     * @return 
+     */
     @Override
-    public void deleteDocument(int document_id) {
+    public boolean deleteDocument(int document_id) {
         String deleteStatement = "DELETE FROM DOCUMENT WHERE id = ?";
         try{
             this.jdbcTemplate.update(deleteStatement, document_id);
@@ -93,6 +97,7 @@ public class DocumentJdbcDao implements DocumentDao {
             System.err.println(runtimeException);
             throw runtimeException;
         }    
+        return true;
     }
 
     /**

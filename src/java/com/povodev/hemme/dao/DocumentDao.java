@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public interface DocumentDao {
     
     public Document getDocument(int document_id);
-    public void newDocument(Document document);
-    public void editDocument(Document document);
-    public void deleteDocument(int document_id);
+    public boolean newDocument(Document document);
+    public boolean editDocument(Document document);
+    public boolean deleteDocument(int document_id);
     public ArrayList<Document> getDiary(int user_id);
     
 }
