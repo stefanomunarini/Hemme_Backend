@@ -24,6 +24,7 @@ public class DocumentMapper {
 
         for (Map row : rows) {
             Document document = new Document();
+            document.setId((int) row.get("id"));
             Timestamp time = (Timestamp) row.get("date");
             document.setDate( (Date) toDate(time));
             document.setFile((String)row.get("file"));

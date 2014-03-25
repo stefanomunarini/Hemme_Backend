@@ -27,14 +27,14 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     private JdbcTemplate jdbcTemplate;
     
     @Override
-    public ClinicalEvent getClinicalEvent(ClinicalFolder clinicalFolder) {
+    public ClinicalEvent getClinicalEvent(int clinicalEvent_id) {
         
         ClinicalEvent clinicalEvent;
-        String sql = "SELECT * FROM clinicalevent WHERE user_id = ? AND clinicalevent_id = ?";
+        String sql = "SELECT * FROM clinicalevent WHERE clinicalevent_id = ?";
        
         try{
             clinicalEvent = (ClinicalEvent) this.jdbcTemplate.queryForObject(
-                sql, new Object[] {clinicalFolder.getUser_id(), clinicalFolder.getClinicalEvent_id()}, 
+                sql, new Object[] { (clinicalEvent_id)}, 
                 new BeanPropertyRowMapper(ClinicalEvent.class));
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
