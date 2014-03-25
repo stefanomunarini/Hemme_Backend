@@ -31,6 +31,12 @@
     </bean>
     
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    
+    <!--
+        ClinicalFolderJdbcDao bean
+    -->
+    <bean name="clinicalEventJdbcDao"
+          class="com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao" />  
       
     <!--
         ClinicalFolderJdbcDao bean
@@ -38,8 +44,6 @@
     <bean name="clinicalFolderJdbcDao"
           class="com.povodev.hemme.jdbcdao.ClinicalFolderJdbcDao" />  
     
-    
-
     <!--
         DocumentJdbcDao bean
     -->

@@ -7,9 +7,12 @@
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
+import com.povodev.hemme.bean.ClinicalFolder;
 import com.povodev.hemme.dao.ClinicalEventDao;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -22,23 +25,35 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
     
     @Override
-    public ClinicalEvent getClinicalEvent(int user_id, int clinicalEvent_id) {        
-        return null;
+    public ClinicalEvent getClinicalEvent(ClinicalFolder clinicalFolder) {
+        
+        ClinicalEvent clinicalEvent;
+        String sql = "SELECT * FROM clinicalevent WHERE user_id = ? AND clinicalevent_id = ?";
+       
+        try{
+            clinicalEvent = (ClinicalEvent) this.jdbcTemplate.queryForObject(
+                sql, new Object[] {clinicalFolder.getUser_id(), clinicalFolder.getClinicalEvent_id()}, 
+                new BeanPropertyRowMapper(ClinicalEvent.class));
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }    
+        return clinicalEvent;
     }
 
     @Override
-    public ArrayList<ClinicalEvent> getClinicalEvents(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void newClinicalEvent(ClinicalEvent clinicalEvent) {
+        try{
+            this.jdbcTemplate.update(
+                "INSERT INTO clinicalevent (author,date,therapy,note) values (?, ?, ?, ?)", 
+                new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getDate(), clinicalEvent.getTherapy(), clinicalEvent.getNote()});
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::fail to CREATE NEW DOCUMENT, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }    
     }
-
-    @Override
-    public void newClinicalEvent(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

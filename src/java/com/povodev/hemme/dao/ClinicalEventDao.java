@@ -7,6 +7,7 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
+import com.povodev.hemme.bean.ClinicalFolder;
 import java.util.ArrayList;
 
 
@@ -18,22 +19,21 @@ public interface ClinicalEventDao {
     
     /**
      * Retrieve a specific clinical event for a user
+     * @param clinicalFolder
      * @return the clinical event
-     * @param user_id
-     * @param clinicalEvent_id
      */
-    public ClinicalEvent getClinicalEvent(int user_id, int clinicalEvent_id);
+    public ClinicalEvent getClinicalEvent(ClinicalFolder clinicalFolder);
     
     /**
      * Retrieve a list of clinical events for a user
      * @return the clinical event
      * @param user_id
      */
-    public ArrayList<ClinicalEvent> getClinicalEvents(int user_id);
+    //public ArrayList<ClinicalEvent> getClinicalEvents(int user_id);
     
     /**
      * Create and insert a new clinical event for a given user
-     * @param user_id
+     * @param clinicalEvent
      */
-    public void newClinicalEvent(int user_id);
+    public void newClinicalEvent(ClinicalEvent clinicalEvent);
 }
