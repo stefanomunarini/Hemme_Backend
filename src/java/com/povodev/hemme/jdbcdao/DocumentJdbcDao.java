@@ -114,9 +114,9 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
 
-    	String sql = "SELECT * FROM DOCUMENT where";
+    	String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
 	try{
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);
             return DocumentMapper.getDiaryMap(rows);
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
