@@ -22,15 +22,11 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
     
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
-         
         
-        System.err.println(this.getClass().getName() + "  Is this null?" + jdbcTemplate==null);
+        System.err.println("Is this null? " + jdbcTemplate==null);
         
         ArrayList<ClinicalEvent> cce = new ArrayList();
         ClinicalEvent ce;
@@ -45,9 +41,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
                 System.err.println(runtimeException);
                 throw runtimeException;
             }
-            
-            System.err.println(" ESEGUITO LA QUERY SENZA ERRORI ");
-            
+                        
             ce.setNote("fjfd");
             ce.setTherapy("sdjdj");
             cce.add(ce);

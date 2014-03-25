@@ -27,9 +27,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     }
     
     @Override
-    public ClinicalEvent getClinicalEvent(int user_id, int clinicalEvent_id) {
-        System.err.println(jdbcTemplate==null);
-        
+    public ClinicalEvent getClinicalEvent(int user_id, int clinicalEvent_id) {        
         return null;
     }
 
