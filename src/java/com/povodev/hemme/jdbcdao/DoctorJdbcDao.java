@@ -9,6 +9,9 @@ package com.povodev.hemme.jdbcdao;
 import com.povodev.hemme.bean.Doctor;
 import com.povodev.hemme.dao.DoctorDao;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -17,6 +20,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class DoctorJdbcDao implements DoctorDao{
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -24,7 +28,19 @@ public class DoctorJdbcDao implements DoctorDao{
 
     @Override
     public Doctor getDoctor(int doctor_id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.err.println(jdbcTemplate==null);
+        Doctor doctor = null;
+        String sql = "SELECT * FROM doctor WHERE user_id = ?";
+        try{
+            doctor = (Doctor) this.jdbcTemplate.queryForObject(
+                sql, new Object[] { doctor_id }, 
+                new BeanPropertyRowMapper(Doctor.class));
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }    
+        return doctor;
     }
 
     @Override

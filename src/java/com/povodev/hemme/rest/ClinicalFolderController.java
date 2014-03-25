@@ -9,6 +9,8 @@ package com.povodev.hemme.rest;
 import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.jdbcdao.ClinicalFolderJdbcDao;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ClinicalFolderController {
     
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
+    
     @RequestMapping("/getClinicalFolder")
     public @ResponseBody ArrayList<ClinicalEvent> getClinicalFolder(
             @RequestParam(value="user_id", required=true) int user_id) {
+        System.err.println(this.getClass().getName() + "  Is it null? " + jdbcTemplate==null);
         ClinicalFolderJdbcDao clinicalFolder = new ClinicalFolderJdbcDao();
         return clinicalFolder.getClinicalFolder(user_id);
     }

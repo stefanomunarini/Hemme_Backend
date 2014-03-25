@@ -9,6 +9,7 @@ package com.povodev.hemme.jdbcdao;
 import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.dao.ClinicalFolderDao;
 import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -17,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -24,6 +26,11 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
+        
+        ClinicalEvent ce;
+        
+        
+        System.err.println(this.getClass().getName() + "  Is this null?" + jdbcTemplate==null);
         return null;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
     }
     

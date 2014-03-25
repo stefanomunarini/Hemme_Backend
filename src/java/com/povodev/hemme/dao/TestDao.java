@@ -7,7 +7,6 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.Result;
-import com.povodev.hemme.bean.Test;
 import java.util.ArrayList;
 
 
