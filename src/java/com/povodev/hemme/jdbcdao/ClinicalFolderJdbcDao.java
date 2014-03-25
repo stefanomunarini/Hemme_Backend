@@ -10,6 +10,8 @@ import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.dao.ClinicalFolderDao;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -27,11 +29,29 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
         
-        ClinicalEvent ce;
-        
-        
         System.err.println(this.getClass().getName() + "  Is this null?" + jdbcTemplate==null);
-        return null;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
+        
+        ArrayList<ClinicalEvent> cce = new ArrayList();
+        ClinicalEvent ce;
+        for (int i=0;i<2;i++){
+            String sql = "SELECT * FROM clinicalevent WHERE ID = ?";
+            try{
+                ce = (ClinicalEvent) this.jdbcTemplate.queryForObject(
+                    sql, new Object[] { user_id }, 
+                    new BeanPropertyRowMapper(ClinicalEvent.class));
+            }catch (DataAccessException runtimeException){
+                System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
+                System.err.println(runtimeException);
+                throw runtimeException;
+            }
+            ce.setAuthor("wre");
+            ce.setNote("fjfd");
+            ce.setTherapy("sdjdj");
+            cce.add(ce);
+            
+        }
+        
+        return cce;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
     }
     
     @Override

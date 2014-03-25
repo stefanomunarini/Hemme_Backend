@@ -8,6 +8,7 @@ package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.HasTp;
 import com.povodev.hemme.jdbcdao.HasTpJdbcDao;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author gbonadiman.stage
  */
+@Controller
 public class HasTpController {
         
     @RequestMapping("/getHasTp")

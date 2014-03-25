@@ -10,6 +10,7 @@ import com.povodev.hemme.bean.Result;
 import com.povodev.hemme.bean.Test;
 import com.povodev.hemme.jdbcdao.TestJdbcDao;
 import java.util.ArrayList;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author gbonadiman.stage
  */
+@Controller
 public class TestController {
     
     @RequestMapping("/getTest")

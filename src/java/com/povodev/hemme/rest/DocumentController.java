@@ -9,6 +9,7 @@ package com.povodev.hemme.rest;
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.jdbcdao.DocumentJdbcDao;
 import java.util.ArrayList;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author gbonadiman.stage
  */
+@Controller
 public class DocumentController {
     
     @RequestMapping("/getDocument")
