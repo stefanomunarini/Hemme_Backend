@@ -7,13 +7,14 @@
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
+import com.povodev.hemme.bean.ClinicalFolder;
 import com.povodev.hemme.dao.ClinicalFolderDao;
+import com.povodev.hemme.rowmapper.ClinicalFolderMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -27,29 +28,35 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
-                
-        ArrayList<ClinicalEvent> clinicalFolder = new ArrayList();
+        
+        List<Map<String, Object>> rows;
+        ArrayList<ClinicalEvent> clinicalFolder;
+        
         String sql = "SELECT * FROM clinicalevent";
 	try{
-            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql);
-            for (Map row : rows) {
-                    ClinicalEvent clinicalEvent = new ClinicalEvent();
-                    clinicalEvent.setAuthor((int) (row.get("author")));
-                    clinicalEvent.setNote((String) (row.get("note")));
-                    clinicalFolder.add(clinicalEvent);
-            }        
-        }catch (DataAccessException runtimeException){
-            System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
-            throw runtimeException;
-        }    
+            rows = this.jdbcTemplate.queryForList(sql);
+        }catch (DataAccessException dataAccessException){
+            System.err.println("***DAO :: getClinicalFolder FAIL, DataAccessException occurred, message follows.");
+            System.err.println(dataAccessException);
+            throw dataAccessException;
+        }
         
-        return clinicalFolder;//jdbcTemplate.execute("insert into STUDENT (name) values (?)",user_id );
+        clinicalFolder = ClinicalFolderMapper.getClinicalFolderMap(rows);
+        
+        return clinicalFolder;
     }
     
     @Override
-    public void newClinicalFolder(int user_id, int clinicalEvent_id) {
-        
+    public void newClinicalFolder(ClinicalFolder clinicalFolder) {
+        try{
+            this.jdbcTemplate.update(
+                "INSERT INTO clinicalFolder (user_id, clinicalevent_id) values (?, ?)", 
+                new Object[] {clinicalFolder.getUser_id(),clinicalFolder.getClinicalEvent_id()});
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::failed to CREATE NEW CLINICALFOLDER, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }
     }
     
 }

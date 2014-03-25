@@ -7,6 +7,7 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
+import com.povodev.hemme.bean.ClinicalFolder;
 import java.util.ArrayList;
 
 /**
@@ -27,7 +28,7 @@ public interface ClinicalFolderDao {
      * @param user_id
      * @param clinicalEvent_id
      */
-    public void newClinicalFolder(int user_id, int clinicalEvent_id);
+    public void newClinicalFolder(ClinicalFolder clinicalFolder);
     
     
 }

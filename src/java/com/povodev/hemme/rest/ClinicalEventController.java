@@ -29,11 +29,5 @@ public class ClinicalEventController {
         return clinicalEvent.getClinicalEvent(user_id, clinicalEvent_id);
     }
     
-    @RequestMapping("/getClinicalEvents")
-    public @ResponseBody ArrayList<ClinicalEvent> getClinicalEvents(
-            @RequestParam(value="user_id", required=true) int user_id) {
-        ClinicalEventJdbcDao clinicalEvent = new ClinicalEventJdbcDao();
-        return clinicalEvent.getClinicalEvents(user_id);
-    }
     
 }
