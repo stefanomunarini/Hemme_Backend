@@ -14,6 +14,6 @@ import com.povodev.hemme.bean.HasDp;
  */
 public interface HasDpDao {
 
-    public void newHasDp(int user_id, int doctor_id);
+    public void newHasDp(int patient_id, int doctor_id);
     
 }

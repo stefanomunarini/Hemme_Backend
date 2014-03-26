@@ -8,6 +8,7 @@ package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.HasTp;
 import com.povodev.hemme.jdbcdao.HasTpJdbcDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,17 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HasTpController {
         
-    @RequestMapping("/getHasTp")
-    public @ResponseBody HasTp getHasTp(
-        @RequestParam(value="user_id", required=true) int user_id) {
-        HasTpJdbcDao hasTp = new HasTpJdbcDao();
-        return hasTp.getHasTp(user_id);
-    }
+
+    @Autowired
+    private HasTpJdbcDao hasTpJdbcDao;
     
     @RequestMapping("/newHasTp")
-    public @ResponseBody HasTp newHasTp(
-            @RequestParam(value="user_id", required=true) int user_id) {
-        HasTpJdbcDao hasTp = new HasTpJdbcDao();
-        return hasTp.getHasTp(user_id);
+    public @ResponseBody void newHasTp(
+            @RequestParam(value="tutor_id", required=true) int tutor_id,
+            @RequestParam(value="patient_id", required=true) int patient_id) {
+        
+        hasTpJdbcDao.newHasTp(tutor_id, patient_id);
     }
 }

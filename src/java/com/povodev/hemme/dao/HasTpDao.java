@@ -14,7 +14,6 @@ import com.povodev.hemme.bean.HasTp;
  */
 public interface HasTpDao {
        
-    public HasTp getHasTp(int user_id);
-    public void newHasTp(int user_id);
+    public void newHasTp(int tutor_id, int patient_id);
 
 }

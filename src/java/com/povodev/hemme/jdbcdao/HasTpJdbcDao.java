@@ -8,6 +8,8 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.HasTp;
 import com.povodev.hemme.dao.HasTpDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -16,21 +18,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class HasTpJdbcDao implements HasTpDao{
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
-    @Override
-    public HasTp getHasTp(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
-    public void newHasTp(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public void newHasTp(int tutor_id, int patient_id) {
+        
+        String query = "INSERT INTO hastp (tutor_id, patient_id) VALUES (?,?)";
+        try {
+            this.jdbcTemplate.update(
+                query, 
+                new Object[] {tutor_id, patient_id});
+        } catch (DataAccessException dae){
+            throw dae;
+        }
     }
-    
 }
