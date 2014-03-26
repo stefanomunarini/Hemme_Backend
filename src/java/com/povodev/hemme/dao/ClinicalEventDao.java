@@ -18,7 +18,7 @@ public interface ClinicalEventDao {
     
     /**
      * Retrieve a specific clinical event for a user
-     * @param clinicalFolder
+     * @param clinicalEvent_id
      * @return the clinical event
      */
     public ClinicalEvent getClinicalEvent(int clinicalEvent_id);
