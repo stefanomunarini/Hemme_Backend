@@ -29,9 +29,9 @@ public class ClinicalEventController {
     public @ResponseBody ClinicalEvent getClinicalEvent(
             /*@RequestParam(value="user_id", required=true) int user_id,
             @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
-            @RequestParam(value="clinical_folder", required=true) ClinicalFolder clinicalFolder) {
+            @RequestParam(value="clinicalevent_id", required=true) int clinicalEvent_id) {
         
-        return clinicalEventJdbcDao.getClinicalEvent(clinicalFolder);
+        return clinicalEventJdbcDao.getClinicalEvent(clinicalEvent_id);
     }
     
     @RequestMapping("/newClinicalEvent")

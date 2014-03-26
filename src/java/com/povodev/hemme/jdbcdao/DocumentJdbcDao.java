@@ -94,10 +94,13 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public boolean deleteDocument(int document_id) {
     
-        String deleteStatement = "DELETE FROM DOCUMENT WHERE id = ?";
+        
+        String deleteStatement1 = "DELETE FROM DIARY WHERE document_id = ?";
+        String deleteStatement2 = "DELETE FROM DOCUMENT WHERE id = ?";
         
         try{
-            this.jdbcTemplate.update(deleteStatement, document_id);
+            this.jdbcTemplate.update(deleteStatement1, document_id);
+            this.jdbcTemplate.update(deleteStatement2, document_id);
         }catch (RuntimeException runtimeException){
             System.err.println("***NagiosHostDao::DELETE DOCUMENT FAILED, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
