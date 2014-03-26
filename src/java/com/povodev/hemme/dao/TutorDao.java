@@ -6,16 +6,13 @@
 
 package com.povodev.hemme.dao;
 
-import com.povodev.hemme.bean.Tutor;
 
 /**
  *
  * @author gbonadiman.stage
  */
 public interface TutorDao {
-    
-    public Tutor getTutor(int user_id);
-    public void newTutor (int user_id);
-    public void registerPatientDevice (String imei);
+
+    public boolean registerPatientDevice (int user_id, String imei);
     
 }

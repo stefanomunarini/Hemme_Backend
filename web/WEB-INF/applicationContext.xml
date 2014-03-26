@@ -51,6 +51,12 @@
           class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />
     
     <!--
+        DoctorJdbcDao bean
+    -->
+    <bean name="doctorJdbcDao"
+          class="com.povodev.hemme.jdbcdao.DoctorJdbcDao" />
+    
+    <!--
         TutorJdbcDao bean
     -->
     <bean name="tutorJdbcDao"

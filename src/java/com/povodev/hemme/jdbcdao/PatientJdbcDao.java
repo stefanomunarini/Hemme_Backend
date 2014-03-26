@@ -8,6 +8,7 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.Patient;
 import com.povodev.hemme.dao.PatientDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -16,22 +17,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class PatientJdbcDao implements PatientDao{
 
-    
-    private JdbcTemplate jdbcTemplate;
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
-    @Override
-    public Patient getPatient(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void newPatient(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    @Autowired
+    private JdbcTemplate jdbcTemplate;    
 }

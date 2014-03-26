@@ -7,7 +7,6 @@
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
-import com.povodev.hemme.bean.ClinicalFolder;
 import com.povodev.hemme.dao.ClinicalEventDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;

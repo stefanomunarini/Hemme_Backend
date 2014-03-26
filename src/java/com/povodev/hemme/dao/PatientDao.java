@@ -13,7 +13,4 @@ import com.povodev.hemme.bean.Patient;
  * @author gbonadiman.stage
  */
 public interface PatientDao {
-    public Patient getPatient(int user_id);
-    public void newPatient (int user_id);
-
 }
