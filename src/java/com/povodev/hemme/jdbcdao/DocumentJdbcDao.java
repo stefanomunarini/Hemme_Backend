@@ -9,7 +9,6 @@ package com.povodev.hemme.jdbcdao;
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.dao.DocumentDao;
 import com.povodev.hemme.rowmapper.DocumentMapper;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.apache.log4j.Logger;
+import org.apache.commons.logging. Log;
+import org.apache.commons.logging. LogFactory;
 
 
 public class DocumentJdbcDao implements DocumentDao {
@@ -24,6 +28,10 @@ public class DocumentJdbcDao implements DocumentDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
+    //static Logger log = Logger.getLogger(DocumentJdbcDao.class.getName());
+    static Log log = LogFactory.getLog(DocumentJdbcDao.class.getName());
+
+            
     /**
      * Return document from its Id
      * @param document_id
@@ -32,6 +40,9 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public Document getDocument(int document_id) {
         
+         log.info("Going to create HelloWord Obj");
+      
+         
         Document document = new Document();
         String sql = "SELECT * FROM DOCUMENT WHERE ID = ?";
        
@@ -54,12 +65,22 @@ public class DocumentJdbcDao implements DocumentDao {
      * @param document 
      */
     @Override
-    public boolean newDocument(Document document) {
+    public boolean newDocument(Document document, int user_id) {
+        
+        KeyHolder holder = new GeneratedKeyHolder();
+        int document_generated_key = 0;
         
         try{
             this.jdbcTemplate.update(
                 "insert into DOCUMENT (date,file) values (?, ?)", 
-                new Object[] {document.getDate(),document.getFile()});
+                new Object[] {document.getDate(),document.getFile()}, holder);
+            
+            document_generated_key = holder.getKey().intValue();
+            
+            this.jdbcTemplate.update(
+                "insert into DIARY (user_id,document_id) values (?, ?)", 
+                new Object[] {user_id,document_generated_key});
+            
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao::fail to CREATE NEW DOCUMENT, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
@@ -117,7 +138,8 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
 
-    	String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
+         
+        String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);
             return DocumentMapper.getDiaryMap(rows);
@@ -127,5 +149,6 @@ public class DocumentJdbcDao implements DocumentDao {
             throw runtimeException;
         }    
     }
+
     
 }

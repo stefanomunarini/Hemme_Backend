@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,17 +27,29 @@ public class DocumentController {
     @Autowired
     private DocumentJdbcDao documentJdbcDao;
     
+    private static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
+    
         
     @RequestMapping("/getDocument")
     public @ResponseBody Document getDocument(
         @RequestParam(value="document_id", required=true) int document_id) {
+        
+        log.trace("Trace");
+        log.debug("Debug");
+        log.info("Info");
+        log.warn("Warn");
+        log.error("Error");
+        log.fatal("Fatal");
+        
+        
         return documentJdbcDao.getDocument(document_id);
     }
     
     @RequestMapping("/newDocument")
     public @ResponseBody boolean newDocument(
-            @RequestParam(value="new_document", required=true) Document new_document) {
-        return documentJdbcDao.newDocument(new_document);
+            @RequestParam(value="new_document", required=true) Document new_document,
+            @RequestParam(value="user_id", required=true) int user_id){
+        return documentJdbcDao.newDocument(new_document,user_id);
     }
  
     @RequestMapping("/editDocument")
