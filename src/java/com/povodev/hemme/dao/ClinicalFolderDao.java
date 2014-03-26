@@ -28,7 +28,7 @@ public interface ClinicalFolderDao {
      * @param user_id
      * @param clinicalEvent_id
      */
-    public void newClinicalFolder(ClinicalFolder clinicalFolder);
+    public void newClinicalFolder(int user_id, int clinicalEvent_id);
     
     
 }

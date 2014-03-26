@@ -8,7 +8,6 @@ package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.bean.ClinicalFolder;
-import java.util.ArrayList;
 
 
 /**
@@ -35,5 +34,5 @@ public interface ClinicalEventDao {
      * Create and insert a new clinical event for a given user
      * @param clinicalEvent
      */
-    public void newClinicalEvent(ClinicalEvent clinicalEvent);
+    public void newClinicalEvent(ClinicalEvent clinicalEvent, int user_id);
 }

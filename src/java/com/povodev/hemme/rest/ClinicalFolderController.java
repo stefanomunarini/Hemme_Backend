@@ -32,12 +32,12 @@ public class ClinicalFolderController {
         return clinicalFolderJdbcDao.getClinicalFolder(user_id);
     }
     
-    @RequestMapping("/newClinicalFolder")
+    /*@RequestMapping("/newClinicalFolder")
     public @ResponseBody void newClinicalFolder(
-            /*@RequestParam(value="user_id", required=true) int user_id,
-            @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
+            @RequestParam(value="user_id", required=true) int user_id,
+            @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id
             @RequestParam(value="clinical_folder", required=true) ClinicalFolder clinicalFolder) {
         clinicalFolderJdbcDao.newClinicalFolder(clinicalFolder);
-    }
+    }*/
     
 }

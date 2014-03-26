@@ -38,9 +38,10 @@ public class ClinicalEventController {
     public @ResponseBody void newClinicalEvent(
             /*@RequestParam(value="user_id", required=true) int user_id,
             @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
-            @RequestParam(value="clinical_event", required=true) ClinicalEvent clinicalEvent) {
+            @RequestParam(value="clinical_event", required=true) ClinicalEvent clinicalEvent,
+            @RequestParam(value="user_id", required=true) int user_id) {
         
-        clinicalEventJdbcDao.newClinicalEvent(clinicalEvent);
+        clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
     }
     
     
