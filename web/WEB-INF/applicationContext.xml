@@ -51,7 +51,13 @@
           class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />
     
     <!--
-        DocumentJdbcDao bean
+        TutorJdbcDao bean
+    -->
+    <bean name="tutorJdbcDao"
+          class="com.povodev.hemme.jdbcdao.TutorJdbcDao" />
+    
+    <!--
+        UserJdbcDao bean
     -->
     <bean name="userJdbcDao"
           class="com.povodev.hemme.jdbcdao.UserJdbcDao" />
