@@ -13,8 +13,7 @@ import com.povodev.hemme.bean.HasDp;
  * @author gbonadiman.stage
  */
 public interface HasDpDao {
-    
-    public HasDp getHasDp(int user_id);
-    public void newHasDp(int user_id);
+
+    public void newHasDp(int user_id, int doctor_id);
     
 }

@@ -4,6 +4,7 @@ import com.povodev.hemme.bean.HasDp;
 import com.povodev.hemme.bean.Test;
 import com.povodev.hemme.jdbcdao.HasDpJdbcDao;
 import com.povodev.hemme.jdbcdao.TestJdbcDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,18 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HasDpController {
     
-    
-    @RequestMapping("/getHasDp")
-    public @ResponseBody HasDp getHasDp(
-        @RequestParam(value="user_id", required=true) int user_id) {
-        HasDpJdbcDao hasDp = new HasDpJdbcDao();
-        return hasDp.getHasDp(user_id);
-    }
+    @Autowired
+    private HasDpJdbcDao hasJdbcDao;
     
     @RequestMapping("/newHasDp")
     public @ResponseBody HasDp newHasDp(
-            @RequestParam(value="user_id", required=true) int user_id) {
-        HasDpJdbcDao hasDp = new HasDpJdbcDao();
-        return hasDp.getHasDp(user_id);
+            @RequestParam(value="user_id", required=true) int user_id,
+            @RequestParam(value="doctor_id", required=true) int doctor_id) {
+        
+        return hasJdbcDao.getHasDp(user_id);
     }
 }

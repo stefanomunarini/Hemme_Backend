@@ -57,6 +57,18 @@
           class="com.povodev.hemme.jdbcdao.DoctorJdbcDao" />
     
     <!--
+        HasDpJdbcDao bean
+    -->
+    <bean name="hasDpJdbcDao"
+          class="com.povodev.hemme.jdbcdao.HasDpJdbcDao" />
+    
+    <!--
+        HasTpJdbcDao bean
+    -->
+    <bean name="hasTpJdbcDao"
+          class="com.povodev.hemme.jdbcdao.HasTpJdbcDao" />
+    
+    <!--
         TutorJdbcDao bean
     -->
     <bean name="tutorJdbcDao"
