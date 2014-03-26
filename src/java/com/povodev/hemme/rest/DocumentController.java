@@ -27,19 +27,19 @@ public class DocumentController {
     @Autowired
     private DocumentJdbcDao documentJdbcDao;
     
-    private static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
+    static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
     
         
     @RequestMapping("/getDocument")
     public @ResponseBody Document getDocument(
         @RequestParam(value="document_id", required=true) int document_id) {
         
-        log.trace("Trace");
-        log.debug("Debug");
-        log.info("Info");
-        log.warn("Warn");
-        log.error("Error");
-        log.fatal("Fatal");
+        log.trace("asddasdsadsTrace");
+        log.debug("asdDebug");
+        log.info("asdInfo");
+        log.warn("asdWarn");
+        log.error("asdErrorasddasdsadsTrace");
+        log.fatal("asdFatal");
         
         
         return documentJdbcDao.getDocument(document_id);
