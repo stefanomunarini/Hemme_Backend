@@ -8,6 +8,9 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -16,29 +19,64 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class UserJdbcDao implements UserDao{
     
+    @Autowired
     private JdbcTemplate jdbcTemplate;
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    
 
     @Override
     public User getUser(int user_id) {
         
-        User u = new User();
-        throw new UnsupportedOperationException
-        ("Not supported yet. ooooooooooooooooooooooooooooooooo"+"________________________USSUSUS  " + u.getId()); 
+        User user;
+        String sql = "SELECT * FROM user WHERE user_id = ?";
+       
+        try{
+            user = (User) this.jdbcTemplate.queryForObject(
+                sql,
+                new Object[] { (user_id)}, 
+                new BeanPropertyRowMapper(User.class));
+        }catch (DataAccessException dae){
+            
+            throw dae;
+        }    
+        return user;
         
-        //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean registration(String imei, String name, String surname, String password, String email, int role) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+        String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
+        try {
+            this.jdbcTemplate.update(
+                query, 
+                new Object[] {imei, name, surname, password, email, role});
+        } catch (DataAccessException dae){
+            System.err.println("***Dao::failed to CREATE NEW user, DataAccessException occurred, message follows.");
+            System.err.println(dae.getMessage());
+            throw dae;
+        }
+        
+        return true;
+        
     }
     
     @Override
-    public boolean login(String email,String password) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public User login(String email,String password) {
+
+        User user;
+        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+       
+        try{
+            user = (User) this.jdbcTemplate.queryForObject(
+                sql,
+                new Object[] { email, password}, 
+                new BeanPropertyRowMapper(User.class));
+        }catch (DataAccessException dae){
+            
+            throw dae;
+        }    
+        return user;
+        
     }
 
     

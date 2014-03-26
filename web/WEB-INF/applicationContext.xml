@@ -36,18 +36,24 @@
         ClinicalFolderJdbcDao bean
     -->
     <bean name="clinicalEventJdbcDao"
-          class="com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao" />  
+          class="com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao" /> 
       
     <!--
         ClinicalFolderJdbcDao bean
     -->
     <bean name="clinicalFolderJdbcDao"
-          class="com.povodev.hemme.jdbcdao.ClinicalFolderJdbcDao" />  
+          class="com.povodev.hemme.jdbcdao.ClinicalFolderJdbcDao" />
     
     <!--
         DocumentJdbcDao bean
     -->
     <bean name="documentJdbcDao"
-          class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />  
+          class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />
+    
+    <!--
+        DocumentJdbcDao bean
+    -->
+    <bean name="userJdbcDao"
+          class="com.povodev.hemme.jdbcdao.UserJdbcDao" />
     
 </beans>
