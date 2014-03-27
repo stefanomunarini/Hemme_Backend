@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.bean;
 
 import java.sql.Date;
@@ -16,7 +10,7 @@ public class Result {
 
     private int id;
     private String grade;
-    private Date time;
+    private int time;
     private Date date;
 
     /**
@@ -50,14 +44,19 @@ public class Result {
     /**
      * @return the time
      */
-    public Date getTime() {
+    
+
+    /**
+     * @return the time
+     */
+    public int getTime() {
         return time;
     }
 
     /**
      * @param time the time to set
      */
-    public void setTime(Date time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
@@ -74,5 +73,5 @@ public class Result {
     public void setDate(Date date) {
         this.date = date;
     }
-    
+
 }
