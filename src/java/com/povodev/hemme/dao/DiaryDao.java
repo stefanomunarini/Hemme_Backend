@@ -14,7 +14,4 @@ import com.povodev.hemme.bean.Diary;
  */
 public interface DiaryDao{
     
-    public Diary getDiary(int user_id);
-    public void newDiary(int user_id);
-    
 }

@@ -16,22 +16,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class DiaryJdbcDao implements DiaryDao{
 
-    
     private JdbcTemplate jdbcTemplate;
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
-    
-    @Override
-    public Diary getDiary(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void newDiary(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

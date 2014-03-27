@@ -69,7 +69,6 @@
         <property name="id"/>
         <property name="grade"/>
         <property name="time"/>
-        <property name="date"/>
     </bean>   
   
     <bean id="test" class="com.povodev.hemme.bean.Test">

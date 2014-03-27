@@ -23,12 +23,10 @@ public class UserController {
 
     @Autowired
     private UserJdbcDao userJdbcDao;
-    
         
     @RequestMapping("/getUser")
     public @ResponseBody User getUser(
             @RequestParam(value="user_id", required=true) int user_id){
-        
         return userJdbcDao.getUser(user_id);
     }
     
@@ -52,7 +50,4 @@ public class UserController {
 
         return userJdbcDao.login(email, password);
     }
-
-    
-    
 }

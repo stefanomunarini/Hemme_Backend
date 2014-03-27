@@ -7,7 +7,6 @@
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Result;
-import com.povodev.hemme.bean.Test;
 import com.povodev.hemme.jdbcdao.TestJdbcDao;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;

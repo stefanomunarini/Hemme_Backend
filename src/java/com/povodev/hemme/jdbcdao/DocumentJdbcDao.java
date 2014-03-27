@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package com.povodev.hemme.jdbcdao;
 
@@ -18,7 +13,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.apache.log4j.Logger;
 import org.apache.commons.logging. Log;
 import org.apache.commons.logging. LogFactory;
 
@@ -30,7 +24,6 @@ public class DocumentJdbcDao implements DocumentDao {
     
     //static Logger log = Logger.getLogger(DocumentJdbcDao.class.getName());
     static Log log = LogFactory.getLog(DocumentJdbcDao.class.getName());
-
             
     /**
      * Return document from its Id
@@ -40,9 +33,6 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public Document getDocument(int document_id) {
         
-         log.info("Going to create HelloWord Obj");
-      
-         
         Document document = new Document();
         String sql = "SELECT * FROM DOCUMENT WHERE ID = ?";
        
@@ -55,6 +45,8 @@ public class DocumentJdbcDao implements DocumentDao {
             System.err.println(runtimeException);
             throw runtimeException;
         }    
+        
+                
         return document;
     }
 
@@ -63,9 +55,11 @@ public class DocumentJdbcDao implements DocumentDao {
     /**
      * Insert new document
      * @param document 
+     * @param user_id 
+     * @return  
      */
     @Override
-    public boolean newDocument(Document document, int user_id) {
+    public boolean insertDocument(Document document, int user_id) {
         
         KeyHolder holder = new GeneratedKeyHolder();
         int document_generated_key = 0;
@@ -92,6 +86,7 @@ public class DocumentJdbcDao implements DocumentDao {
     /**
      * Edit input document
      * @param document 
+     * @return  
      */
     @Override
     public boolean editDocument(Document document) {
@@ -122,7 +117,7 @@ public class DocumentJdbcDao implements DocumentDao {
         try{
             this.jdbcTemplate.update(deleteStatement1, document_id);
             this.jdbcTemplate.update(deleteStatement2, document_id);
-        }catch (RuntimeException runtimeException){
+        }catch (DataAccessException runtimeException){
             System.err.println("***NagiosHostDao::DELETE DOCUMENT FAILED, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
@@ -138,7 +133,6 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
 
-         
         String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);

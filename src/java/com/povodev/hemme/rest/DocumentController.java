@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author gbonadiman.stage
- */
+
+
 @Controller
 public class DocumentController {
     
@@ -29,12 +27,11 @@ public class DocumentController {
     
     static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
     
-        
     @RequestMapping("/getDocument")
     public @ResponseBody Document getDocument(
         @RequestParam(value="document_id", required=true) int document_id) {
         
-        log.trace("asddasdsadsTrace");
+        log.trace("--------------------PROVA LOG DA UTILIZZARE--------------------");
         log.debug("asdDebug");
         log.info("asdInfo");
         log.warn("asdWarn");
@@ -49,7 +46,7 @@ public class DocumentController {
     public @ResponseBody boolean newDocument(
             @RequestParam(value="new_document", required=true) Document new_document,
             @RequestParam(value="user_id", required=true) int user_id){
-        return documentJdbcDao.newDocument(new_document,user_id);
+        return documentJdbcDao.insertDocument(new_document,user_id);
     }
  
     @RequestMapping("/editDocument")
