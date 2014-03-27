@@ -33,7 +33,7 @@
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
     
     <!--
-        ClinicalFolderJdbcDao bean
+        ClinicalEventJdbcDao bean
     -->
     <bean name="clinicalEventJdbcDao"
           class="com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao" /> 
@@ -68,6 +68,21 @@
     <bean name="hasTpJdbcDao"
           class="com.povodev.hemme.jdbcdao.HasTpJdbcDao" />
     
+    
+    <!--
+        TestResultJdbcDao bean
+    -->
+    <bean name="testResultJdbcDao"
+          class="com.povodev.hemme.jdbcdao.TestResultJdbcDao" />
+    
+    
+    <bean name="ResultJdbcDao"
+          class="com.povodev.hemme.jdbcdao.ResultJdbcDao" />
+    
+    
+    
+    
+    
     <!--
         TutorJdbcDao bean
     -->
@@ -79,5 +94,6 @@
     -->
     <bean name="userJdbcDao"
           class="com.povodev.hemme.jdbcdao.UserJdbcDao" />
+    
     
 </beans>

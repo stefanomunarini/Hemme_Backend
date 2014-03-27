@@ -60,6 +60,11 @@
                 <!-- Tutor -->
                 <prop key="insertEvent">tutorController</prop>
                 
+                <!-- Result-->
+                <prop key="getResult.htm">resultController</prop>
+                
+                
+                
             </props>
         </property>
     </bean>
