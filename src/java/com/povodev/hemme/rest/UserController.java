@@ -11,6 +11,7 @@ import com.povodev.hemme.jdbcdao.UserJdbcDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,17 +32,17 @@ public class UserController {
     }
     
     
-    @RequestMapping("/registration")
+    @RequestMapping(value="/registration", method = RequestMethod.POST)
     public @ResponseBody User registration(
-            @RequestParam(value="imei", required=true) String imei,
+            /*@RequestParam(value="imei", required=true) String imei,
             @RequestParam(value="name", required=true) String name,
             @RequestParam(value="surname", required=true) String surname,
             @RequestParam(value="password", required=true) String password,
             @RequestParam(value="email", required=true) String email,
-            @RequestParam(value="role", required=true) int role){
+            @RequestParam(value="role", required=true) int role*/ User user){
         
-        if (userJdbcDao.registration(imei, name, surname, password, email, role)){
-            return userJdbcDao.login(email, password);
+        if (userJdbcDao.registration(user.getImei(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getRole())){
+            return userJdbcDao.login(user.getEmail(), user.getPassword());
         } else {
             return null;
         }
