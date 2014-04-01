@@ -54,12 +54,4 @@ public interface AccessDao {
      */
     public ArrayList<Access> getDevicesList(String email, String passwordtutor_id);
     
-    /**
-     * Return la lista di dispositivi collegati al tutore
-     * @param tutor_id
-     * @return 
-     */
-    public ArrayList<User> getTutorDevice (int tutor_id);
-    
-    
 }
