@@ -7,7 +7,6 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.Access;
-import com.povodev.hemme.bean.User;
 import java.util.ArrayList;
 
 /**
