@@ -69,13 +69,6 @@
           class="com.povodev.hemme.jdbcdao.HasTpJdbcDao" />
     
     
-    <!--
-        TestResultJdbcDao bean
-    -->
-    <bean name="testResultJdbcDao"
-          class="com.povodev.hemme.jdbcdao.TestResultJdbcDao" />
-    
-    
     <bean name="ResultJdbcDao"
           class="com.povodev.hemme.jdbcdao.ResultJdbcDao" />
     
