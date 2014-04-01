@@ -81,6 +81,13 @@
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
     
+    
+    <!--
+        The access controller.
+    -->
+    <bean name="accessController"
+          class="com.povodev.hemme.rest.AccessController" />
+    
     <!--
         The clinical event controller.
     -->

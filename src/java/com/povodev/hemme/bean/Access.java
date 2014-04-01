@@ -13,25 +13,11 @@ package com.povodev.hemme.bean;
 public class Access {
     
     private int id_access;
-    private String username;
+    private String email;
     private String password;
     private String imei;
     private int role;
     private int status;
-
-    /**
-     * @return the username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * @param username the username to set
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     /**
      * @return the password
@@ -87,6 +73,34 @@ public class Access {
      */
     public void setId_access(int id_access) {
         this.id_access = id_access;
+    }
+
+    /**
+     * @return the status
+     */
+    public int getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     

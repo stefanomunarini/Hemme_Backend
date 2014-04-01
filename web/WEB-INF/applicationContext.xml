@@ -33,6 +33,12 @@
     <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
     
     <!--
+        AccessJdbcDao bean
+    -->
+    <bean name="accessJdbcDao"
+          class="com.povodev.hemme.jdbcdao.AccessJdbcDao" /> 
+        
+    <!--
         ClinicalEventJdbcDao bean
     -->
     <bean name="clinicalEventJdbcDao"
