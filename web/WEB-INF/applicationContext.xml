@@ -68,13 +68,11 @@
     <bean name="hasTpJdbcDao"
           class="com.povodev.hemme.jdbcdao.HasTpJdbcDao" />
     
-    
+    <!--
+        ResultJdbcDao bean
+    -->
     <bean name="ResultJdbcDao"
           class="com.povodev.hemme.jdbcdao.ResultJdbcDao" />
-    
-    
-    
-    
     
     <!--
         TutorJdbcDao bean

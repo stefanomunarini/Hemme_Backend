@@ -30,7 +30,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     public ClinicalEvent getClinicalEvent(int clinicalEvent_id) {
         
         ClinicalEvent clinicalEvent;
-        String sql = "SELECT * FROM clinicalevent WHERE clinicalevent_id = ?";
+        String sql = "SELECT * FROM clinicalevent WHERE id = ?";
        
         try{
             clinicalEvent = (ClinicalEvent) this.jdbcTemplate.queryForObject(
