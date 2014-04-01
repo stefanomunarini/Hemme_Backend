@@ -13,7 +13,7 @@ package com.povodev.hemme.bean;
 public class User {
     
     private int id;
-    private int imei;
+    private String imei;
     private String name;
     private String surname;
     private String password;
@@ -32,20 +32,6 @@ public class User {
      */
     public void setId(int id) {
         this.id = id;
-    }
-
-    /**
-     * @return the imei
-     */
-    public int getImei() {
-        return imei;
-    }
-
-    /**
-     * @param imei the imei to set
-     */
-    public void setImei(int imei) {
-        this.imei = imei;
     }
 
     /**
@@ -116,6 +102,20 @@ public class User {
      */
     public void setRole(int role) {
         this.role = role;
+    }
+
+    /**
+     * @return the imei
+     */
+    public String getImei() {
+        return imei;
+    }
+
+    /**
+     * @param imei the imei to set
+     */
+    public void setImei(String imei) {
+        this.imei = imei;
     }
     
     

@@ -8,6 +8,7 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.UserDao;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,7 +23,9 @@ public class UserJdbcDao implements UserDao{
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
-
+    static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
+        
+        
     @Override
     public User getUser(int user_id) {
         
@@ -74,7 +77,12 @@ public class UserJdbcDao implements UserDao{
         }catch (DataAccessException dae){
             
             throw dae;
-        }    
+        }
+        
+        
+        log.debug("Login di " + user.getEmail());
+        
+        
         return user;
         
     }

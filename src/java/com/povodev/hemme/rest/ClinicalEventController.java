@@ -11,7 +11,9 @@ import com.povodev.hemme.bean.ClinicalFolder;
 import com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,14 +36,16 @@ public class ClinicalEventController {
         return clinicalEventJdbcDao.getClinicalEvent(clinicalEvent_id);
     }
     
-    @RequestMapping("/newClinicalEvent")
-    public @ResponseBody void newClinicalEvent(
+    @RequestMapping(value="/newClinicalEvent", method=RequestMethod.POST)
+    public @ResponseBody boolean newClinicalEvent(
             /*@RequestParam(value="user_id", required=true) int user_id,
             @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
-            @RequestParam(value="clinical_event", required=true) ClinicalEvent clinicalEvent,
-            @RequestParam(value="user_id", required=true) int user_id) {
+            @RequestBody/*(value="clinical_event", required=true) */ClinicalEvent clinicalEvent)
+            //@RequestParam(value="user_id", required=true) int user_id) 
+            {
         
-        clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
+        //clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
+        return true;
     }
     
     

@@ -32,7 +32,7 @@ public class UserController {
     
     
     @RequestMapping("/registration")
-    public @ResponseBody boolean registration(
+    public @ResponseBody User registration(
             @RequestParam(value="imei", required=true) String imei,
             @RequestParam(value="name", required=true) String name,
             @RequestParam(value="surname", required=true) String surname,
@@ -40,7 +40,11 @@ public class UserController {
             @RequestParam(value="email", required=true) String email,
             @RequestParam(value="role", required=true) int role){
         
-        return userJdbcDao.registration(imei, name, surname, password, email, role);
+        if (userJdbcDao.registration(imei, name, surname, password, email, role)){
+            return userJdbcDao.login(email, password);
+        } else {
+            return null;
+        }
     }
     
     @RequestMapping("/login")
