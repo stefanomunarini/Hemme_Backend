@@ -29,7 +29,6 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
         
         List<Map<String, Object>> rows;
-        ArrayList<ClinicalEvent> clinicalFolder;
         
         String sql = "SELECT * FROM clinicalfolder NATURAL JOIN clinicalevent WHERE user_id = ?";
 	try{

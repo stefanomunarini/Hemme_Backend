@@ -47,7 +47,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     @Override
     public boolean newClinicalEvent(ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        String query = "INSERT INTO clinicalevent (author,date,therapy,note) values (?, ?, ?, ?)";
+        String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
         try {
             this.jdbcTemplate.update(
                 query, 
