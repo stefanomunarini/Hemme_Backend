@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
@@ -42,13 +44,19 @@ public class DocumentController {
         return documentJdbcDao.getDocument(document_id);
     }
     
-    @RequestMapping("/newDocument")
+    @RequestMapping(value="/newDocument", method = {RequestMethod.GET,RequestMethod.POST})
     public @ResponseBody boolean newDocument(
-            @RequestParam(value="new_document", required=true) Document new_document,
-            @RequestParam(value="user_id", required=true) int user_id){
-        return documentJdbcDao.insertDocument(new_document,user_id);
+            @RequestParam(value="user_id", required=true) int user_id,
+            @RequestBody Document document){
+        return documentJdbcDao.insertDocument(user_id,document);
     }
  
+    
+    
+    
+    
+    
+    
     @RequestMapping("/editDocument")
     public @ResponseBody boolean editDocument(
             @RequestParam(value="document_edit", required=true) Document document_edit) {

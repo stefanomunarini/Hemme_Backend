@@ -59,7 +59,7 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(Document document, int user_id) {
+    public boolean insertDocument(int user_id,Document document) {
         
         KeyHolder holder = new GeneratedKeyHolder();
         int document_generated_key = 0;
