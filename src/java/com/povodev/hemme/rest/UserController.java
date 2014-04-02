@@ -32,6 +32,12 @@ public class UserController {
         return userJdbcDao.getUser(user_id);
     }
     
+    @RequestMapping("/getAuthor")
+    public @ResponseBody String getAuthor(
+            @RequestParam(value="user_id", required=true) int user_id){
+        return userJdbcDao.getAuthor(user_id);
+    }
+    
     
     @RequestMapping(value="/registration", method = RequestMethod.POST)
     public @ResponseBody User registration(

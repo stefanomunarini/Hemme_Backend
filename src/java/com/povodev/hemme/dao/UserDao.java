@@ -17,6 +17,7 @@ public interface UserDao {
     public User getUser(int user_id);
     public boolean registration(User user);
     public User login(String email, String password);
+    public String getAuthor(int user_id);
     
     
 }

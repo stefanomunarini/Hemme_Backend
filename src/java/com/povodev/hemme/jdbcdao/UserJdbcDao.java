@@ -30,7 +30,7 @@ public class UserJdbcDao implements UserDao{
     public User getUser(int user_id) {
         
         User user;
-        String sql = "SELECT * FROM user WHERE user_id = ?";
+        String sql = "SELECT * FROM user WHERE id = ?";
        
         try{
             user = (User) this.jdbcTemplate.queryForObject(
@@ -85,6 +85,12 @@ public class UserJdbcDao implements UserDao{
         
         return user;
         
+    }
+
+    @Override
+    public String getAuthor(int user_id) {
+        User user = getUser(user_id);
+        return user.getName() + " " + user.getSurname();
     }
 
     

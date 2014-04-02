@@ -56,16 +56,16 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
         final String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){
-            @Override
-            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
-                PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                preparedStatement.setInt(1,clinicalEvent.getAuthor()); 
-                preparedStatement.setString(2, clinicalEvent.getTherapy());
-                preparedStatement.setString(3, clinicalEvent.getNote());
-                
-                return preparedStatement; 
-            } 
-        }, keyHolder); 
+                @Override
+                public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
+                    PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    preparedStatement.setInt(1,clinicalEvent.getAuthor()); 
+                    preparedStatement.setString(2, clinicalEvent.getTherapy());
+                    preparedStatement.setString(3, clinicalEvent.getNote());
+
+                    return preparedStatement; 
+                }
+            }, keyHolder); 
             /*this.jdbcTemplate.update(
                 query, 
                 new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getTherapy(), clinicalEvent.getNote()},
