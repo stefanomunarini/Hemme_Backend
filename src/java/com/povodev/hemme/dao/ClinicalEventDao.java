@@ -34,5 +34,5 @@ public interface ClinicalEventDao {
      * Create and insert a new clinical event for a given user
      * @param clinicalEvent
      */
-    public void newClinicalEvent(ClinicalEvent clinicalEvent, int user_id);
+    public boolean newClinicalEvent(ClinicalEvent clinicalEvent, int user_id);
 }

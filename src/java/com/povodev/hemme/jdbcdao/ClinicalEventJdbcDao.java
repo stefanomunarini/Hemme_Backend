@@ -45,7 +45,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     }
 
     @Override
-    public void newClinicalEvent(ClinicalEvent clinicalEvent, int user_id) {
+    public boolean newClinicalEvent(ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String query = "INSERT INTO clinicalevent (author,date,therapy,note) values (?, ?, ?, ?)";
         try {
@@ -61,5 +61,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
         
         int clinicalEvent_id = (int) keyHolder.getKey();
         clinicalFolderJdbcDao.newClinicalFolder(user_id,clinicalEvent_id);
+        
+        return true;
     }
 }

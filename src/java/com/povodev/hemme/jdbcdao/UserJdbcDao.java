@@ -46,13 +46,15 @@ public class UserJdbcDao implements UserDao{
     }
 
     @Override
-    public boolean registration(String imei, String name, String surname, String password, String email, int role) {
+    public boolean registration(User user) {
+        
+        System.err.println("username   " + user.getName());
     
         String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
         try {
             this.jdbcTemplate.update(
                 query, 
-                new Object[] {imei, name, surname, password, email, role});
+                new Object[] {user.getImei(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getRole()});
         } catch (DataAccessException dae){
             System.err.println("***Dao::failed to CREATE NEW user, DataAccessException occurred, message follows.");
             System.err.println(dae.getMessage());
@@ -79,9 +81,7 @@ public class UserJdbcDao implements UserDao{
             throw dae;
         }
         
-        
         log.debug("Login di " + user.getEmail());
-        
         
         return user;
         

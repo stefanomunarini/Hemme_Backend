@@ -10,6 +10,7 @@ import com.povodev.hemme.bean.User;
 import com.povodev.hemme.jdbcdao.UserJdbcDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,9 +40,10 @@ public class UserController {
             @RequestParam(value="surname", required=true) String surname,
             @RequestParam(value="password", required=true) String password,
             @RequestParam(value="email", required=true) String email,
-            @RequestParam(value="role", required=true) int role*/ User user){
-        
-        if (userJdbcDao.registration(user.getImei(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getRole())){
+            @RequestParam(value="role", required=true) int role*/@RequestBody User user){
+                
+        System.err.println(user.getName() + "______________-");
+        if (userJdbcDao.registration(user)) {
             return userJdbcDao.login(user.getEmail(), user.getPassword());
         } else {
             return null;

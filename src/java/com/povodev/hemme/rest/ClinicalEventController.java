@@ -36,19 +36,16 @@ public class ClinicalEventController {
         return clinicalEventJdbcDao.getClinicalEvent(clinicalEvent_id);
     }
     
-    @RequestMapping(value="/newClinicalEvent", method = RequestMethod.POST)
-    public @ResponseBody ClinicalEvent newClinicalEvent(
-            /*@RequestParam(value="user_id", required=true) int user_id,
-            @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
-            /*(value="clinical_event", required=true) */ClinicalEvent clinicalEvent)
+    @RequestMapping(value="/newClinicalEvent", method = {RequestMethod.GET,RequestMethod.POST})
+    public @ResponseBody boolean newClinicalEvent(
+            @RequestParam(value="user_id", required=true) int user_id,
+            /*@RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
+            /*(value="clinical_event", required=true) */@RequestBody ClinicalEvent clinicalEvent)
             //@RequestParam(value="user_id", required=true) int user_id) 
             {
         
-                System.err.println("OK DENTRO");
-        ClinicalEvent ce = new ClinicalEvent();
-        ce.setTherapy("terapia");
-        //clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
-        return ce;
+
+        return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
     }
     
     
