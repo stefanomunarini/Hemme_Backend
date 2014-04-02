@@ -47,11 +47,12 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     @Override
     public boolean newClinicalEvent(ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        System.err.println(user_id+"     ce.id: "+clinicalEvent.getAuthor()+" "+ clinicalEvent.getTherapy() + " "+ clinicalEvent.getNote());
         String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
         try {
             this.jdbcTemplate.update(
                 query, 
-                new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getDate(), clinicalEvent.getTherapy(), clinicalEvent.getNote()},
+                new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getTherapy(), clinicalEvent.getNote()},
                 keyHolder);
         } catch (DataAccessException runtimeException){
             System.err.println("***Dao::fail to CREATE NEW clinicalevent, RuntimeException occurred, message follows.");

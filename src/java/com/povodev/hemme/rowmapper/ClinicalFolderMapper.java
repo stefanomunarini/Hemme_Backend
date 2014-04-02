@@ -8,6 +8,7 @@ package com.povodev.hemme.rowmapper;
 
 import com.povodev.hemme.bean.ClinicalEvent;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class ClinicalFolderMapper {
                 ClinicalEvent clinicalEvent = new ClinicalEvent();
                 clinicalEvent.setId((int) (row.get("id")));
                 clinicalEvent.setAuthor((int) (row.get("author")));
-                clinicalEvent.setDate((Date) (row.get("date")));
+                clinicalEvent.setDate((Timestamp) (row.get("date")));
                 clinicalEvent.setTherapy((String) (row.get("therapy")));
                 clinicalEvent.setNote((String) (row.get("note")));
                 clinicalFolder.add(clinicalEvent);

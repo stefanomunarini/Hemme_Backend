@@ -6,7 +6,8 @@
 
 package com.povodev.hemme.bean;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  *
@@ -16,7 +17,7 @@ public class ClinicalEvent {
     
     private int id;
     private int author;
-    private Date date;
+    private Timestamp date;
     private String therapy;
     private String note;
 
@@ -32,21 +33,6 @@ public class ClinicalEvent {
      */
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    /**
-     * @return the date
-     */
-    public Date getDate() {
-        return date;
-    }
-
-    /**
-     * @param date the date to set
-     */
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     /**
@@ -89,6 +75,20 @@ public class ClinicalEvent {
      */
     public void setAuthor(int author) {
         this.author = author;
+    }
+
+    /**
+     * @return the date
+     */
+    public Timestamp getDate() {
+        return date;
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
     
 }

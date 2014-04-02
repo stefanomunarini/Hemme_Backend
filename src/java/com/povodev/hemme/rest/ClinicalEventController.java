@@ -44,8 +44,7 @@ public class ClinicalEventController {
             //@RequestParam(value="user_id", required=true) int user_id) 
             {
         
-
-        return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
+        return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, 1);
     }
     
     
