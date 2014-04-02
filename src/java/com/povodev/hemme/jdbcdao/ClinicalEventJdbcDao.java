@@ -8,10 +8,15 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.dao.ClinicalEventDao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -45,22 +50,33 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     }
 
     @Override
-    public boolean newClinicalEvent(ClinicalEvent clinicalEvent, int user_id) {
+    public boolean newClinicalEvent(final ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         System.err.println(user_id+"     ce.id: "+clinicalEvent.getAuthor()+" "+ clinicalEvent.getTherapy() + " "+ clinicalEvent.getNote());
-        String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
+        final String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
         try {
-            this.jdbcTemplate.update(
+            jdbcTemplate.update(new PreparedStatementCreator(){
+            @Override
+            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
+                PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setInt(1,clinicalEvent.getAuthor()); 
+                preparedStatement.setString(2, clinicalEvent.getTherapy());
+                preparedStatement.setString(3, clinicalEvent.getNote());
+                
+                return preparedStatement; 
+            } 
+        }, keyHolder); 
+            /*this.jdbcTemplate.update(
                 query, 
                 new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getTherapy(), clinicalEvent.getNote()},
-                keyHolder);
+                keyHolder);*/
         } catch (DataAccessException runtimeException){
             System.err.println("***Dao::fail to CREATE NEW clinicalevent, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
         }
         
-        int clinicalEvent_id = (int) keyHolder.getKey();
+        int clinicalEvent_id = keyHolder.getKey().intValue();
         clinicalFolderJdbcDao.newClinicalFolder(user_id,clinicalEvent_id);
         
         return true;
