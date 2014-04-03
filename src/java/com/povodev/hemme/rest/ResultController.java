@@ -6,17 +6,15 @@
 
 package com.povodev.hemme.rest;
 
-import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.bean.Result;
-import com.povodev.hemme.jdbcdao.DocumentJdbcDao;
 import com.povodev.hemme.jdbcdao.ResultJdbcDao;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -33,15 +31,17 @@ public class ResultController {
     
     @RequestMapping("/getResult")
     public @ResponseBody Result getResult(
-        @RequestParam(value="result_id", required=true) int result_id) {
+            @RequestParam(value="result_id", required=true) int result_id) {
+        
         return resultJdbcDao.getResult(result_id);
     }
     
-    @RequestMapping("/insertResult")
+    @RequestMapping(value="/insertResult", method = {RequestMethod.GET,RequestMethod.POST})
     public @ResponseBody boolean insertResult(
-            @RequestParam(value="result", required=true) Result result,
+            @RequestBody Result result,
             @RequestParam(value="user_id", required=true) int user_id){
-            return resultJdbcDao.insertResult(result,user_id);
+        
+        return resultJdbcDao.insertResult(result,user_id);
     }
     
 }

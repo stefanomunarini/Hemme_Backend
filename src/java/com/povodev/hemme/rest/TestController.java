@@ -34,9 +34,10 @@ public class TestController {
     
     @RequestMapping("/newTest")
     public @ResponseBody void newTest(
-            @RequestParam(value="user_id", required=true) int user_id) {
-        TestJdbcDao test = new TestJdbcDao();
-        test.newTest(user_id);
+            @RequestParam(value="user_id", required=true) int user_id,
+            @RequestParam(value="result_id", required=true) int result_id) {
+        
+        testJdbcDao.newTest(user_id, result_id);
     }
     
 }

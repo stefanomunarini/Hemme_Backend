@@ -3,10 +3,15 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.Result;
 import com.povodev.hemme.dao.ResultDao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -14,6 +19,9 @@ public class ResultJdbcDao implements ResultDao{
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    private TestJdbcDao testJdbcDao;
     
     @Override
     public Result getResult(int result_id) {
@@ -34,20 +42,33 @@ public class ResultJdbcDao implements ResultDao{
     }
 
     @Override
-    public boolean insertResult(Result result,int user_id) {
+    public boolean insertResult(final Result result,int user_id) {
 
-        KeyHolder holder = new GeneratedKeyHolder();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         int result_generated_key;
   
-        this.jdbcTemplate.update(
-                "INSERT into RESULT (grade,time,date) values (?,?,?)", 
-                new Object[] {result.getGrade(),result.getTime(),result.getDate()},holder);
+        final String query = "INSERT into RESULT (grade,time,date) values (?,?,?)";
+        try {
+            jdbcTemplate.update(new PreparedStatementCreator(){
+                @Override
+                public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
+                    PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    preparedStatement.setString(1,result.getGrade()); 
+                    preparedStatement.setInt(2, result.getTime());
+                    preparedStatement.setTimestamp(3, result.getDate());
+                    return preparedStatement; 
+                }
+            }, keyHolder);
+        } catch (DataAccessException runtimeException){
+            System.err.println("***Dao::fail to CREATE NEW result, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }
         
-        result_generated_key = holder.getKey().intValue();
+        // the id of the just created clinical event
+        result_generated_key = keyHolder.getKey().intValue();
 
-        this.jdbcTemplate.update(
-            "INSERT into TEST (user_id,result_id) values (?, ?)", 
-            new Object[] {user_id,result_generated_key});
+        testJdbcDao.newTest(user_id, result_generated_key);
         
         return true;
     }

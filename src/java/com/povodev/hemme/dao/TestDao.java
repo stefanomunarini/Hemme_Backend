@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public interface TestDao {
     
-    public void newTest(int user_id);
+    public void newTest(int user_id, int result_id);
     public ArrayList<Result> getTest(int user_id);
 
 }

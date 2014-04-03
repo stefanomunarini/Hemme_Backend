@@ -27,9 +27,16 @@ public class TestJdbcDao implements TestDao{
     private JdbcTemplate jdbcTemplate;
     
     @Override
-    public void newTest(int user_id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-        //To change body of generated methods, choose Tools | Templates.
+    public void newTest(int user_id, int result_id) {
+        try{
+            this.jdbcTemplate.update(
+                "INSERT INTO test (user_id, result_id) values (?, ?)", 
+                new Object[] {user_id, result_id});
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::failed to CREATE NEW TEST, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }
     }
 
     @Override
