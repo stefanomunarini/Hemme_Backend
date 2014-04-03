@@ -39,7 +39,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
             throw dataAccessException;
         }
         
-        return ClinicalFolderMapper.getClinicalFolderMap(rows);    
+        return ClinicalFolderMapper.getClinicalFolderMap(rows);
     }
     
     @Override

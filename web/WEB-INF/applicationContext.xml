@@ -87,6 +87,12 @@
           class="com.povodev.hemme.jdbcdao.ResultJdbcDao" />
     
     <!--
+        TestJdbcDao bean
+    -->
+    <bean name="testJdbcDao"
+          class="com.povodev.hemme.jdbcdao.TestJdbcDao" />
+    
+    <!--
         TutorJdbcDao bean
     -->
     <bean name="tutorJdbcDao"

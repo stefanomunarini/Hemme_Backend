@@ -1,6 +1,7 @@
 package com.povodev.hemme.bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -11,7 +12,7 @@ public class Result {
     private int id;
     private String grade;
     private int time;
-    private Date date;
+    private Timestamp date;
 
     /**
      * @return the id
@@ -63,14 +64,14 @@ public class Result {
     /**
      * @return the date
      */
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
     /**
      * @param date the date to set
      */
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
