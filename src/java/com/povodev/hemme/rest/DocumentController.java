@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,12 +33,12 @@ import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequ
 
 
 @Controller
-public class DocumentController {
+public class DocumentController implements ApplicationContextAware{
     
     
     @Autowired
     private DocumentJdbcDao documentJdbcDao;
-
+    ApplicationContext applicationContext = null;
     
     static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
     
@@ -65,28 +68,25 @@ public class DocumentController {
     
     @RequestMapping(value="/uploadDocument", method=RequestMethod.POST)
     public @ResponseBody boolean documentUpload(
-            @RequestParam("file") MultipartFile file) throws IOException{
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("nota") String nota) throws IOException{
+        
+        String fileName = "";
         
         if(!file.isEmpty()){
             
             InputStream inputStream = null;  
             OutputStream outputStream = null;  
-  
-            String fileName = file.getOriginalFilename();  
-            System.err.println("original File Name = " + fileName);
-  
+            fileName = file.getOriginalFilename();  
             try {  
                 inputStream = file.getInputStream();
-                
-                File newFile = new File("C:/Users/smunarini.stage/Desktop/" + fileName);  
+                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
                 if (!newFile.exists()) {  
                     newFile.createNewFile();  
                 }  
-        
                 outputStream = new FileOutputStream(newFile);  
                 int read = 0;  
                 byte[] bytes = new byte[1024];  
-  
                 while ((read = inputStream.read(bytes)) != -1) {  
                     outputStream.write(bytes, 0, read);  
                 }
@@ -97,7 +97,9 @@ public class DocumentController {
             }      
             inputStream.close();
             outputStream.close();
-            return true;
+
+            return documentJdbcDao.insertDocument(fileName,nota);
+
         }else{
             return false;
         }
@@ -119,6 +121,11 @@ public class DocumentController {
     public @ResponseBody ArrayList<Document> getDiary(
             @RequestParam(value="user_id", required=true) int user_id) {
         return documentJdbcDao.getDiary(user_id);
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext ac) throws BeansException {
+        this.applicationContext = ac;
     }
     
     

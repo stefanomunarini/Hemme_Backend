@@ -73,11 +73,11 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(int user_id,final Document document) {
+    public boolean insertDocument(final String file,final String note) {
         
         KeyHolder holder = new GeneratedKeyHolder();
         
-        final String query = "insert into DOCUMENT (file) values (?)";
+        final String query = "insert into DOCUMENT (file,note) values (?,?)";
         
         int document_generated_key = 0;
         
@@ -86,16 +86,20 @@ public class DocumentJdbcDao implements DocumentDao {
             @Override
             public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                 PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                preparedStatement.setString(1,document.getFile()); 
+                preparedStatement.setString(1,file); 
+                preparedStatement.setString(2,note); 
                 return preparedStatement; 
             } 
         },holder);
             
             document_generated_key = holder .getKey().intValue();
             
+            // GESTIRE L'INSERIMENTO NELLA RELAZIONE TRA DOCUMENT E USER. IN QUESTO MOMENTO NON C'E' USER
+            /*
             this.jdbcTemplate.update(
                 "insert into DIARY (user_id,document_id) values (?, ?)", 
                 new Object[] {user_id,document_generated_key});
+            */
             
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao::fail to CREATE NEW DOCUMENT, RuntimeException occurred, message follows.");
