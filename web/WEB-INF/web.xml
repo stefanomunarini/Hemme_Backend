@@ -7,8 +7,6 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
-        
     <context-param>
         <param-name>log4jConfigLocation</param-name>
         <param-value>/WEB-INF/log4j-hello.xml</param-value>
@@ -28,10 +26,6 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>-->
-    <servlet-mapping>
-        <servlet-name>ProvaDocument</servlet-name>
-        <url-pattern>/ProvaDocument</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -49,10 +43,6 @@
             <param-value>/WEB-INF/rest-services-config.xml</param-value>
         </init-param>
         <load-on-startup>4</load-on-startup>
-    </servlet>
-    <servlet>
-        <servlet-name>ProvaDocument</servlet-name>
-        <servlet-class>com.povodev.hemme.configuration.ProvaDocument</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServiceRest</servlet-name>

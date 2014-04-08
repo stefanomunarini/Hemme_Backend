@@ -67,10 +67,7 @@ public class DocumentController {
     public @ResponseBody boolean documentUpload(
             @RequestParam("file") MultipartFile file) throws IOException{
         
-        System.err.println("ENTRATO NEL CONTROLLER");
-        
         if(!file.isEmpty()){
-            System.err.println("MULTIPART IS NOT EMPTY");
             
             InputStream inputStream = null;  
             OutputStream outputStream = null;  
@@ -79,10 +76,11 @@ public class DocumentController {
             System.err.println("original File Name = " + fileName);
   
             try {  
-                inputStream = file.getInputStream();  
-                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
+                inputStream = file.getInputStream();
+                
+                File newFile = new File("C:/Users/smunarini.stage/Desktop/" + fileName);  
                 if (!newFile.exists()) {  
-                 newFile.createNewFile();  
+                    newFile.createNewFile();  
                 }  
         
                 outputStream = new FileOutputStream(newFile);  
@@ -101,32 +99,9 @@ public class DocumentController {
             outputStream.close();
             return true;
         }else{
-            System.err.println("MULTIPART IS _____________ EMPTY");
             return false;
         }
-
-
-
-//        if (file != null && !file.isEmpty()) {
-//            try {
-//                byte[] bytes = file.getBytes();
-//                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
-//                stream.write(bytes);
-//                stream.close();
-//                return true;
-//                //return "You successfully uploaded " + name + " into " + name + "-uploaded !";
-//            } catch (Exception e) {
-//                //return "You failed to upload " + name + " => " + e.getMessage();
-//            }
-//        } else {
-//            //return "You failed to upload " + name + " because the file was empty.";
-//        }
-//        return false;
-    } 
-    
-    
-    
-    
+    }
     
     @RequestMapping("/editDocument")
     public @ResponseBody boolean editDocument(
