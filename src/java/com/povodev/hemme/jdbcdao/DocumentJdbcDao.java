@@ -4,9 +4,21 @@ package com.povodev.hemme.jdbcdao;
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.dao.DocumentDao;
 import com.povodev.hemme.rowmapper.DocumentMapper;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -15,6 +27,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.apache.commons.logging. Log;
 import org.apache.commons.logging. LogFactory;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public class DocumentJdbcDao implements DocumentDao {
@@ -59,17 +73,25 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(int user_id,Document document) {
+    public boolean insertDocument(int user_id,final Document document) {
         
         KeyHolder holder = new GeneratedKeyHolder();
+        
+        final String query = "insert into DOCUMENT (file) values (?)";
+        
         int document_generated_key = 0;
         
         try{
-            this.jdbcTemplate.update(
-                "insert into DOCUMENT (date,file) values (?, ?)", 
-                new Object[] {document.getDate(),document.getFile()}, holder);
+            this.jdbcTemplate.update(new PreparedStatementCreator(){
+            @Override
+            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
+                PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setString(1,document.getFile()); 
+                return preparedStatement; 
+            } 
+        },holder);
             
-            document_generated_key = holder.getKey().intValue();
+            document_generated_key = holder .getKey().intValue();
             
             this.jdbcTemplate.update(
                 "insert into DIARY (user_id,document_id) values (?, ?)", 
@@ -83,6 +105,40 @@ public class DocumentJdbcDao implements DocumentDao {
         return true;
     }
 
+    
+    
+    @Override
+    public boolean uploadDocument(File file) {
+
+        System.err.println("UPLOAD DOCUMENT BEGIN");
+        
+        
+        String fileName = file.getName();
+        FileOutputStream fOS = null;
+            
+        if (file!=null) {
+            File fOUT = new File("/",fileName);
+
+            try (FileInputStream fIS = new FileInputStream(file)) {
+                fOS = new FileOutputStream(fOUT);
+                while (fIS.available()>0)
+                    fOS.write(fIS.read());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(DocumentJdbcDao.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(DocumentJdbcDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                fOS.close();
+            } catch (IOException ex) {
+                Logger.getLogger(DocumentJdbcDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return true;
+    }
+    
+    
+    
     /**
      * Edit input document
      * @param document 

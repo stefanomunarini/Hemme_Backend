@@ -8,6 +8,12 @@ package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.jdbcdao.DocumentJdbcDao;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 
 
@@ -26,6 +34,7 @@ public class DocumentController {
     
     @Autowired
     private DocumentJdbcDao documentJdbcDao;
+
     
     static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
     
@@ -44,14 +53,75 @@ public class DocumentController {
         return documentJdbcDao.getDocument(document_id);
     }
     
-    @RequestMapping(value="/newDocument", method = {RequestMethod.GET,RequestMethod.POST})
-    public @ResponseBody boolean newDocument(
-            @RequestParam(value="user_id", required=true) int user_id,
-            @RequestBody Document document){
-        return documentJdbcDao.insertDocument(user_id,document);
-    }
+//    @RequestMapping(value="/newDocument", method = {RequestMethod.GET,RequestMethod.POST})
+//    public @ResponseBody boolean newDocument(
+//            @RequestParam(value="user_id", required=true) int user_id,
+//            @RequestBody Document document){
+//        return documentJdbcDao.insertDocument(user_id,document);
+//    }
  
     
+    
+    @RequestMapping(value="/uploadDocument", method=RequestMethod.POST)
+    public @ResponseBody boolean documentUpload(
+            @RequestParam("file") MultipartFile file) throws IOException{
+        
+        System.err.println("ENTRATO NEL CONTROLLER");
+        
+        if(!file.isEmpty()){
+            System.err.println("MULTIPART IS NOT EMPTY");
+            
+            InputStream inputStream = null;  
+            OutputStream outputStream = null;  
+  
+            String fileName = file.getOriginalFilename();  
+            System.err.println("original File Name = " + fileName);
+  
+            try {  
+                inputStream = file.getInputStream();  
+                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
+                if (!newFile.exists()) {  
+                 newFile.createNewFile();  
+                }  
+        
+                outputStream = new FileOutputStream(newFile);  
+                int read = 0;  
+                byte[] bytes = new byte[1024];  
+  
+                while ((read = inputStream.read(bytes)) != -1) {  
+                    outputStream.write(bytes, 0, read);  
+                }
+                
+            } catch (IOException e) {  
+                // TODO Auto-generated catch block  
+                e.printStackTrace();  
+            }      
+            inputStream.close();
+            outputStream.close();
+            return true;
+        }else{
+            System.err.println("MULTIPART IS _____________ EMPTY");
+            return false;
+        }
+
+
+
+//        if (file != null && !file.isEmpty()) {
+//            try {
+//                byte[] bytes = file.getBytes();
+//                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(name + "-uploaded")));
+//                stream.write(bytes);
+//                stream.close();
+//                return true;
+//                //return "You successfully uploaded " + name + " into " + name + "-uploaded !";
+//            } catch (Exception e) {
+//                //return "You failed to upload " + name + " => " + e.getMessage();
+//            }
+//        } else {
+//            //return "You failed to upload " + name + " because the file was empty.";
+//        }
+//        return false;
+    } 
     
     
     

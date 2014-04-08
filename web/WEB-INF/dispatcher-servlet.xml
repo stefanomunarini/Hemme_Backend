@@ -20,8 +20,10 @@
     -->
     <context:component-scan base-package="com.povodev.hemme.rest" />
     <context:component-scan base-package="com.povodev.hemme.jdbcdao" />
-    
-    <!--
+
+
+
+<!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
     define an explicit mapping for it.
@@ -73,6 +75,9 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
+
+    
+        
 
     <!--
     The index controller.
