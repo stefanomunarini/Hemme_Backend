@@ -8,38 +8,35 @@ package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.jdbcdao.DocumentJdbcDao;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 
 
 @Controller
-public class DocumentController implements ApplicationContextAware{
+public class DocumentController{
     
     
     @Autowired
     private DocumentJdbcDao documentJdbcDao;
-    ApplicationContext applicationContext = null;
     
+    @Autowired
+    ServletContext sc;
+
+    @Autowired
+    ServletRequest sr;
+
     static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
     
     @RequestMapping("/getDocument")
@@ -56,23 +53,20 @@ public class DocumentController implements ApplicationContextAware{
         
         return documentJdbcDao.getDocument(document_id);
     }
-    
-//    @RequestMapping(value="/newDocument", method = {RequestMethod.GET,RequestMethod.POST})
-//    public @ResponseBody boolean newDocument(
-//            @RequestParam(value="user_id", required=true) int user_id,
-//            @RequestBody Document document){
-//        return documentJdbcDao.insertDocument(user_id,document);
-//    }
- 
-    
+
     
     @RequestMapping(value="/uploadDocument", method=RequestMethod.POST)
     public @ResponseBody boolean documentUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("idu") int user_id,
             @RequestParam("nota") String nota) throws IOException{
-        
-        return documentJdbcDao.insertDocument(file,nota,user_id);
+
+        String dirName = sr.getServletContext().getRealPath("Resources/");
+        File file1 = new File(dirName);
+        if (!file1.exists()){
+            file1.mkdir();
+        }
+        return documentJdbcDao.insertDocument(file,nota,user_id,dirName);
         
     }
     
@@ -94,13 +88,5 @@ public class DocumentController implements ApplicationContextAware{
         return documentJdbcDao.getDiary(user_id);
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext ac) throws BeansException {
-        this.applicationContext = ac;
-    }
-    
-    
-    
-    
     
 }

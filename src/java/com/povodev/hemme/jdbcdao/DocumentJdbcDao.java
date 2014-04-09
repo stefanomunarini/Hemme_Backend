@@ -75,7 +75,7 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(final MultipartFile file,final String note, final int user_id) {
+    public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName) {
         
         String fileName = "";
         KeyHolder holder = new GeneratedKeyHolder();
@@ -90,7 +90,8 @@ public class DocumentJdbcDao implements DocumentDao {
             fileName = file.getOriginalFilename(); 
             try {  
                 inputStream = file.getInputStream();
-                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
+                File newFile = new File(dirName + "/" + fileName);  
+//                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
                 if (!newFile.exists()) {  
                     newFile.createNewFile();  
                 }  
