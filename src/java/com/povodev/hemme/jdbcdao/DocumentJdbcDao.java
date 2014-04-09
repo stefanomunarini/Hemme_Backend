@@ -69,7 +69,7 @@ public class DocumentJdbcDao implements DocumentDao {
     
     
     /**
-     * Insert new document
+     * Insert new document in
      * @param document 
      * @param user_id 
      * @return  
