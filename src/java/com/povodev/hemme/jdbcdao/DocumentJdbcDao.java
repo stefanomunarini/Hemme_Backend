@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -73,33 +75,60 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(final String file,final String note) {
+    public boolean insertDocument(final MultipartFile file,final String note, final int user_id) {
         
+        String fileName = "";
         KeyHolder holder = new GeneratedKeyHolder();
-        
         final String query = "insert into DOCUMENT (file,note) values (?,?)";
-        
         int document_generated_key = 0;
+
         
+        //    Read/Write uploaded file
+        if(!file.isEmpty()){
+            InputStream inputStream = null;  
+            OutputStream outputStream = null;  
+            fileName = file.getOriginalFilename(); 
+            try {  
+                inputStream = file.getInputStream();
+                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
+                if (!newFile.exists()) {  
+                    newFile.createNewFile();  
+                }  
+                outputStream = new FileOutputStream(newFile);  
+                int read = 0;  
+                byte[] bytes = new byte[1024];  
+                while ((read = inputStream.read(bytes)) != -1) {  
+                    outputStream.write(bytes, 0, read);  
+                }
+                inputStream.close();
+                outputStream.close();
+            } catch (IOException e) {  
+                // TODO Auto-generated catch block  
+                e.printStackTrace();  
+            }      
+        }else{
+            return false;
+        }
+        
+        
+        // Insert into document table
         try{
             this.jdbcTemplate.update(new PreparedStatementCreator(){
             @Override
             public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                 PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                preparedStatement.setString(1,file); 
+                preparedStatement.setString(1,file.getOriginalFilename()); 
                 preparedStatement.setString(2,note); 
                 return preparedStatement; 
             } 
         },holder);
             
-            document_generated_key = holder .getKey().intValue();
-            
-            // GESTIRE L'INSERIMENTO NELLA RELAZIONE TRA DOCUMENT E USER. IN QUESTO MOMENTO NON C'E' USER
-            /*
+        document_generated_key = holder .getKey().intValue();
+    
+        // Insert into diary table
             this.jdbcTemplate.update(
                 "insert into DIARY (user_id,document_id) values (?, ?)", 
                 new Object[] {user_id,document_generated_key});
-            */
             
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao::fail to CREATE NEW DOCUMENT, RuntimeException occurred, message follows.");
@@ -201,7 +230,7 @@ public class DocumentJdbcDao implements DocumentDao {
             System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
-        }    
+        }        
     }
 
     

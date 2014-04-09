@@ -69,40 +69,11 @@ public class DocumentController implements ApplicationContextAware{
     @RequestMapping(value="/uploadDocument", method=RequestMethod.POST)
     public @ResponseBody boolean documentUpload(
             @RequestParam("file") MultipartFile file,
+            @RequestParam("idu") int user_id,
             @RequestParam("nota") String nota) throws IOException{
         
-        String fileName = "";
+        return documentJdbcDao.insertDocument(file,nota,user_id);
         
-        if(!file.isEmpty()){
-            
-            InputStream inputStream = null;  
-            OutputStream outputStream = null;  
-            fileName = file.getOriginalFilename();  
-            try {  
-                inputStream = file.getInputStream();
-                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
-                if (!newFile.exists()) {  
-                    newFile.createNewFile();  
-                }  
-                outputStream = new FileOutputStream(newFile);  
-                int read = 0;  
-                byte[] bytes = new byte[1024];  
-                while ((read = inputStream.read(bytes)) != -1) {  
-                    outputStream.write(bytes, 0, read);  
-                }
-                
-            } catch (IOException e) {  
-                // TODO Auto-generated catch block  
-                e.printStackTrace();  
-            }      
-            inputStream.close();
-            outputStream.close();
-
-            return documentJdbcDao.insertDocument(fileName,nota);
-
-        }else{
-            return false;
-        }
     }
     
     @RequestMapping("/editDocument")
