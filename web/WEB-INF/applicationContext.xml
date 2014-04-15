@@ -69,6 +69,12 @@
     -->
     <bean name="documentJdbcDao"
           class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />
+
+    <!--
+        DiaryJdbcDao bean
+    -->
+    <bean name="diaryJdbcDao"
+          class="com.povodev.hemme.jdbcdao.DiaryJdbcDao" />
     
     <!--
         DoctorJdbcDao bean
