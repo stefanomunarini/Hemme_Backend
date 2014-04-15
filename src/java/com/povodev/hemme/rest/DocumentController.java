@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,6 +86,8 @@ public class DocumentController{
     @RequestMapping("/getDiary")
     public @ResponseBody ArrayList<Document> getDiary(
             @RequestParam(value="user_id", required=true) int user_id) {
+        System.err.println("ENTRATO NEL CONTROLLO");
+
         return documentJdbcDao.getDiary(user_id);
     }
 

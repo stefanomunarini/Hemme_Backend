@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -37,6 +38,10 @@ public class DocumentJdbcDao implements DocumentDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    ServletRequest sr;
+    
     
     //static Logger log = Logger.getLogger(DocumentJdbcDao.class.getName());
     static Log log = LogFactory.getLog(DocumentJdbcDao.class.getName());
@@ -223,15 +228,20 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
 
+        
+        System.err.println("ENTRATO NEL JDBC DAO");
+        String dirName = sr.getServletContext().getRealPath("Resources/");
+        System.err.println("CERCO IL FILE NELLA PATH = " + dirName);
+        
         String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);
-            return DocumentMapper.getDiaryMap(rows);
+            return DocumentMapper.getDiaryMap(rows,dirName);
         }catch (DataAccessException runtimeException){
             System.err.println("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
-        }        
+        }
     }
 
     

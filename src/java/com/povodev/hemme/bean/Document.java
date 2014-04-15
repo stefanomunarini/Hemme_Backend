@@ -1,5 +1,6 @@
 package com.povodev.hemme.bean;
 
+import java.io.File;
 import java.sql.Date;
 
 /**
@@ -11,6 +12,7 @@ public class Document {
     private int id;
     private Date date;
     private String file;
+    private File uploaded;
 
     /**
      * @return the id
@@ -52,5 +54,19 @@ public class Document {
      */
     public void setFile(String file) {
         this.file = file;
+    }
+
+    /**
+     * @return the uploaded
+     */
+    public File getUploaded() {
+        return uploaded;
+    }
+
+    /**
+     * @param uploaded the uploaded to set
+     */
+    public void setUploaded(File uploaded) {
+        this.uploaded = uploaded;
     }
 }
