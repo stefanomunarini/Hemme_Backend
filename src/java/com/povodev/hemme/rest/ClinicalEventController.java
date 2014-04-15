@@ -29,8 +29,6 @@ public class ClinicalEventController {
     
     @RequestMapping("/getClinicalEvent")
     public @ResponseBody ClinicalEvent getClinicalEvent(
-            /*@RequestParam(value="user_id", required=true) int user_id,
-            @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
             @RequestParam(value="clinicalevent_id", required=true) int clinicalEvent_id) {
         
         return clinicalEventJdbcDao.getClinicalEvent(clinicalEvent_id);
@@ -39,9 +37,7 @@ public class ClinicalEventController {
     @RequestMapping(value="/newClinicalEvent", method = {RequestMethod.GET,RequestMethod.POST})
     public @ResponseBody boolean newClinicalEvent(
             @RequestParam(value="user_id", required=true) int user_id,
-            /*@RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id*/
-            /*(value="clinical_event", required=true) */@RequestBody ClinicalEvent clinicalEvent)
-            //@RequestParam(value="user_id", required=true) int user_id) 
+            @RequestBody ClinicalEvent clinicalEvent)
             {
         
         return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, 1);
