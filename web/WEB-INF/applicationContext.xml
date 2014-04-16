@@ -19,6 +19,14 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.povodev.hemme.jdbcdao"/>
 
+    
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<property name="maxUploadSize" value="5000000" />
+    </bean>
+
+
+
     <!--
         JdbcTemplate bean
     -->
@@ -63,6 +71,12 @@
     -->
     <bean name="documentJdbcDao"
           class="com.povodev.hemme.jdbcdao.DocumentJdbcDao" />
+
+    <!--
+        DiaryJdbcDao bean
+    -->
+    <bean name="diaryJdbcDao"
+          class="com.povodev.hemme.jdbcdao.DiaryJdbcDao" />
     
     <!--
         DoctorJdbcDao bean
