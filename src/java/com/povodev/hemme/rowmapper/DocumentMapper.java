@@ -7,6 +7,7 @@
 package com.povodev.hemme.rowmapper;
 
 import com.povodev.hemme.bean.Document;
+import java.io.File;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.Map;
  */
 public class DocumentMapper {
     
-    public static ArrayList<Document> getDiaryMap(List<Map<String, Object>> rows){
+    public static ArrayList<Document> getDiaryMap(List<Map<String, Object>> rows,String dirName){
         ArrayList<Document> diario = new ArrayList();
 
         for (Map row : rows) {
@@ -28,6 +29,9 @@ public class DocumentMapper {
             Timestamp time = (Timestamp) row.get("date");
             document.setDate( (Date) toDate(time));
             document.setFile((String)row.get("file"));
+            File f = new File(dirName +"/"+ document.getFile());
+            System.err.println("nome file " + f.getName() + "______" + f.exists());
+            document.setUploaded(f);
             diario.add(document);
         }              
         return diario;

@@ -8,25 +8,36 @@ package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.jdbcdao.DocumentJdbcDao;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 
 
 @Controller
-public class DocumentController {
+public class DocumentController{
     
     
     @Autowired
     private DocumentJdbcDao documentJdbcDao;
     
+    @Autowired
+    ServletContext sc;
+
+    @Autowired
+    ServletRequest sr;
+
     static org.apache.log4j.Logger log = Logger.getLogger(DocumentController.class);
     
     @RequestMapping("/getDocument")
@@ -43,19 +54,22 @@ public class DocumentController {
         
         return documentJdbcDao.getDocument(document_id);
     }
+
     
-    @RequestMapping(value="/newDocument", method = {RequestMethod.GET,RequestMethod.POST})
-    public @ResponseBody boolean newDocument(
-            @RequestParam(value="user_id", required=true) int user_id,
-            @RequestBody Document document){
-        return documentJdbcDao.insertDocument(user_id,document);
+    @RequestMapping(value="/uploadDocument", method=RequestMethod.POST)
+    public @ResponseBody boolean documentUpload(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("idu") int user_id,
+            @RequestParam("nota") String nota) throws IOException{
+
+        String dirName = sr.getServletContext().getRealPath("Resources/");
+        File file1 = new File(dirName);
+        if (!file1.exists()){
+            file1.mkdir();
+        }
+        return documentJdbcDao.insertDocument(file,nota,user_id,dirName);
+        
     }
- 
-    
-    
-    
-    
-    
     
     @RequestMapping("/editDocument")
     public @ResponseBody boolean editDocument(
@@ -72,11 +86,10 @@ public class DocumentController {
     @RequestMapping("/getDiary")
     public @ResponseBody ArrayList<Document> getDiary(
             @RequestParam(value="user_id", required=true) int user_id) {
+        System.err.println("ENTRATO NEL CONTROLLO");
+
         return documentJdbcDao.getDiary(user_id);
     }
-    
-    
-    
-    
+
     
 }

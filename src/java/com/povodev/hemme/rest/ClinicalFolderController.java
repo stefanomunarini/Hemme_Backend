@@ -7,7 +7,6 @@
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.ClinicalEvent;
-import com.povodev.hemme.bean.ClinicalFolder;
 import com.povodev.hemme.jdbcdao.ClinicalFolderJdbcDao;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
