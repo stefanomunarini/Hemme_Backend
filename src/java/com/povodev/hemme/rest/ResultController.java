@@ -40,7 +40,7 @@ public class ResultController {
     public @ResponseBody boolean insertResult(
             @RequestBody Result result,
             @RequestParam(value="user_id", required=true) int user_id){
-        
+        System.err.println("_____MIAO  sono entreato   " + resultJdbcDao.insertResult(result,user_id));
         return resultJdbcDao.insertResult(result,user_id);
     }
     

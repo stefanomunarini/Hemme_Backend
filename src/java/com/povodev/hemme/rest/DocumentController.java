@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,6 +59,7 @@ public class DocumentController{
     
     @RequestMapping(value="/uploadDocument", method=RequestMethod.POST)
     public @ResponseBody boolean documentUpload(
+            @RequestHeader(value="salt") String salt,
             @RequestParam("file") MultipartFile file,
             @RequestParam("idu") int user_id,
             @RequestParam("nota") String nota) throws IOException{
@@ -67,8 +69,11 @@ public class DocumentController{
         if (!file1.exists()){
             file1.mkdir();
         }
-        return documentJdbcDao.insertDocument(file,nota,user_id,dirName);
         
+        
+        System.err.println("ENTRATO NEL CONTROLLER UPLLOOAD DOCUMENT");
+        return documentJdbcDao.insertDocument(file,nota,user_id,dirName,salt);        
+
     }
     
     @RequestMapping("/editDocument")
@@ -86,7 +91,9 @@ public class DocumentController{
     @RequestMapping("/getDiary")
     public @ResponseBody ArrayList<Document> getDiary(
             @RequestParam(value="user_id", required=true) int user_id) {
-        System.err.println("ENTRATO NEL CONTROLLO");
+
+        
+        System.err.println("ENTRATO NEL CONTROLLER DOCUMENT");
 
         return documentJdbcDao.getDiary(user_id);
     }

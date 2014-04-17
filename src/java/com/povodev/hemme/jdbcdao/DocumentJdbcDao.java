@@ -4,6 +4,7 @@ package com.povodev.hemme.jdbcdao;
 import com.povodev.hemme.bean.Document;
 import com.povodev.hemme.dao.DocumentDao;
 import com.povodev.hemme.rowmapper.DocumentMapper;
+import com.povodev.hemme.security.Encoding_Md5;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -80,7 +82,15 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName) {
+    public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName,String salt) {
+        
+        Encoding_Md5 en = new Encoding_Md5(this.jdbcTemplate);
+        try {
+            System.err.println("HASH TABLE IS _________++++++++++++++  " + en.authHash("ABC"));
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(DocumentJdbcDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         String fileName = "";
         KeyHolder holder = new GeneratedKeyHolder();
