@@ -24,6 +24,8 @@ public class UserJdbcDao implements UserDao{
     private JdbcTemplate jdbcTemplate;
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
+    
+    
         
         
     @Override
@@ -91,6 +93,23 @@ public class UserJdbcDao implements UserDao{
     public String getAuthor(int user_id) {
         User user = getUser(user_id);
         return user.getName() + " " + user.getSurname();
+    }
+
+    @Override
+    public String passwordRecovery(String email) {
+        
+        String password;
+        String sql = "SELECT password FROM user WHERE email = '" + email + "'";
+       
+        try{
+            password = this.jdbcTemplate.queryForObject(
+                    sql,
+                    String.class);
+        } catch (DataAccessException dae){
+            throw dae;
+        }
+        
+        return password;
     }
 
     

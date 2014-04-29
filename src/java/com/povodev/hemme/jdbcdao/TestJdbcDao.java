@@ -43,7 +43,7 @@ public class TestJdbcDao implements TestDao{
     public ArrayList<Result> getTest(int user_id) {
         List<Map<String, Object>> rows;
         
-        String sql = "SELECT * FROM test NATURAL JOIN result WHERE user_id = ?";
+        String sql = "SELECT * FROM test NATURAL JOIN result WHERE user_id = ? ORDER BY date DESC";
 	try{
             rows = this.jdbcTemplate.queryForList(sql, user_id);
         }catch (DataAccessException dataAccessException){

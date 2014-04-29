@@ -46,7 +46,7 @@ public class ResultJdbcDao implements ResultDao{
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int result_generated_key;
-  
+          
         final String query = "INSERT into RESULT (grade,time,date) values (?,?,?)";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){

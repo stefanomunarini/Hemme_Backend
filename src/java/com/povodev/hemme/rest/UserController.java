@@ -41,12 +41,7 @@ public class UserController {
     
     @RequestMapping(value="/registration", method = RequestMethod.POST)
     public @ResponseBody User registration(
-            /*@RequestParam(value="imei", required=true) String imei,
-            @RequestParam(value="name", required=true) String name,
-            @RequestParam(value="surname", required=true) String surname,
-            @RequestParam(value="password", required=true) String password,
-            @RequestParam(value="email", required=true) String email,
-            @RequestParam(value="role", required=true) int role*/@RequestBody User user){
+            @RequestBody User user){
                 
         System.err.println(user.getName() + "______________-");
         if (userJdbcDao.registration(user)) {
@@ -62,5 +57,12 @@ public class UserController {
             @RequestParam(value="password", required=true) String password){
 
         return userJdbcDao.login(email, password);
+    }
+    
+    @RequestMapping("/passwordRecovery")
+    public @ResponseBody String passwordRecovery(
+            @RequestParam(value="email", required=true) String email){
+
+        return userJdbcDao.passwordRecovery(email);
     }
 }

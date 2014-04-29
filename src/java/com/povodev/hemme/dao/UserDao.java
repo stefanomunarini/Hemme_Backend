@@ -18,6 +18,7 @@ public interface UserDao {
     public boolean registration(User user);
     public User login(String email, String password);
     public String getAuthor(int user_id);
+    public String passwordRecovery (String email);
     
     
 }
