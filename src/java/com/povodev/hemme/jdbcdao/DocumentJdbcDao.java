@@ -85,11 +85,26 @@ public class DocumentJdbcDao implements DocumentDao {
     public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName,String salt) {
         
         Encoding_Md5 en = new Encoding_Md5(this.jdbcTemplate);
+        
+        //controllo che la stringa passata come HAS(salt) corrispona alla HAS("povodevforhemmeABC")
+        if(salt.equals("21bd8aee973b8457476af0bac8b65b2a")){
+            //System.err.println("lo header funziona correttamente e corrisponde a MD5 di 'ABC'");
+            salt = "ABC";
+        }else{
+            System.err.println("sto cazzo che funziona. Has non corretta");
+        }
+        
+        
+        //stampa di controllo
+        /*
         try {
-            System.err.println("HASH TABLE IS _________++++++++++++++  " + en.authHash("ABC"));
+            System.err.println("HASH TABLE IS _________++++++++++++++  " + en.authHash(salt));
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(DocumentJdbcDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
+
+        
         
         
         String fileName = "";
@@ -241,7 +256,7 @@ public class DocumentJdbcDao implements DocumentDao {
         
         System.err.println("ENTRATO NEL JDBC DAO");
         String dirName = sr.getServletContext().getRealPath("Resources/");
-        System.err.println("CERCO IL FILE NELLA PATH = " + dirName);
+        //System.err.println("CERCO IL FILE NELLA PATH = " + dirName);
         
         String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
 	try{
