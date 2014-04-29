@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Document;
@@ -23,8 +17,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
-
-
 
 @Controller
 public class DocumentController{
@@ -69,7 +61,6 @@ public class DocumentController{
         if (!file1.exists()){
             file1.mkdir();
         }
-        
         
         System.err.println("ENTRATO NEL CONTROLLER UPLLOOAD DOCUMENT");
         return documentJdbcDao.insertDocument(file,nota,user_id,dirName,salt);        
