@@ -165,8 +165,7 @@ public class DocumentJdbcDao implements DocumentDao {
     public boolean uploadDocument(File file) {
 
         System.err.println("UPLOAD DOCUMENT BEGIN");
-        
-        
+       
         String fileName = file.getName();
         FileOutputStream fOS = null;
             
@@ -243,8 +242,6 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
 
-        
-        System.err.println("ENTRATO NEL JDBC DAO");
         String dirName = sr.getServletContext().getRealPath("Resources/");
         //System.err.println("CERCO IL FILE NELLA PATH = " + dirName);
         
