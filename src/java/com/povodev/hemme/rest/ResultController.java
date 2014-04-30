@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  *
  * @author gbonadiman.stage
  */
-
-
-
 @Controller
 public class ResultController {
      

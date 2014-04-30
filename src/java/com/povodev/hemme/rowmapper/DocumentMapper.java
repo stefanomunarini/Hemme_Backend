@@ -30,7 +30,7 @@ public class DocumentMapper {
             document.setDate( (Date) toDate(time));
             document.setFile((String)row.get("file"));
             File f = new File(dirName +"/"+ document.getFile());
-            System.err.println("nome file " + f.getName() + "______" + f.exists());
+//            System.err.println("nome file " + f.getName() + "______" + f.exists());
             document.setUploaded(f);
             diario.add(document);
         }              

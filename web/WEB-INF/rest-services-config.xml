@@ -26,6 +26,7 @@
         @Controller, @Service etc.
     -->
     <context:component-scan base-package="com.povodev.hemme.rest" />
+    <context:component-scan base-package="com.povodev.hemme.security" />
 
  	 	
     <!--To enable @RequestMapping process on type level and method level-->

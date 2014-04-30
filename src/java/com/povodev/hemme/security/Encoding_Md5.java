@@ -8,6 +8,7 @@ package com.povodev.hemme.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -17,11 +18,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class Encoding_Md5 {
     
     JdbcTemplate jdbcTemplate;
-    
-    public Encoding_Md5(JdbcTemplate jdbcTemplate){
+
+    Encoding_Md5(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
-    
     public boolean authHash(String salt) throws NoSuchAlgorithmException{
      
         String password = "povodevforhemme"+salt;
@@ -64,8 +64,10 @@ public class Encoding_Md5 {
         String sql = "SELECT COUNT(*) FROM hash_table WHERE hash = '" + hex + "' ";
 
         int res = 0;
+    
+        System.err.println("SDC prima di jdbcdao");
         res = this.jdbcTemplate.queryForObject(sql, Integer.class);
-        
+        System.err.println("SDC dopo di jdbcdao");        
  
         //SDC
         //        System.err.println(this.jdbcTemplate.queryForObject(sql, Integer.class));
