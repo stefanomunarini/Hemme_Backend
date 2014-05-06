@@ -13,7 +13,8 @@ public class Document {
     private Date date;
     private String file;
     private File uploaded;
-
+    private String note;
+    
     /**
      * @return the id
      */
@@ -68,5 +69,19 @@ public class Document {
      */
     public void setUploaded(File uploaded) {
         this.uploaded = uploaded;
+    }
+
+    /**
+     * @return the note
+     */
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(String note) {
+        this.note = note;
     }
 }

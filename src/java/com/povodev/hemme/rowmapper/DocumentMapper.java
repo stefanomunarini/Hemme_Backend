@@ -29,6 +29,7 @@ public class DocumentMapper {
             Timestamp time = (Timestamp) row.get("date");
             document.setDate( (Date) toDate(time));
             document.setFile((String)row.get("file"));
+            document.setNote((String)row.get("note"));
             File f = new File(dirName +"/"+ document.getFile());
 //            System.err.println("nome file " + f.getName() + "______" + f.exists());
             document.setUploaded(f);
