@@ -32,6 +32,7 @@ public class InterceptorControl implements HandlerInterceptor  {
             if(key.equals("salt")){
                 salt = value;
             }
+            System.err.println(key + "---" + value);
 	}
         
         //controllo che la stringa passata come HAS(salt) corrispona alla HAS("povodevforhemmeABC")
