@@ -48,6 +48,7 @@ public class UserController {
 
         System.err.println("ENTRATO NEl CONTROLLER DI REGISTRATION" + user);
         
+        
         if (userJdbcDao.registration(user)) {
             return userJdbcDao.login(user.getEmail(), user.getPassword());
         } else {
