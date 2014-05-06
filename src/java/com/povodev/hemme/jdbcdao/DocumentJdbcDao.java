@@ -84,24 +84,30 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName) {
         
+        System.err.println("entrato nel insert document");
+        
+        int tmp = countDocument(this.jdbcTemplate);
+        
         String fileName = "";
         KeyHolder holder = new GeneratedKeyHolder();
         final String query = "insert into DOCUMENT (file,note) values (?,?)";
         int document_generated_key = 0;
-
         
         //    Read/Write uploaded file
         if(file != null && !file.isEmpty()){
             InputStream inputStream = null;  
             OutputStream outputStream = null;  
-            fileName = file.getOriginalFilename(); 
+            fileName = tmp + file.getOriginalFilename(); 
             try {  
                 inputStream = file.getInputStream();
-                File newFile = new File(dirName + "/" + fileName);  
-//                File newFile = new File("C:/Users/gbonadiman.stage/Desktop/" + fileName);  
-                if (!newFile.exists()) {  
-                    newFile.createNewFile();  
-                }  
+                
+                boolean success = (new File(dirName+ "/" + user_id)).mkdir();
+                System.err.println("success - " + success);
+                File newFile = new File(dirName + "/" + user_id + "/" + fileName);  
+                if(!newFile.exists()){
+                    newFile.createNewFile();                      
+                }
+   
                 outputStream = new FileOutputStream(newFile);  
                 int read = 0;  
                 byte[] bytes = new byte[1024];  
@@ -122,11 +128,16 @@ public class DocumentJdbcDao implements DocumentDao {
             @Override
             public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                 PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+                
                 if(file!=null){
                     preparedStatement.setString(1,file.getOriginalFilename()); 
                 }else{
                     preparedStatement.setString(1,""); 
                 }
+                
+                
+                
                 preparedStatement.setString(2,note); 
                 return preparedStatement; 
             } 
@@ -147,6 +158,18 @@ public class DocumentJdbcDao implements DocumentDao {
         return true;
     }
 
+    
+    public int countDocument(JdbcTemplate jdbcTemplate){
+        int res = 0;
+        String sql = "SELECT COUNT(*) FROM document";
+        try{
+            res = (int) jdbcTemplate.queryForObject(sql,Integer.class);
+        }catch (DataAccessException runtimeException){}
+        System.err.println("numero di documenti nel database" + res);
+        return res;
+    }
+    
+    
     
     
     @Override
