@@ -55,17 +55,26 @@ public class DocumentController{
             @RequestParam("file") MultipartFile file,
             @RequestParam("idu") int user_id,
             @RequestParam("nota") String nota) throws IOException{
-
         String dirName = sr.getServletContext().getRealPath("Resources/");
         File file1 = new File(dirName);
         if (!file1.exists()){
             file1.mkdir();
         }
-        
         System.err.println("ENTRATO NEL CONTROLLER UPLLOOAD DOCUMENT");
-        return documentJdbcDao.insertDocument(file,nota,user_id,dirName,salt);        
+        return documentJdbcDao.insertDocument(file,nota,user_id,dirName);        
+    }
+    
+    @RequestMapping(value="/uploadDocumentWithoutFile")
+    public @ResponseBody boolean documentUpload(
+            @RequestHeader(value="salt") String salt,
+            @RequestParam("idu") int user_id,
+            @RequestParam("nota") String nota) throws IOException{
+
+        System.err.println("ENTRATO NEL CONTROLLER UPLLOOAD DOCUMENT WITHOUT FILE");
+        return documentJdbcDao.insertDocument(null,nota,user_id,"");        
 
     }
+    
     
     @RequestMapping("/editDocument")
     public @ResponseBody boolean editDocument(

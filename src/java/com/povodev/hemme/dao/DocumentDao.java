@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface DocumentDao {
     
     public Document getDocument(int document_id);
-    public boolean insertDocument(MultipartFile file,String note,int user_id,String dirName,String salt);
+    public boolean insertDocument(MultipartFile file,String note,int user_id,String dirName);
     public boolean editDocument(Document document);
     public boolean deleteDocument(int document_id);
     public ArrayList<Document> getDiary(int user_id);

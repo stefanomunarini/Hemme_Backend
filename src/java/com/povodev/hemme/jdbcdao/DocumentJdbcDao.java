@@ -82,20 +82,7 @@ public class DocumentJdbcDao implements DocumentDao {
      * @return  
      */
     @Override
-    public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName,String salt) {
-        
-        
-        //stampa di controllo
-        /*
-        try {
-            System.err.println("HASH TABLE IS _________++++++++++++++  " + en.authHash(salt));
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(DocumentJdbcDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-
-        
-        
+    public boolean insertDocument(final MultipartFile file,final String note, final int user_id,final String dirName) {
         
         String fileName = "";
         KeyHolder holder = new GeneratedKeyHolder();
@@ -104,7 +91,7 @@ public class DocumentJdbcDao implements DocumentDao {
 
         
         //    Read/Write uploaded file
-        if(!file.isEmpty()){
+        if(file != null && !file.isEmpty()){
             InputStream inputStream = null;  
             OutputStream outputStream = null;  
             fileName = file.getOriginalFilename(); 
@@ -127,10 +114,7 @@ public class DocumentJdbcDao implements DocumentDao {
                 // TODO Auto-generated catch block  
                 e.printStackTrace();  
             }      
-        }else{
-            return false;
         }
-        
         
         // Insert into document table
         try{
@@ -138,7 +122,11 @@ public class DocumentJdbcDao implements DocumentDao {
             @Override
             public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                 PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-                preparedStatement.setString(1,file.getOriginalFilename()); 
+                if(file!=null){
+                    preparedStatement.setString(1,file.getOriginalFilename()); 
+                }else{
+                    preparedStatement.setString(1,""); 
+                }
                 preparedStatement.setString(2,note); 
                 return preparedStatement; 
             } 
