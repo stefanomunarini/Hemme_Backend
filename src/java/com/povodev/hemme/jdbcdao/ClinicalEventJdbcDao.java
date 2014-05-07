@@ -52,7 +52,6 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     @Override
     public boolean newClinicalEvent(final ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        System.err.println(user_id+"     ce.id: "+clinicalEvent.getAuthor()+" "+ clinicalEvent.getTherapy() + " "+ clinicalEvent.getNote());
         final String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){
@@ -79,6 +78,20 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
         int clinicalEvent_id = keyHolder.getKey().intValue();
         clinicalFolderJdbcDao.newClinicalFolder(user_id,clinicalEvent_id);
         
+        return true;
+    }
+
+    @Override
+    public boolean modifyClinicalEvent(ClinicalEvent clinicalEvent, int clinicalEvent_id) {
+        try{
+            this.jdbcTemplate.update(
+                "UPDATE clinicalEvent SET (author=?,therapy=?,note=?) WHERE id = ?", 
+                new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getTherapy(), clinicalEvent.getNote(), clinicalEvent_id});
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }
         return true;
     }
 }

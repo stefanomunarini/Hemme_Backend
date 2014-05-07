@@ -40,7 +40,16 @@ public class ClinicalEventController {
             @RequestBody ClinicalEvent clinicalEvent)
             {
         
-        return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, 1);
+        return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
+    }
+    
+    @RequestMapping(value="/modifyClinicalEvent", method = {RequestMethod.GET,RequestMethod.POST})
+    public @ResponseBody boolean modifyClinicalEvent(
+            @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id,
+            @RequestBody ClinicalEvent clinicalEvent)
+            {
+        
+        return clinicalEventJdbcDao.modifyClinicalEvent(clinicalEvent, clinicalEvent_id);
     }
     
     
