@@ -82,12 +82,23 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     }
 
     @Override
-    public boolean modifyClinicalEvent(ClinicalEvent clinicalEvent, int clinicalEvent_id) {
+    public boolean modifyClinicalEvent(final ClinicalEvent clinicalEvent, final int clinicalEvent_id) {
+        final String query = "UPDATE clinicalEvent SET author=?, therapy=?, note=? WHERE id = ?";
         try{
-            this.jdbcTemplate.update(
-                "UPDATE clinicalEvent SET (author=?,therapy=?,note=?) WHERE id = ?", 
-                new Object[] {clinicalEvent.getAuthor(), clinicalEvent.getTherapy(), clinicalEvent.getNote(), clinicalEvent_id});
-        }catch (DataAccessException runtimeException){
+            this.jdbcTemplate.update(new PreparedStatementCreator(){
+                @Override
+                public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
+                    PreparedStatement preparedStatement = conn.prepareStatement(query);
+                    preparedStatement.setInt(1,clinicalEvent.getAuthor()); 
+                    preparedStatement.setString(2, clinicalEvent.getTherapy());
+                    preparedStatement.setString(3, clinicalEvent.getNote());
+                    preparedStatement.setInt(4, clinicalEvent_id);
+                    
+                    return preparedStatement; 
+                }
+            });
+                
+        } catch (DataAccessException runtimeException){
             System.err.println("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
             System.err.println(runtimeException);
             throw runtimeException;
