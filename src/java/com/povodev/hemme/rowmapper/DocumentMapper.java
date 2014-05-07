@@ -21,8 +21,11 @@ import java.util.Map;
 public class DocumentMapper {
     
     public static ArrayList<Document> getDiaryMap(List<Map<String, Object>> rows,String dirName){
+        
         ArrayList<Document> diario = new ArrayList();
 
+        System.err.println("entrato nel mapper");
+        
         for (Map row : rows) {
             Document document = new Document();
             document.setId((int) row.get("id"));
@@ -31,10 +34,12 @@ public class DocumentMapper {
             document.setFile((String)row.get("file"));
             document.setNote((String)row.get("note"));
             File f = new File(dirName +"/"+ document.getFile());
-//            System.err.println("nome file " + f.getName() + "______" + f.exists());
+            System.err.println("nome file del diario" + f.getName() + "______" + f.exists());
             document.setUploaded(f);
             diario.add(document);
         }              
+        System.err.println("finito mapper e diario ha dimensione = " + diario.size());
+        
         return diario;
     }
             

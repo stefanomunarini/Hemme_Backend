@@ -20,6 +20,7 @@ public class UserMapper {
         User user = new User();
         if(!rows.isEmpty()){
             for (Map row : rows) {
+                user.setId((int) row.get("id"));
                 user.setEmail((String) row.get("email"));
                 user.setImei((String) row.get("imei"));
                 user.setName((String) row.get("name"));

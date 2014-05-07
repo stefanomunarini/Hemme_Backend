@@ -32,14 +32,13 @@ public class InterceptorControl implements HandlerInterceptor  {
             if(key.equals("salt")){
                 salt = value;
             }
-            System.err.println(key + "---" + value);
+//            System.err.println(key + "---" + value);
 	}
         
         //controllo che la stringa passata come HAS(salt) corrispona alla HAS("povodevforhemmeABC")
         if(salt.equals("21bd8aee973b8457476af0bac8b65b2a")){
             System.err.println("Hash CORRETTA");
             salt = "ABC";
-            System.err.println("__risultato hash nel database__"+en.authHash(salt));
             return true;
         }else{
             System.err.println("Hash NON CORRETTA");
