@@ -25,7 +25,7 @@ public class HasTpController {
     @Autowired
     private HasTpJdbcDao hasTpJdbcDao;
     
-    @RequestMapping("/listPazienti")
+    @RequestMapping("/patienList")
     public @ResponseBody void newHasTp(
             @RequestParam(value="tutor_id", required=true) int tutor_id){
         hasTpJdbcDao.patientList(tutor_id);
