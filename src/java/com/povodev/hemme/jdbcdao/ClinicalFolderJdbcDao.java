@@ -30,7 +30,7 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
         
         List<Map<String, Object>> rows;
         
-        String sql = "SELECT * FROM clinicalfolder NATURAL JOIN clinicalevent WHERE user_id = ? ORDER BY date DESC";
+        String sql = "SELECT * FROM clinicalfolder NATURAL JOIN clinicalevent JOIN User ON author = User.id WHERE user_id = ? ORDER BY date DESC";
 	try{
             rows = this.jdbcTemplate.queryForList(sql, user_id);
         }catch (DataAccessException dataAccessException){
