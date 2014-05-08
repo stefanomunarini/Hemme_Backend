@@ -7,6 +7,8 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.HasDp;
+import com.povodev.hemme.bean.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,5 +17,6 @@ import com.povodev.hemme.bean.HasDp;
 public interface HasDpDao {
 
     public void newHasDp(int patient_id, int doctor_id);
-    
+    public ArrayList<User> patientList(int doctor_id);
+
 }
