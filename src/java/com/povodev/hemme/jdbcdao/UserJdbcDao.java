@@ -53,10 +53,6 @@ public class UserJdbcDao implements UserDao{
     @Override
     public User login(String email,String password,String imei) {
         
-        
-        System.err.println("accesso con " + email + " e " + password+"-- codice: "+imei);
-        
-        
         String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
         try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,email,password);
@@ -96,7 +92,6 @@ public class UserJdbcDao implements UserDao{
         return user;  
     }
     
-
     private boolean associaTutorPaziente(User tutore, User paziente, JdbcTemplate jdbcTemplate){
         String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
         jdbcTemplate.update(

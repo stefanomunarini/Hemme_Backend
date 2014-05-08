@@ -28,7 +28,7 @@ public class ClinicalFolderMapper {
                 clinicalEvent.setDate((Timestamp) (row.get("date")));
                 clinicalEvent.setTherapy((String) (row.get("therapy")));
                 clinicalEvent.setNote((String) (row.get("note")));
-                clinicalEvent.setAuthor_name((String) row.get("name"));
+                clinicalEvent.setAuthor_name((String) row.get("name") + " " + row.get("surname"));
                 clinicalFolder.add(clinicalEvent);
             }
         return clinicalFolder;

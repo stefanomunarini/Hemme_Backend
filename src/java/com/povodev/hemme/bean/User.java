@@ -18,6 +18,12 @@ public class User {
     private String surname;
     private String password;
     private String email;
+    
+    /*
+     *  0 TUTOR
+     *  1 DOTTORE
+     *  2 PAZIENTE
+     */
     private int role;
 
     /**
