@@ -43,7 +43,9 @@ public class UserController {
     public @ResponseBody User registration(HttpEntity<User> requestEntity){
 
         User user  = requestEntity.getBody();
+        
         System.err.println("ENTRATO NEl CONTROLLER DI REGISTRATION" + user);
+        
         if (userJdbcDao.registration(user)) {
             return userJdbcDao.login(user.getEmail(), user.getPassword(),user.getImei());
         } else {

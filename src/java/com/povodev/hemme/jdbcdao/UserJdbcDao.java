@@ -10,6 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import com.povodev.hemme.bean.ClinicalEvent;
+import com.povodev.hemme.dao.ClinicalEventDao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+
 
 /**
  * JdbcDao implementation for User
@@ -36,28 +53,55 @@ public class UserJdbcDao implements UserDao{
 
     
     @Override
-    public boolean registration(User user) {
-        String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
-        try {
-            this.jdbcTemplate.update(
-                query, 
-                new Object[] {user.getImei(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getRole()});
-        } catch (DataAccessException dae){
-            log.error("***Dao::failed to CREATE NEW user, DataAccessException occurred, message follows.");
-            log.error(dae.getMessage());
-            throw dae;
+    public boolean registration(final User user) {
+        
+        if(user.getRole() == 2){
+            final String query = "UPDATE user SET name=?, surname=?, password=?, email=? WHERE imei = ?";
+            try{
+                this.jdbcTemplate.update(new PreparedStatementCreator(){
+                    @Override
+                    public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
+                        PreparedStatement preparedStatement = conn.prepareStatement(query);
+                        preparedStatement.setString(1, user.getName()); 
+                        preparedStatement.setString(2, user.getSurname());
+                        preparedStatement.setString(3, user.getPassword());
+                        preparedStatement.setString(4, user.getEmail());
+                        preparedStatement.setString(5, user.getImei());
+                        return preparedStatement; 
+                    }
+                });
+                return true;
+            }catch (DataAccessException runtimeException){
+                System.err.println("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
+                System.err.println(runtimeException);
+                throw runtimeException;
+            }
         }
-        return true;
+        else{
+            String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
+            try {
+                this.jdbcTemplate.update(
+                    query, 
+                    new Object[] {user.getImei(), user.getName(), user.getSurname(), user.getPassword(), user.getEmail(), user.getRole()});
+            } catch (DataAccessException dae){
+                log.error("***Dao::failed to CREATE NEW user, DataAccessException occurred, message follows.");
+                log.error(dae.getMessage());
+                throw dae;
+            }
+            return true;
+        }
     }
     
     @Override
     public User login(String email,String password,String imei) {
         
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        
         String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
         try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,email,password);
             //return UserMapper.checkUser(rows);
-            
+            JdbcTemplate jdbcTemplate2 = this.jdbcTemplate;
             User user = UserMapper.checkUser(rows);
 
             //l'utente non esiste
@@ -70,12 +114,36 @@ public class UserJdbcDao implements UserDao{
             
             //tutor logga con dispositivo del paziente
             else{
-                User paziente = user;
+                User pazienteTmp = new User();
+                pazienteTmp.setImei(imei);
+                pazienteTmp.setName("tmp");
+                pazienteTmp.setRole(2);
+                
+                User tutore = user;
+
+                String query = "INSERT INTO user (imei, name, surname, role) values (?, ?, ?, ?)";
+                try {
+                    jdbcTemplate2.update(
+                        query, 
+                        new Object[] {imei,"tmp","tmp",2});
+                } catch (DataAccessException dae){
+                    log.error("***Dao::failed to CREATE NEW user form login function, DataAccessException occurred, message follows.");
+                    log.error(dae.getMessage());
+                    throw dae;
+                }
+                
+                User paziente = catchUserFromImei(jdbcTemplate, imei);
+                
+                associaTutorPaziente(tutore, paziente.getId(),this.jdbcTemplate);
+        
+                
+                return pazienteTmp;
+                /*                User paziente = user;
                 user = catchUserFromImei(this.jdbcTemplate,imei);
                 User tutore = user;
                 associaTutorPaziente(tutore,paziente,this.jdbcTemplate);
                 return paziente;
-            }
+ */           }
             
         }catch (DataAccessException runtimeException){
             log.error("***Dao::check user into database FAIL, RuntimeException occurred, message follows.");
@@ -92,11 +160,14 @@ public class UserJdbcDao implements UserDao{
         return user;  
     }
     
-    private boolean associaTutorPaziente(User tutore, User paziente, JdbcTemplate jdbcTemplate){
+    private boolean associaTutorPaziente(User tutore, int paziente, JdbcTemplate jdbcTemplate){
+        
+        System.err.println("associo  tutor "+ tutore.getId() + " paziente  = " + paziente);
+        
         String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
         jdbcTemplate.update(
             query, 
-            new Object[] {tutore.getId(),paziente.getId()});
+            new Object[] {tutore.getId(),paziente});
         return true;
     }
     
