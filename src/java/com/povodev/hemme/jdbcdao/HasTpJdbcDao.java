@@ -7,7 +7,12 @@
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.HasTp;
+import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.HasTpDao;
+import com.povodev.hemme.rowmapper.HasMapper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,15 +27,21 @@ public class HasTpJdbcDao implements HasTpDao{
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public void newHasTp(int tutor_id, int patient_id) {
-        
-        String query = "INSERT INTO hastp (tutor_id, patient_id) VALUES (?,?)";
-        try {
-            this.jdbcTemplate.update(
-                query, 
-                new Object[] {tutor_id, patient_id});
-        } catch (DataAccessException dae){
-            throw dae;
+    public ArrayList<User> patientList(int tutor_id) {
+
+        String sql = "SELECT * FROM tp WHERE tutor_id = ?";
+	try{
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,tutor_id);
+            return HasMapper.getListPatient(rows, this.jdbcTemplate);
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::create list of patient HasTp, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
         }
+    
+    
     }
+
+
+
 }

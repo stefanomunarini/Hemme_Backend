@@ -7,6 +7,8 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.HasTp;
+import com.povodev.hemme.bean.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +16,6 @@ import com.povodev.hemme.bean.HasTp;
  */
 public interface HasTpDao {
        
-    public void newHasTp(int tutor_id, int patient_id);
+    public ArrayList<User> patientList(int tutor_id);
 
 }
