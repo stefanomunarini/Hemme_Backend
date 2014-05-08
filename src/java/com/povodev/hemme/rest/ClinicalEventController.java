@@ -45,11 +45,11 @@ public class ClinicalEventController {
     
     @RequestMapping(value="/modifyClinicalEvent", method = {RequestMethod.GET,RequestMethod.POST})
     public @ResponseBody boolean modifyClinicalEvent(
-            @RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id,
+            //@RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id,
             @RequestBody ClinicalEvent clinicalEvent)
             {
         
-        return clinicalEventJdbcDao.modifyClinicalEvent(clinicalEvent, clinicalEvent_id);
+        return clinicalEventJdbcDao.modifyClinicalEvent(clinicalEvent);
     }
     
     

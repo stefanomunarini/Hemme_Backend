@@ -23,7 +23,7 @@ public class ClinicalFolderMapper {
         ArrayList<ClinicalEvent> clinicalFolder = new ArrayList();
         for (Map row : rows) {
                 ClinicalEvent clinicalEvent = new ClinicalEvent();
-                clinicalEvent.setId((int) (row.get("id")));
+                clinicalEvent.setId((int) (row.get("clinicalevent_id")));
                 clinicalEvent.setAuthor((int) (row.get("author")));
                 clinicalEvent.setDate((Timestamp) (row.get("date")));
                 clinicalEvent.setTherapy((String) (row.get("therapy")));

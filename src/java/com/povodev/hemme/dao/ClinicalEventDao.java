@@ -41,5 +41,5 @@ public interface ClinicalEventDao {
      * Modify a clinical event
      * @param clinicalEvent
      */
-    public boolean modifyClinicalEvent(ClinicalEvent clinicalEvent, int clinicalEvent_id);
+    public boolean modifyClinicalEvent(ClinicalEvent clinicalEvent);
 }
