@@ -51,11 +51,36 @@ public class UserJdbcDao implements UserDao{
     }
     
     @Override
-    public User login(String email,String password) {
+    public User login(String email,String password,String imei) {
+        
+        
+        System.err.println("accesso con " + email + " e " + password+"-- codice: "+imei);
+        
+        
         String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
         try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,email,password);
-            return UserMapper.checkUser(rows);
+            //return UserMapper.checkUser(rows);
+            
+            User user = UserMapper.checkUser(rows);
+
+            //l'utente non esiste
+            if(user ==  null)
+                return null;
+
+            //tutor logga con il proprio dispositivo
+            if(user.getImei().equals(imei))
+                return user;
+            
+            //tutor logga con dispositivo del paziente
+            else{
+                User paziente = user;
+                user = catchUserFromImei(this.jdbcTemplate,imei);
+                User tutore = user;
+                associaTutorPaziente(tutore,paziente,this.jdbcTemplate);
+                return paziente;
+            }
+            
         }catch (DataAccessException runtimeException){
             log.error("***Dao::check user into database FAIL, RuntimeException occurred, message follows.");
             log.error(runtimeException);
@@ -63,6 +88,23 @@ public class UserJdbcDao implements UserDao{
         }
     }
 
+    private User catchUserFromImei(JdbcTemplate jdbcTemplate,String imei){
+        User user;
+        String sql = "SELECT * FROM user WHERE imei = ?";
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,imei);
+        user = UserMapper.checkUser(rows);
+        return user;  
+    }
+    
+
+    private boolean associaTutorPaziente(User tutore, User paziente, JdbcTemplate jdbcTemplate){
+        String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
+        jdbcTemplate.update(
+            query, 
+            new Object[] {tutore.getId(),paziente.getId()});
+        return true;
+    }
+    
     
     @Override
     public String getAuthor(int user_id) {

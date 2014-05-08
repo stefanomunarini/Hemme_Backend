@@ -45,12 +45,9 @@ public class UserController {
     public @ResponseBody User registration(HttpEntity<User> requestEntity){
 
         User user  = requestEntity.getBody();
-
         System.err.println("ENTRATO NEl CONTROLLER DI REGISTRATION" + user);
-        
-        
         if (userJdbcDao.registration(user)) {
-            return userJdbcDao.login(user.getEmail(), user.getPassword());
+            return userJdbcDao.login(user.getEmail(), user.getPassword(),user.getImei());
         } else {
             return null;
         }
@@ -59,9 +56,9 @@ public class UserController {
     @RequestMapping("/login")
     public @ResponseBody User login(
             @RequestParam(value="email", required=true) String email,
-            @RequestParam(value="password", required=true) String password){
-
-        return userJdbcDao.login(email, password);
+            @RequestParam(value="password", required=true) String password,
+            @RequestParam(value="imei", required=true) String imei){
+        return userJdbcDao.login(email, password,imei);
     }
     
     @RequestMapping("/passwordRecovery")
