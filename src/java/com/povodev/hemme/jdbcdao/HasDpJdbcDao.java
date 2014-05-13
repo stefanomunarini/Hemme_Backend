@@ -26,16 +26,19 @@ public class HasDpJdbcDao implements HasDpDao{
     private JdbcTemplate jdbcTemplate;
     
     @Override
-    public void newHasDp(int patient_id, int doctor_id) {
-        
-        String query = "INSERT INTO hasdp (patient_id, doctor_id) VALUES (?,?)";
+    public boolean newHasDp(int patient_id, int doctor_id) {
+
+        String query = "INSERT INTO dp (patient_id, doctor_id) VALUES (?,?)";
         try {
             this.jdbcTemplate.update(
                 query, 
                 new Object[] {patient_id, doctor_id});
         } catch (DataAccessException dae){
+            System.err.println("catch exception");
             throw dae;
         }
+        
+        return true;
     }
     
     @Override

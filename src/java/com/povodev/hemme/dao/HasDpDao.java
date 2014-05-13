@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public interface HasDpDao {
 
-    public void newHasDp(int patient_id, int doctor_id);
+    public boolean newHasDp(int patient_id, int doctor_id);
     public ArrayList<User> patientList(int doctor_id);
 
 }

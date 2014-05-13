@@ -7,6 +7,7 @@
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.Doctor;
+import com.povodev.hemme.bean.User;
 import java.util.ArrayList;
 
 
@@ -34,6 +35,7 @@ import java.util.ArrayList;
      * @param user_id
      * @return 
      */
-    public ArrayList<Doctor> getAllDoctors(int user_id);
-
+    public ArrayList<User> getAllDoctors();
+    
+    
 }

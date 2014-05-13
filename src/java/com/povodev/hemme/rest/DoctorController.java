@@ -7,7 +7,9 @@
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Doctor;
+import com.povodev.hemme.bean.User;
 import com.povodev.hemme.jdbcdao.DoctorJdbcDao;
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,6 @@ public class DoctorController {
     @RequestMapping("/getDoctor")
     public @ResponseBody Doctor getDoctor(
         @RequestParam(value="doctor_id", required=true) int doctor_id) {
-        
         return doctorJdbcDao.getDoctor(doctor_id);
     }
     
@@ -37,5 +38,12 @@ public class DoctorController {
 
         doctorJdbcDao.newDoctor(user_id);
     }
+    
+    
+    @RequestMapping("/getListDoctor")
+    public @ResponseBody ArrayList<User> getListDoctor() {
+        return doctorJdbcDao.getAllDoctors();
+    }
+    
     
 }

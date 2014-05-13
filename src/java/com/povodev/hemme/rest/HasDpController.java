@@ -29,10 +29,10 @@ public class HasDpController {
     private HasDpJdbcDao hasDpJdbcDao;
     
     @RequestMapping("/newHasDp")
-    public @ResponseBody void newHasDp(
+    public @ResponseBody boolean newHasDp(
             @RequestParam(value="patient_id", required=true) int patient_id,
             @RequestParam(value="doctor_id", required=true) int doctor_id) {        
-        hasDpJdbcDao.newHasDp(patient_id, doctor_id);
+        return hasDpJdbcDao.newHasDp(patient_id, doctor_id);
     }
     
     @RequestMapping("/patienListDoctor")
