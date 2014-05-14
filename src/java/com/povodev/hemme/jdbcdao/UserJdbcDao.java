@@ -47,17 +47,18 @@ public class UserJdbcDao implements UserDao{
     public boolean registration(final User user) {
         
         if(user.getRole() == 2){
-            final String query = "UPDATE user SET name=?, surname=?, password=?, email=? WHERE imei = ?";
+            final String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
             try{
                 this.jdbcTemplate.update(new PreparedStatementCreator(){
                     @Override
                     public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                         PreparedStatement preparedStatement = conn.prepareStatement(query);
-                        preparedStatement.setString(1, user.getName()); 
-                        preparedStatement.setString(2, user.getSurname());
-                        preparedStatement.setString(3, user.getPassword());
-                        preparedStatement.setString(4, user.getEmail());
-                        preparedStatement.setString(5, user.getImei());
+                        preparedStatement.setString(1, user.getImei()); 
+                        preparedStatement.setString(2, user.getName()); 
+                        preparedStatement.setString(3, user.getSurname());
+                        preparedStatement.setString(4, user.getPassword());
+                        preparedStatement.setString(5, user.getEmail());
+                        preparedStatement.setInt(6, 2); 
                         return preparedStatement; 
                     }
                 });
@@ -106,10 +107,13 @@ public class UserJdbcDao implements UserDao{
             //tutor logga con dispositivo del paziente
             else{
                 User pazienteTmp = new User();
-                pazienteTmp.setImei(imei);
-                pazienteTmp.setName("tmp");
-                pazienteTmp.setRole(2);
-                
+                pazienteTmp.setImei("tmp");
+                pazienteTmp.setEmail(user.getEmail());
+                pazienteTmp.setName(user.getName());
+                pazienteTmp.setPassword(user.getPassword());
+                pazienteTmp.setRole(user.getRole());
+                pazienteTmp.setSurname(user.getSurname());
+/*
                 User tutore = user;
 
                 String query = "INSERT INTO user (imei, name, surname, role) values (?, ?, ?, ?)";
@@ -126,7 +130,7 @@ public class UserJdbcDao implements UserDao{
                 User paziente = catchUserFromImei(jdbcTemplate, imei);
                 
                 associaTutorPaziente(tutore, paziente.getId(),this.jdbcTemplate);
-        
+  */      
                 
                 return pazienteTmp;
                 /*                User paziente = user;

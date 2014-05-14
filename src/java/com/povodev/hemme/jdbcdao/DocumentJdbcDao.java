@@ -107,6 +107,9 @@ public class DocumentJdbcDao implements DocumentDao {
             }      
         }
         
+        
+        String real = fileName;
+        final String nameFileSave = real;
         // Insert into document table
         try{
             this.jdbcTemplate.update(new PreparedStatementCreator(){
@@ -114,7 +117,7 @@ public class DocumentJdbcDao implements DocumentDao {
             public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                 PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 if(file!=null){
-                    preparedStatement.setString(1,file.getOriginalFilename()); 
+                    preparedStatement.setString(1,nameFileSave); 
                 }else{
                     preparedStatement.setString(1,""); 
                 }
@@ -219,15 +222,11 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public ArrayList<Document> getDiary(int user_id) {
         
-        System.err.println("entroi nel conroller per caricare il diario");
         String dirName = sr.getServletContext().getRealPath("Resources/"+user_id+"/");
         String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
 	try{
-            System.err.println("eseguo la query");
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);
-            System.err.println("esecuzione finita \n richiamo il mapper");
-
-            return DocumentMapper.getDiaryMap(rows,dirName);
+            return DocumentMapper.getDiaryMap(rows,dirName,user_id);
         }catch (DataAccessException runtimeException){
             log.error("***Dao::create diary FAIL, RuntimeException occurred, message follows.");
             log.error(runtimeException);
