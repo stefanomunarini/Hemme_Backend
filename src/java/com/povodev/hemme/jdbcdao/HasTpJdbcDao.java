@@ -38,10 +38,5 @@ public class HasTpJdbcDao implements HasTpDao{
             System.err.println(runtimeException);
             throw runtimeException;
         }
-    
-    
     }
-
-
-
 }
