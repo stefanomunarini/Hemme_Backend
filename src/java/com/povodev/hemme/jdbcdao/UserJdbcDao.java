@@ -2,6 +2,7 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.UserDao;
+import com.povodev.hemme.rowmapper.HasMapper;
 import com.povodev.hemme.rowmapper.UserMapper;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -108,6 +111,7 @@ public class UserJdbcDao implements UserDao{
             else{
                 User pazienteTmp = new User();
                 pazienteTmp.setImei("tmp");
+                pazienteTmp.setId(user.getId());
                 pazienteTmp.setEmail(user.getEmail());
                 pazienteTmp.setName(user.getName());
                 pazienteTmp.setPassword(user.getPassword());
@@ -189,5 +193,42 @@ public class UserJdbcDao implements UserDao{
         }
         return password;
     }
+
+    @Override
+    public boolean addNewLinkTutorPatient(int old_tutor_id,String IMEI) {
+
+        
+        User usr = catchUserFromImei(jdbcTemplate, IMEI);
+        int new_tutor_id = usr.getId();
+        
+        String sql = "SELECT * FROM tp WHERE tutor_id = ?";
+	try{
+            List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,old_tutor_id);
+            ArrayList<Integer> pazienti_tutor =  UserMapper.listPatient(rows);
+            
+            Iterator itr = pazienti_tutor.iterator();
+            while(itr.hasNext()){
+                int id_paz = (int) itr.next();
+                insertConnection(id_paz,new_tutor_id,jdbcTemplate);
+            }
+            
+        }catch (DataAccessException runtimeException){
+            System.err.println("***Dao::create list of patient addNewLinkTutorPatient, RuntimeException occurred, message follows.");
+            System.err.println(runtimeException);
+            throw runtimeException;
+        }
+        return true;
+    }
+    
+    public boolean insertConnection(int paziente_id,int old_tutor_id, JdbcTemplate jdbcTemplate){
+    
+        System.err.println("INSERT CONNECTION " + paziente_id);
+        String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
+        jdbcTemplate.update(
+            query, 
+            new Object[] {old_tutor_id,paziente_id});
+        return true;
+    }
+    
 
 }
