@@ -67,4 +67,13 @@ public class UserController {
 
         return userJdbcDao.passwordRecovery(email);
     }
+
+    @RequestMapping("/addNewLinkTutorPatient")
+    public @ResponseBody boolean addNewLinkTutorPatient(
+            @RequestParam(value="old_tutor_id", required=true) int old_tutor_id,
+            @RequestParam(value="IMEI", required=true) String IMEI){
+
+        return userJdbcDao.addNewLinkTutorPatient(old_tutor_id,IMEI);
+    }
+
 }

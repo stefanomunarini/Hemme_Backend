@@ -7,6 +7,7 @@
 package com.povodev.hemme.rowmapper;
 
 import com.povodev.hemme.bean.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,4 +35,14 @@ public class UserMapper {
         return user;
     }
 
+    
+    public static ArrayList<Integer> listPatient(List<Map<String, Object>> rows){
+        ArrayList<Integer> pazienti = new ArrayList();
+        for (Map row : rows) {
+            int id_paz = (Integer) row.get("patient_id");
+            pazienti.add(id_paz);
+        }              
+        return pazienti;
+    }
 }
+
