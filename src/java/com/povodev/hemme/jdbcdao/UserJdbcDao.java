@@ -147,6 +147,19 @@ public class UserJdbcDao implements UserDao{
         return user.getName() + " " + user.getSurname();
     }
 
+    
+    @Override
+    public boolean associaTutorPaziente(int tutore, int paziente){
+        log.error("**: FAIL associTutorPaziente");
+        String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
+        jdbcTemplate.update(
+            query, 
+            new Object[] {tutore,paziente});
+        return true;
+    }
+    
+    
+    
     @Override
     public String passwordRecovery(String email) {        
         String password;

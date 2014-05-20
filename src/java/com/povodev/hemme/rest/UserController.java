@@ -43,6 +43,22 @@ public class UserController {
             return null;
         }
     }
+
+      @RequestMapping(value="/registrationWithAssociation", method = RequestMethod.POST)
+    public @ResponseBody User registrationWithAssociation(
+            HttpEntity<User> requestEntity,
+            @RequestParam(value="tutor_id", required=true) int tutor_id){
+
+        User user  = requestEntity.getBody();
+
+        if (userJdbcDao.registration(user)) {
+            userJdbcDao.associaTutorPaziente(tutor_id, user.getId());
+            return userJdbcDao.login(user.getEmail(), user.getPassword(),user.getImei());
+        } else {
+            return null;
+        }
+    }
+
     
     @RequestMapping("/login")
     public @ResponseBody User login(
