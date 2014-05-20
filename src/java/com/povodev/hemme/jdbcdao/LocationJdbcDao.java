@@ -40,8 +40,8 @@ public class LocationJdbcDao implements LocationDao {
                 @Override
                 public PreparedStatement createPreparedStatement(Connection conn) throws SQLException{ 
                     PreparedStatement preparedStatement = conn.prepareStatement(query);
-                    preparedStatement.setDouble(1, values.getLat());
-                    preparedStatement.setDouble(2, values.getLon());
+                    preparedStatement.setDouble(1, values.getLatitude());
+                    preparedStatement.setDouble(2, values.getLongitude());
                     preparedStatement.setInt(3, values.getRadius());
                     preparedStatement.setInt(4, user_id);
 
@@ -59,18 +59,22 @@ public class LocationJdbcDao implements LocationDao {
 
     @Override
     public LocationCoordinates getCoordinates(int user_id) {
-        
+                
         LocationCoordinates locationCoordinates;
         String sql = "SELECT * FROM Location WHERE user_id = ?";
 	try{
             locationCoordinates = (LocationCoordinates) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { (user_id)}, 
-                new BeanPropertyRowMapper(ClinicalEvent.class));
+                new BeanPropertyRowMapper(LocationCoordinates.class));
         }catch (DataAccessException runtimeException){
-            log.error("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
+            log.error("***Dao:: fail to GET COORDINATES, RuntimeException occurred, message follows.");
             log.error(runtimeException);
             throw runtimeException;
-        }    
+        }
+        
+        System.err.println("Radius: "+ locationCoordinates.getRadius());        
+        System.err.println("Lat " + locationCoordinates.getLatitude()+ "    " + locationCoordinates.getLongitude());
+        
         return locationCoordinates;
     }
 

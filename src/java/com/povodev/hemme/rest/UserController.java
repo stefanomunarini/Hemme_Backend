@@ -82,5 +82,12 @@ public class UserController {
 
         return userJdbcDao.addNewLinkTutorPatient(old_tutor_id,IMEI);
     }
+    
+    @RequestMapping("/getTutorEmail")
+    public @ResponseBody String getTutorEmail(
+            @RequestParam(value="patient_id", required=true) int patient_id){
+
+        return userJdbcDao.getTutorEmail(patient_id);
+    }
 
 }

@@ -209,6 +209,23 @@ public class UserJdbcDao implements UserDao{
             new Object[] {old_tutor_id,paziente_id});
         return true;
     }
+
+    @Override
+    public String getTutorEmail(int patient_id) {
+        String query = "SELECT tutor_id FROM TP where patient_id = ?";
+        int tutor_id;
+        try{
+            tutor_id = this.jdbcTemplate.queryForObject(
+                    query,
+                    Integer.class);
+        } catch (DataAccessException dae){
+            log.error("***Dao::passwordrecovery FAIL, RuntimeException occurred, message follows.");
+            log.error(dae);
+            throw dae;
+        }
+        User tutor = getUser(tutor_id);
+        return tutor.getEmail();
+    }
     
 
 }

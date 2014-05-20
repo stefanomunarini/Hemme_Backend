@@ -21,4 +21,5 @@ public interface UserDao {
     public String passwordRecovery (String email);
     public boolean addNewLinkTutorPatient(int old_tutor_id,String IMEI);
     public boolean associaTutorPaziente(int tutore, int paziente);
+    public String getTutorEmail(int patient_id);
 }

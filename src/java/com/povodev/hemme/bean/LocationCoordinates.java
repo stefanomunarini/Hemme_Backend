@@ -12,9 +12,10 @@ package com.povodev.hemme.bean;
  */
 public class LocationCoordinates {
     
+    private int id;
     private int user_id;
-    private double lat;
-    private double lon;
+    private double latitude;
+    private double longitude;
     private int radius;
 
     /**
@@ -34,29 +35,29 @@ public class LocationCoordinates {
     /**
      * @return the lat
      */
-    public double getLat() {
-        return lat;
+    public double getLatitude() {
+        return latitude;
     }
 
     /**
      * @param lat the lat to set
      */
-    public void setLat(double lat) {
-        this.lat = lat;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     /**
      * @return the lon
      */
-    public double getLon() {
-        return lon;
+    public double getLongitude() {
+        return longitude;
     }
 
     /**
      * @param lon the lon to set
      */
-    public void setLon(double lon) {
-        this.lon = lon;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     /**
@@ -71,6 +72,20 @@ public class LocationCoordinates {
      */
     public void setRadius(int radius) {
         this.radius = radius;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
 }
