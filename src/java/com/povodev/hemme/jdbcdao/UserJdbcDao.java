@@ -150,9 +150,8 @@ public class UserJdbcDao implements UserDao{
     
     @Override
     public boolean associaTutorPaziente(int tutore, int paziente){
-        log.error("**: FAIL associTutorPaziente");
-        String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
-        jdbcTemplate.update(
+        String query = "INSERT INTO TP (tutor_id,patient_id) VALUES (?,?)";
+        this.jdbcTemplate.update(
             query, 
             new Object[] {tutore,paziente});
         return true;
