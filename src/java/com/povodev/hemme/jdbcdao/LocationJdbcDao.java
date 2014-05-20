@@ -34,7 +34,7 @@ public class LocationJdbcDao implements LocationDao {
 
     @Override
     public boolean setCoordinates(final LocationCoordinates values, final int user_id) {
-        final String query = "UPDATE location SET lat=?, SET lon = ?, SET radius = ? WHERE user_id = ?";
+        final String query = "UPDATE Location SET latitude = ?, longitude = ?, radius = ? WHERE user_id = ?";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){
                 @Override
@@ -43,7 +43,7 @@ public class LocationJdbcDao implements LocationDao {
                     preparedStatement.setDouble(1, values.getLat());
                     preparedStatement.setDouble(2, values.getLon());
                     preparedStatement.setInt(3, values.getRadius());
-                    preparedStatement.setInt(4,user_id);
+                    preparedStatement.setInt(4, user_id);
 
                     return preparedStatement; 
                 }
@@ -61,7 +61,7 @@ public class LocationJdbcDao implements LocationDao {
     public LocationCoordinates getCoordinates(int user_id) {
         
         LocationCoordinates locationCoordinates;
-        String sql = "SELECT * FROM location WHERE user_id = ?";
+        String sql = "SELECT * FROM Location WHERE user_id = ?";
 	try{
             locationCoordinates = (LocationCoordinates) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { (user_id)}, 
@@ -76,7 +76,7 @@ public class LocationJdbcDao implements LocationDao {
 
     @Override
     public boolean addNewPatient(final int user_id) {
-        final String query = "INSERT INTO location (user_id, lat, lon, radius) VALUES (?,0,0,0)";
+        final String query = "INSERT INTO Location (user_id, latitude, longitude, radius) VALUES (?,0,0,0)";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){
                 @Override
