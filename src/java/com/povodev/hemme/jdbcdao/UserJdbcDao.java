@@ -2,7 +2,6 @@ package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.UserDao;
-import com.povodev.hemme.rowmapper.HasMapper;
 import com.povodev.hemme.rowmapper.UserMapper;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +9,6 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +33,7 @@ public class UserJdbcDao implements UserDao{
     @Override
     public User getUser(int user_id) {
         User user;
-        String sql = "SELECT * FROM user WHERE id = ?";
+        String sql = "SELECT * FROM User WHERE id = ?";
         try{
             user = (User) this.jdbcTemplate.queryForObject(
                 sql,
@@ -50,7 +48,7 @@ public class UserJdbcDao implements UserDao{
     public boolean registration(final User user) {
         
         if(user.getRole() == 2){
-            final String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
+            final String query = "INSERT INTO User (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
             try{
                 this.jdbcTemplate.update(new PreparedStatementCreator(){
                     @Override
@@ -67,13 +65,13 @@ public class UserJdbcDao implements UserDao{
                 });
                 return true;
             }catch (DataAccessException runtimeException){
-                System.err.println("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
-                System.err.println(runtimeException);
+                log.error("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
+                log.error(runtimeException);
                 throw runtimeException;
             }
         }
         else{
-            String query = "INSERT INTO user (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO User (imei, name, surname, password, email, role) values (?, ?, ?, ?, ?, ?)";
             try {
                 this.jdbcTemplate.update(
                     query, 
@@ -92,7 +90,7 @@ public class UserJdbcDao implements UserDao{
         
         KeyHolder keyHolder = new GeneratedKeyHolder();
         
-        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM User WHERE email = ? AND password = ?";
         try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,email,password);
             //return UserMapper.checkUser(rows);
@@ -153,7 +151,7 @@ public class UserJdbcDao implements UserDao{
 
     private User catchUserFromImei(JdbcTemplate jdbcTemplate,String imei){
         User user;
-        String sql = "SELECT * FROM user WHERE imei = ?";
+        String sql = "SELECT * FROM User WHERE imei = ?";
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql,imei);
         user = UserMapper.checkUser(rows);
         return user;  
@@ -161,9 +159,9 @@ public class UserJdbcDao implements UserDao{
     
     private boolean associaTutorPaziente(User tutore, int paziente, JdbcTemplate jdbcTemplate){
         
-        System.err.println("associo  tutor "+ tutore.getId() + " paziente  = " + paziente);
+        log.error("associo  tutor "+ tutore.getId() + " paziente  = " + paziente);
         
-        String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
+        String query = "INSERT INTO TP (tutor_id,patient_id) values (?, ?)";
         jdbcTemplate.update(
             query, 
             new Object[] {tutore.getId(),paziente});
@@ -181,7 +179,7 @@ public class UserJdbcDao implements UserDao{
     @Override
     public String passwordRecovery(String email) {        
         String password;
-        String sql = "SELECT password FROM user WHERE email = '" + email + "'";
+        String sql = "SELECT password FROM User WHERE email = '" + email + "'";
         try{
             password = this.jdbcTemplate.queryForObject(
                     sql,
@@ -201,7 +199,7 @@ public class UserJdbcDao implements UserDao{
         User usr = catchUserFromImei(jdbcTemplate, IMEI);
         int new_tutor_id = usr.getId();
         
-        String sql = "SELECT * FROM tp WHERE tutor_id = ?";
+        String sql = "SELECT * FROM TP WHERE tutor_id = ?";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,old_tutor_id);
             ArrayList<Integer> pazienti_tutor =  UserMapper.listPatient(rows);
@@ -213,8 +211,8 @@ public class UserJdbcDao implements UserDao{
             }
             
         }catch (DataAccessException runtimeException){
-            System.err.println("***Dao::create list of patient addNewLinkTutorPatient, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao::create list of patient addNewLinkTutorPatient, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }
         return true;
@@ -222,8 +220,8 @@ public class UserJdbcDao implements UserDao{
     
     public boolean insertConnection(int paziente_id,int old_tutor_id, JdbcTemplate jdbcTemplate){
     
-        System.err.println("INSERT CONNECTION " + paziente_id);
-        String query = "INSERT INTO tp (tutor_id,patient_id) values (?, ?)";
+        log.error("INSERT CONNECTION " + paziente_id);
+        String query = "INSERT INTO TP (tutor_id,patient_id) values (?, ?)";
         jdbcTemplate.update(
             query, 
             new Object[] {old_tutor_id,paziente_id});

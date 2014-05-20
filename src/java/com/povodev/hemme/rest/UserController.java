@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.User;
@@ -18,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Spring Controller for User
- * @author smunarini.stage
  */
 @Controller
 public class UserController {
@@ -43,9 +36,7 @@ public class UserController {
     public @ResponseBody User registration(HttpEntity<User> requestEntity){
 
         User user  = requestEntity.getBody();
-        
-        System.err.println("ENTRATO NEl CONTROLLER DI REGISTRATION" + user);
-        
+
         if (userJdbcDao.registration(user)) {
             return userJdbcDao.login(user.getEmail(), user.getPassword(),user.getImei());
         } else {

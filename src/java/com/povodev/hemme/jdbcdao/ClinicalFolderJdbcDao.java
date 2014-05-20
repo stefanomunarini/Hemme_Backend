@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
@@ -12,30 +6,32 @@ import com.povodev.hemme.rowmapper.ClinicalFolderMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * JdbcDao implementation for ClinicalFolder
- * @author smunarini.stage
  */
 public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
+    static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
+
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
         
         List<Map<String, Object>> rows;
         
-        String sql = "SELECT * FROM clinicalfolder NATURAL JOIN clinicalevent JOIN User ON author = User.id WHERE user_id = ? ORDER BY date DESC";
+        String sql = "SELECT * FROM ClinicalFolder NATURAL JOIN ClinicalEvent JOIN User ON author = User.id WHERE user_id = ? ORDER BY date DESC";
 	try{
             rows = this.jdbcTemplate.queryForList(sql, user_id);
         }catch (DataAccessException dataAccessException){
-            System.err.println("***DAO :: getClinicalFolder FAIL, DataAccessException occurred, message follows.");
-            System.err.println(dataAccessException);
+            log.error("***DAO :: getClinicalFolder FAIL, DataAccessException occurred, message follows.");
+            log.error(dataAccessException);
             throw dataAccessException;
         }
         
@@ -46,11 +42,11 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     public void newClinicalFolder(int user_id, int clinicalEvent_id) {
         try{
             this.jdbcTemplate.update(
-                "INSERT INTO clinicalFolder (user_id, clinicalevent_id) values (?, ?)", 
+                "INSERT INTO ClinicalFolder (user_id, clinicalevent_id) values (?, ?)", 
                 new Object[] {user_id, clinicalEvent_id});
         }catch (DataAccessException runtimeException){
-            System.err.println("***Dao::failed to CREATE NEW CLINICALFOLDER, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao::failed to CREATE NEW CLINICALFOLDER, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }
     }

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -23,19 +24,21 @@ public class ResultJdbcDao implements ResultDao{
     @Autowired
     private TestJdbcDao testJdbcDao;
     
+    static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
+
     @Override
     public Result getResult(int result_id) {
         
         Result result = new Result();
-        String sql = "SELECT * FROM RESULT WHERE ID = ?";
+        String sql = "SELECT * FROM Result WHERE ID = ?";
         
         try{
             result = (Result) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { result_id }, 
                 new BeanPropertyRowMapper(Result.class));
         }catch (DataAccessException runtimeException){
-            System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }    
         return result;
@@ -47,7 +50,7 @@ public class ResultJdbcDao implements ResultDao{
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int result_generated_key;
           
-        final String query = "INSERT into RESULT (grade,time,date) values (?,?,?)";
+        final String query = "INSERT into Result (grade,time,date) values (?,?,?)";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){
                 @Override
@@ -60,8 +63,8 @@ public class ResultJdbcDao implements ResultDao{
                 }
             }, keyHolder);
         } catch (DataAccessException runtimeException){
-            System.err.println("***Dao::fail to CREATE NEW result, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao::fail to CREATE NEW result, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }
         

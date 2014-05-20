@@ -18,8 +18,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -51,7 +49,7 @@ public class DocumentJdbcDao implements DocumentDao {
     @Override
     public Document getDocument(int document_id) {        
         Document document = new Document();
-        String sql = "SELECT * FROM DOCUMENT WHERE ID = ?";
+        String sql = "SELECT * FROM Document WHERE ID = ?";
         try{
             document = (Document) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { document_id }, 
@@ -75,7 +73,7 @@ public class DocumentJdbcDao implements DocumentDao {
         int tmp = countDocument(this.jdbcTemplate);
         String fileName = "";
         KeyHolder holder = new GeneratedKeyHolder();
-        final String query = "insert into DOCUMENT (file,note) values (?,?)";
+        final String query = "insert into Document (file,note) values (?,?)";
         int document_generated_key = 0;
         
         //    Read/Write uploaded file
@@ -87,7 +85,6 @@ public class DocumentJdbcDao implements DocumentDao {
                 inputStream = file.getInputStream();
                 
                 boolean success = (new File(dirName+ "/" + user_id)).mkdir();
-                System.err.println("success - " + success);
                 File newFile = new File(dirName + "/" + user_id + "/" + fileName);  
                 if(!newFile.exists()){
                     newFile.createNewFile();                      
@@ -129,7 +126,7 @@ public class DocumentJdbcDao implements DocumentDao {
         document_generated_key = holder .getKey().intValue();    
         // Insert into diary table
             this.jdbcTemplate.update(
-                "insert into DIARY (user_id,document_id) values (?, ?)", 
+                "insert into Diary (user_id,document_id) values (?, ?)", 
                 new Object[] {user_id,document_generated_key});
         }catch (DataAccessException runtimeException){
             log.error("***Dao::fail to INSERT INTO DIARY A DOCUMENT, RuntimeException occurred, message follows.");
@@ -142,7 +139,7 @@ public class DocumentJdbcDao implements DocumentDao {
     
     public int countDocument(JdbcTemplate jdbcTemplate){
         int res = 0;
-        String sql = "SELECT COUNT(*) FROM document";
+        String sql = "SELECT COUNT(*) FROM Document";
         res = (int) jdbcTemplate.queryForObject(sql,Integer.class);
         return res;
     }
@@ -183,7 +180,7 @@ public class DocumentJdbcDao implements DocumentDao {
     public boolean editDocument(Document document) {
         try{
             this.jdbcTemplate.update(
-                "update DOCUMENT set id = ?,date = ?, file = ?  where id = ?", 
+                "update Document set id = ?,date = ?, file = ?  where id = ?", 
                 new Object[] {document.getId(), document.getDate(), document.getFile(),document.getId()});
         }catch (DataAccessException runtimeException){
             log.error("***Dao:: edit Document FAIL, RuntimeException occurred, message follows.");
@@ -201,8 +198,8 @@ public class DocumentJdbcDao implements DocumentDao {
      */
     @Override
     public boolean deleteDocument(int document_id) {
-        String deleteStatement1 = "DELETE FROM DIARY WHERE document_id = ?";
-        String deleteStatement2 = "DELETE FROM DOCUMENT WHERE id = ?";
+        String deleteStatement1 = "DELETE FROM Diary WHERE document_id = ?";
+        String deleteStatement2 = "DELETE FROM Document WHERE id = ?";
         try{
             this.jdbcTemplate.update(deleteStatement1, document_id);
             this.jdbcTemplate.update(deleteStatement2, document_id);
@@ -223,7 +220,7 @@ public class DocumentJdbcDao implements DocumentDao {
     public ArrayList<Document> getDiary(int user_id) {
         
         String dirName = sr.getServletContext().getRealPath("Resources/"+user_id+"/");
-        String sql = "SELECT * FROM document NATURAL JOIN diary WHERE user_id = ?";
+        String sql = "SELECT * FROM Document NATURAL JOIN Diary WHERE user_id = ?";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);
             return DocumentMapper.getDiaryMap(rows,dirName,user_id);

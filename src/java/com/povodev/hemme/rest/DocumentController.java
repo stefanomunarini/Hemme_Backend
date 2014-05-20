@@ -60,7 +60,6 @@ public class DocumentController{
         if (!file1.exists()){
             file1.mkdir();
         }
-        System.err.println("ENTRATO NEL CONTROLLER UPLLOOAD DOCUMENT");
         return documentJdbcDao.insertDocument(file,nota,user_id,dirName);        
     }
     
@@ -70,7 +69,6 @@ public class DocumentController{
             @RequestParam("idu") int user_id,
             @RequestParam("nota") String nota) throws IOException{
 
-        System.err.println("ENTRATO NEL CONTROLLER UPLLOOAD DOCUMENT WITHOUT FILE");
         return documentJdbcDao.insertDocument(null,nota,user_id,"");        
 
     }
@@ -91,10 +89,6 @@ public class DocumentController{
     @RequestMapping("/getDiary")
     public @ResponseBody ArrayList<Document> getDiary(
             @RequestParam(value="user_id", required=true) int user_id) {
-
-        
-        System.err.println("ENTRATO NEL CONTROLLER DOCUMENT");
-
         return documentJdbcDao.getDiary(user_id);
     }
 

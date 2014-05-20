@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.ClinicalEvent;
-import com.povodev.hemme.bean.ClinicalFolder;
 import com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Spring Controller for ClinicalEvent
- * @author smunarini.stage
  */
 @Controller
 public class ClinicalEventController {
@@ -37,20 +29,16 @@ public class ClinicalEventController {
     @RequestMapping(value="/newClinicalEvent", method = {RequestMethod.GET,RequestMethod.POST})
     public @ResponseBody boolean newClinicalEvent(
             @RequestParam(value="user_id", required=true) int user_id,
-            @RequestBody ClinicalEvent clinicalEvent)
-            {
+            @RequestBody ClinicalEvent clinicalEvent){
         
         return clinicalEventJdbcDao.newClinicalEvent(clinicalEvent, user_id);
     }
     
     @RequestMapping(value="/modifyClinicalEvent", method = {RequestMethod.GET,RequestMethod.POST})
     public @ResponseBody boolean modifyClinicalEvent(
-            //@RequestParam(value="clinicalEvent_id", required=true) int clinicalEvent_id,
-            @RequestBody ClinicalEvent clinicalEvent)
-            {
+            @RequestBody ClinicalEvent clinicalEvent){
         
         return clinicalEventJdbcDao.modifyClinicalEvent(clinicalEvent);
     }
-    
     
 }

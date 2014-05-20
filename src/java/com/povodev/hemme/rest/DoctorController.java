@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Doctor;
@@ -18,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Spring Controller for Doctor
- * @author smunarini.stage
  */
 @Controller
 public class DoctorController {

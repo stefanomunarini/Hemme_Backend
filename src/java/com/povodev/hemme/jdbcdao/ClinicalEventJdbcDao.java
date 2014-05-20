@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.ClinicalEvent;
@@ -12,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,7 +17,6 @@ import org.springframework.jdbc.support.KeyHolder;
 
 /**
  * JdbcDao implementation for ClinicalEvent
- * @author smunarini.stage
  */
 public class ClinicalEventJdbcDao implements ClinicalEventDao{
     
@@ -31,19 +25,21 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     @Autowired
     private ClinicalFolderJdbcDao clinicalFolderJdbcDao;
     
+    static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
+
     @Override
     public ClinicalEvent getClinicalEvent(int clinicalEvent_id) {
         
         ClinicalEvent clinicalEvent;
-        String sql = "SELECT * FROM clinicalevent WHERE id = ?";
+        String sql = "SELECT * FROM ClinicalEvent WHERE id = ?";
        
         try{
             clinicalEvent = (ClinicalEvent) this.jdbcTemplate.queryForObject(
                 sql, new Object[] { (clinicalEvent_id)}, 
                 new BeanPropertyRowMapper(ClinicalEvent.class));
         }catch (DataAccessException runtimeException){
-            System.err.println("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao:: fail to GET DOCUMENT, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }    
         return clinicalEvent;
@@ -52,7 +48,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     @Override
     public boolean newClinicalEvent(final ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        final String query = "INSERT INTO clinicalevent (author,therapy,note) values (?, ?, ?)";
+        final String query = "INSERT INTO ClinicalEvent (author,therapy,note) values (?, ?, ?)";
         try {
             jdbcTemplate.update(new PreparedStatementCreator(){
                 @Override
@@ -66,8 +62,8 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
                 }
             }, keyHolder); 
         } catch (DataAccessException runtimeException){
-            System.err.println("***Dao::fail to CREATE NEW clinicalevent, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao::fail to CREATE NEW clinicalevent, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }
         
@@ -79,7 +75,7 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
 
     @Override
     public boolean modifyClinicalEvent(final ClinicalEvent clinicalEvent) {
-        final String query = "UPDATE clinicalEvent SET author=?, therapy=?, note=? WHERE id = ?";
+        final String query = "UPDATE ClinicalEvent SET author=?, therapy=?, note=? WHERE id = ?";
         try{
             this.jdbcTemplate.update(new PreparedStatementCreator(){
                 @Override
@@ -95,8 +91,8 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
             });
                 
         } catch (DataAccessException runtimeException){
-            System.err.println("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
-            System.err.println(runtimeException);
+            log.error("***Dao::failed to UPDATE CLINICALEVENT, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
             throw runtimeException;
         }
         return true;

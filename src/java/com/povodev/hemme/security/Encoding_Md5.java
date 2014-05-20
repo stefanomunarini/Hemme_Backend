@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.security;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- *
- * @author gbonadiman.stage
- */
+
 public class Encoding_Md5 {
     
     JdbcTemplate jdbcTemplate;
@@ -37,8 +27,6 @@ public class Encoding_Md5 {
          sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
  
-        //SDC
-        //System.out.println("Digest(in hex format):: " + sb.toString());
  
         //convert the byte to hex format method 2
         StringBuffer hexString = new StringBuffer();
@@ -48,8 +36,6 @@ public class Encoding_Md5 {
    	     	hexString.append(hex);
     	}
  
-        //SDC
-        //    	System.out.println("Digest(in hex format):: " + hexString.toString());
 
         if(dbin(hexString.toString()))
             return true;
@@ -60,25 +46,15 @@ public class Encoding_Md5 {
     
     private boolean dbin(String hex){
     
-//        String sql = "SELECT COUNT(*) FROM hash_table WHERE hash = '21bd8aee973b8457476af0bac8b65b2a'";
         String sql = "SELECT COUNT(*) FROM hash_table WHERE hash = '" + hex + "' ";
-
         int res = 0;
     
-        System.err.println("SDC prima di jdbcdao");
         res = this.jdbcTemplate.queryForObject(sql, Integer.class);
-        System.err.println("SDC dopo di jdbcdao");        
- 
-        //SDC
-        //        System.err.println(this.jdbcTemplate.queryForObject(sql, Integer.class));
-        //        System.err.println("res= " + res);
-        
+
         if(res == 1)
             return true;
         else
             return false;
-        
     }
     
-
 }

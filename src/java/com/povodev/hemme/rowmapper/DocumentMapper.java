@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rowmapper;
 
 import com.povodev.hemme.bean.Document;
@@ -14,10 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author gbonadiman.stage
- */
 public class DocumentMapper {
     
     public static ArrayList<Document> getDiaryMap(List<Map<String, Object>> rows,String dirName,int user_id){
@@ -34,9 +24,7 @@ public class DocumentMapper {
             File f = new File(dirName +"\\"+ document.getFile());
             document.setUploaded(f);
             diario.add(document);
-        }              
-        System.err.println("finito mapper e diario ha dimensione = " + diario.size());
-        
+        }                      
         return diario;
     }
             

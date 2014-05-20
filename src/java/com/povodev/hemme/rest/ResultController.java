@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rest;
 
 import com.povodev.hemme.bean.Result;
@@ -16,10 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author gbonadiman.stage
- */
 @Controller
 public class ResultController {
      
@@ -28,8 +18,7 @@ public class ResultController {
     
     @RequestMapping("/getResult")
     public @ResponseBody Result getResult(
-            @RequestParam(value="result_id", required=true) int result_id) {
-        
+            @RequestParam(value="result_id", required=true) int result_id) {        
         return resultJdbcDao.getResult(result_id);
     }
     

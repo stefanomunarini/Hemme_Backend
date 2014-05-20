@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.rowmapper;
 
 import com.povodev.hemme.bean.User;
@@ -14,10 +8,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-/**
- *
- * @author gbonadiman.stage
- */
 public class DoctorMapper {
     
     public static ArrayList<User> getListDoctor(List<Map<String, Object>> rows,JdbcTemplate jdbcTemplate){
@@ -33,7 +23,7 @@ public class DoctorMapper {
         
     public static User getUser(int user_id,JdbcTemplate jdbcTemplate) {
         User user;
-        String sql = "SELECT * FROM user WHERE id = ?";
+        String sql = "SELECT * FROM User WHERE id = ?";
         try{
             user = (User) jdbcTemplate.queryForObject(
                 sql,
@@ -42,6 +32,5 @@ public class DoctorMapper {
         }catch (DataAccessException dae){throw dae;}    
         return user;
     }
-
             
 }
