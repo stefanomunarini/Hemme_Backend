@@ -268,7 +268,7 @@ public class UserJdbcDao implements UserDao{
      */
     @Override
     public String getTutorEmail(int patient_id) {
-        String query = "SELECT tutor_id FROM TP where patient_id = ?";
+        String query = "SELECT tutor_id FROM TP where patient_id = " + patient_id;
         int tutor_id;
         try{
             tutor_id = this.jdbcTemplate.queryForObject(
