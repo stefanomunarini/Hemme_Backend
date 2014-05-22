@@ -49,11 +49,9 @@ public class InterceptorControl implements HandlerInterceptor  {
         
         //controllo che la stringa passata come HAS(salt) corrispona alla HAS("povodevforhemmeABC")
         if(salt.equals("21bd8aee973b8457476af0bac8b65b2a")){
-            System.err.println("Hash CORRETTA");
             salt = "ABC";
             return true;
         }else{
-            System.err.println("Hash NON CORRETTA");
             return false;
         }
     }
