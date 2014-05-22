@@ -8,29 +8,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- *
- * @author gbonadiman.stage
+ * Classe controller per filtrare correttamente le richieste in input
+ * @author Babol
  */
 @Controller
 public class TutorController {
     
     @Autowired
     TutorJdbcDao tutorJdbcDao;
-    
-    /*@RequestMapping("/getTutor")
-    public @ResponseBody Tutor getTutor(
-        @RequestParam(value="user_id", required=true) int user_id) {
-        
-        return tutorJdbcDao.getTutor(user_id);
-    }
-    
-    @RequestMapping("/newTutor")
-    public @ResponseBody Tutor newTutor(
-            @RequestParam(value="user_id", required=true) int user_id) {
-        
-        return tutorJdbcDao.getTutor(user_id);
-    }*/
-    
+   
     @RequestMapping("/registerPatientDevice")
     public @ResponseBody boolean newTutor(
             @RequestParam(value="user_id", required=true) int user_id,

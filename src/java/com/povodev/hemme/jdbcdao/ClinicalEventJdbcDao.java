@@ -16,7 +16,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 /**
- * JdbcDao implementation for ClinicalEvent
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
  */
 public class ClinicalEventJdbcDao implements ClinicalEventDao{
     
@@ -27,6 +28,11 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
 
+    /**
+     * Restituisco il singolo evento clinico
+     * @param clinicalEvent_id
+     * @return 
+     */
     @Override
     public ClinicalEvent getClinicalEvent(int clinicalEvent_id) {
         
@@ -45,6 +51,12 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
         return clinicalEvent;
     }
 
+    /**
+     * Inserimento nuovo evento clinico
+     * @param clinicalEvent
+     * @param user_id
+     * @return 
+     */
     @Override
     public boolean newClinicalEvent(final ClinicalEvent clinicalEvent, int user_id) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -72,7 +84,12 @@ public class ClinicalEventJdbcDao implements ClinicalEventDao{
         
         return true;
     }
-
+   
+    /**
+     * Modifica del singolo evento clinico
+     * @param clinicalEvent
+     * @return 
+     */
     @Override
     public boolean modifyClinicalEvent(final ClinicalEvent clinicalEvent) {
         final String query = "UPDATE ClinicalEvent SET author=?, therapy=?, note=? WHERE id = ?";

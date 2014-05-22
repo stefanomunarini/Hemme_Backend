@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe mapper che consente di gestire result multipli di query SQL
+ * @author Babol
+ */
 public class TestMapper {
-    
+   
+    /**
+     * Ritorno l'insieme dei test eseguiti
+     * @param rows
+     * @return 
+     */
     public static ArrayList<Result> getTestMap (List<Map<String, Object>> rows){
         ArrayList<Result> test = new ArrayList();
         for (Map row : rows) {

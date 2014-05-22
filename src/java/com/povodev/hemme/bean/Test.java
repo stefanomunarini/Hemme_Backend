@@ -1,6 +1,11 @@
 
 package com.povodev.hemme.bean;
 
+/**
+ * Classe utilizzata come bean. Il Bean mappa in tutti i suo argomenti, gli attributi del database della tabella corrispondente
+ * @author Babol
+ */
+
 public class Test {
 
     private int id;

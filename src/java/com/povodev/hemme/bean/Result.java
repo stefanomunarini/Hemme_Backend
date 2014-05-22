@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
- *
- * @author gbonadiman.stage
+ * Classe utilizzata come bean. Il Bean mappa in tutti i suo argomenti, gli attributi del database della tabella corrispondente
+ * @author Babol
  */
 public class Result {
 

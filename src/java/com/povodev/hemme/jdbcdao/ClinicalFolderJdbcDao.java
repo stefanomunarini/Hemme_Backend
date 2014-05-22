@@ -12,7 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * JdbcDao implementation for ClinicalFolder
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
  */
 public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
 
@@ -21,6 +22,11 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
 
+    /**
+     * Preso in input restituisco la sua cartella clinica
+     * @param user_id
+     * @return 
+     */
     @Override
     public ArrayList<ClinicalEvent> getClinicalFolder(int user_id) {
         
@@ -38,6 +44,11 @@ public class ClinicalFolderJdbcDao implements ClinicalFolderDao{
         return ClinicalFolderMapper.getClinicalFolderMap(rows);
     }
     
+    /**
+     * Inserisco relazione utente-cartella clinica
+     * @param user_id
+     * @param clinicalEvent_id 
+     */
     @Override
     public void newClinicalFolder(int user_id, int clinicalEvent_id) {
         try{

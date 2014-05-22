@@ -5,7 +5,6 @@ import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.HasDpDao;
 import com.povodev.hemme.rowmapper.HasMapper;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -20,6 +19,12 @@ public class HasDpJdbcDao implements HasDpDao{
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
 
+    /**
+     * Inserisco una nuova connessione tra medico e paziente
+     * @param patient_id
+     * @param doctor_id
+     * @return 
+     */
     @Override
     public boolean newHasDp(int patient_id, int doctor_id) {
 
@@ -35,6 +40,11 @@ public class HasDpJdbcDao implements HasDpDao{
         return true;
     }
     
+    /**
+     * Restituisco i pazienti associati a un dottore
+     * @param doctor_id
+     * @return 
+     */
     @Override
     public ArrayList<User> patientList(int doctor_id) {
 
@@ -49,6 +59,12 @@ public class HasDpJdbcDao implements HasDpDao{
         }
     }
 
+    /**
+     * Creo e restituisco due liste. 
+     * Contengono le relazioni medico-paziente associate ai pazienti di un singolo tutor
+     * @param tutor_id
+     * @return 
+     */
     @Override
     public ArrayList<PatientDoctorItem> getPatientDoctorList(int tutor_id) {
         String query1 = "SELECT * FROM DP JOIN `User` ON patient_id = `User`.id WHERE patient_id IN (SELECT patient_id FROM TP WHERE tutor_id = " + tutor_id + ");";

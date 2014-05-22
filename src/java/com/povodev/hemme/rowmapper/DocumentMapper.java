@@ -8,10 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe mapper che consente di gestire result multipli di query SQL
+ * @author Babol
+ */
 public class DocumentMapper {
-    
-    public static ArrayList<Document> getDiaryMap(List<Map<String, Object>> rows,String dirName,int user_id){
-        
+   
+    /**
+     * Ritorna l'insieme dei documenti di un diario
+     * @param rows
+     * @param dirName
+     * @param user_id
+     * @return 
+     */
+    public static ArrayList<Document> getDiaryMap(List<Map<String, Object>> rows,String dirName,int user_id){    
         ArrayList<Document> diario = new ArrayList();
 
         for (Map row : rows) {

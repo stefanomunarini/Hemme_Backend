@@ -5,8 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe mapper che consente di gestire result multipli di query SQL
+ * @author Babol
+ */
 public class UserMapper {
     
+    /**
+     * Controllo che esista l'utente
+     * @param rows
+     * @return 
+     */
     public static User checkUser(List<Map<String, Object>> rows){
         User user = new User();
         if(!rows.isEmpty()){
@@ -25,7 +34,11 @@ public class UserMapper {
         return user;
     }
 
-    
+    /**
+     * Costruisco la lista di pazienti
+     * @param rows
+     * @return 
+     */
     public static ArrayList<Integer> listPatient(List<Map<String, Object>> rows){
         ArrayList<Integer> pazienti = new ArrayList();
         for (Map row : rows) {

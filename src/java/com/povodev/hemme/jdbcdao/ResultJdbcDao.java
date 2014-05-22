@@ -16,6 +16,10 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+/**
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
+ */
 public class ResultJdbcDao implements ResultDao{
     
     @Autowired
@@ -26,6 +30,11 @@ public class ResultJdbcDao implements ResultDao{
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
 
+    /**
+     * Recupero risultato di un singolo test
+     * @param result_id
+     * @return 
+     */
     @Override
     public Result getResult(int result_id) {
         
@@ -44,6 +53,12 @@ public class ResultJdbcDao implements ResultDao{
         return result;
     }
 
+    /**
+     * Inserisco nuovo risultato
+     * @param result
+     * @param user_id
+     * @return 
+     */
     @Override
     public boolean insertResult(final Result result,int user_id) {
 
@@ -68,11 +83,8 @@ public class ResultJdbcDao implements ResultDao{
             throw runtimeException;
         }
         
-        // the id of the just created clinical event
         result_generated_key = keyHolder.getKey().intValue();
-
         testJdbcDao.newTest(user_id, result_generated_key);
-        
         return true;
     }
 

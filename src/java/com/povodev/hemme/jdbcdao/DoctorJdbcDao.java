@@ -13,6 +13,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
+ */
 public class DoctorJdbcDao implements DoctorDao{
     
     @Autowired
@@ -24,6 +28,11 @@ public class DoctorJdbcDao implements DoctorDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Restiutisce un dottore
+     * @param doctor_id
+     * @return 
+     */
     @Override
     public Doctor getDoctor(int doctor_id) {
 
@@ -46,6 +55,10 @@ public class DoctorJdbcDao implements DoctorDao{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Restituisce un arrayList di dottori
+     * @return 
+     */
     @Override
     public ArrayList<User> getAllDoctors() {
 

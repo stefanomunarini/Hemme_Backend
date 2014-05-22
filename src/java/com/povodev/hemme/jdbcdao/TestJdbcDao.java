@@ -11,15 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
+ */
 public class TestJdbcDao implements TestDao{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    
 
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
-
         
+    /**
+     * Inserimento nuovo test
+     * @param user_id
+     * @param result_id 
+     */
     @Override
     public void newTest(int user_id, int result_id) {
         try{
@@ -33,6 +40,11 @@ public class TestJdbcDao implements TestDao{
         }
     }
 
+    /**
+     * Recupero i test di un paziente
+     * @param user_id
+     * @return 
+     */
     @Override
     public ArrayList<Result> getTest(int user_id) {
         List<Map<String, Object>> rows;
@@ -45,7 +57,6 @@ public class TestJdbcDao implements TestDao{
             log.error(dataAccessException);
             throw dataAccessException;
         }
-        
         return TestMapper.getTestMap(rows);
     }
     

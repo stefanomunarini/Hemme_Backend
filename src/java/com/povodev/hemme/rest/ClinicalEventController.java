@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Spring Controller for ClinicalEvent
+ * Classe controller per filtrare correttamente le richieste in input
+ * @author Babol
  */
 @Controller
 public class ClinicalEventController {

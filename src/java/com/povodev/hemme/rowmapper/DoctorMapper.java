@@ -8,8 +8,18 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+/**
+ * Classe mapper che consente di gestire result multipli di query SQL
+ * @author Babol
+ */
 public class DoctorMapper {
     
+    /**
+     * Crea la lista di pazienti associati a un dottore
+     * @param rows
+     * @param jdbcTemplate
+     * @return 
+     */
     public static ArrayList<User> getListDoctor(List<Map<String, Object>> rows,JdbcTemplate jdbcTemplate){
         ArrayList<User> dottori = new ArrayList();
         for (Map row : rows) {
@@ -21,6 +31,12 @@ public class DoctorMapper {
     }
         
         
+    /**
+     * Funzione di supporto per creare un utente dal database
+     * @param user_id
+     * @param jdbcTemplate
+     * @return 
+     */
     public static User getUser(int user_id,JdbcTemplate jdbcTemplate) {
         User user;
         String sql = "SELECT * FROM User WHERE id = ?";

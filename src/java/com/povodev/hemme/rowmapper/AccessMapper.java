@@ -5,8 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe mapper che consente di gestire result multipli di query SQL
+ * @author Babol
+ */
 public class AccessMapper {
-    
+   
+    /**
+     * Funzionalità di memorizzazione di device 
+     * @param rows
+     * @return 
+     */
     public static ArrayList<Access> getDevices(List<Map<String, Object>> rows){
         ArrayList<Access> devices = new ArrayList();
 

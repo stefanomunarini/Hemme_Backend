@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * Classe controller per filtrare correttamente le richieste in input
+ * @author Babol
+ */
 @Controller
 public class HasTpController {
-        
-
+   
     @Autowired
     private HasTpJdbcDao hasTpJdbcDao;
     

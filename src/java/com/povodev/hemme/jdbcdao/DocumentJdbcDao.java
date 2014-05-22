@@ -1,4 +1,3 @@
-
 package com.povodev.hemme.jdbcdao;
 
 import com.povodev.hemme.bean.Document;
@@ -30,9 +29,16 @@ import org.apache.commons.logging. LogFactory;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.web.multipart.MultipartFile;
 
-
+/**
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
+ */
 public class DocumentJdbcDao implements DocumentDao {
 
+    
+    public static String pathServer = "http://172.24.200.12:8080/data/hemme/context";
+    
+    
     @Autowired
     public JdbcTemplate jdbcTemplate;
     
@@ -42,7 +48,7 @@ public class DocumentJdbcDao implements DocumentDao {
     static Log log = LogFactory.getLog(DocumentJdbcDao.class.getName());
             
     /**
-     * Return document from its Id
+     * Restituirsco un singolo documento
      * @param document_id
      * @return 
      */
@@ -64,7 +70,7 @@ public class DocumentJdbcDao implements DocumentDao {
 
     
     /**
-     * Insert new document in
+     * Inserisco un documento con associato il file (se presente)
      * @param user_id 
      * @return  
      */
@@ -107,7 +113,6 @@ public class DocumentJdbcDao implements DocumentDao {
         
         String real = fileName;
         final String nameFileSave = real;
-        // Insert into document table
         try{
             this.jdbcTemplate.update(new PreparedStatementCreator(){
             @Override
@@ -124,7 +129,6 @@ public class DocumentJdbcDao implements DocumentDao {
         },holder);
             
         document_generated_key = holder .getKey().intValue();    
-        // Insert into diary table
             this.jdbcTemplate.update(
                 "insert into Diary (user_id,document_id) values (?, ?)", 
                 new Object[] {user_id,document_generated_key});
@@ -136,7 +140,12 @@ public class DocumentJdbcDao implements DocumentDao {
         return true;
     }
 
-    
+
+    /**
+     * Selezione quanti documenti sono presenti, il risultato verrà aggiunto al nome del file per renderlo univoco
+     * @param jdbcTemplate
+     * @return 
+     */
     public int countDocument(JdbcTemplate jdbcTemplate){
         int res = 0;
         String sql = "SELECT COUNT(*) FROM Document";
@@ -144,7 +153,11 @@ public class DocumentJdbcDao implements DocumentDao {
         return res;
     }
     
-    
+    /**
+     * Upload (Scrittura) sul server del file passato
+     * @param file
+     * @return 
+     */
     @Override
     public boolean uploadDocument(File file) {            
         if (file!=null) {
@@ -172,7 +185,7 @@ public class DocumentJdbcDao implements DocumentDao {
     
     
     /**
-     * Edit input document
+     * Modifica di un documento
      * @param document 
      * @return  
      */
@@ -192,7 +205,7 @@ public class DocumentJdbcDao implements DocumentDao {
 
     
     /**
-     * Delete document from id_document
+     * Eliminazione documento
      * @param document_id
      * @return 
      */
@@ -212,14 +225,17 @@ public class DocumentJdbcDao implements DocumentDao {
     }
 
     /**
-     * Return diary of IdUser
+     * Restituisce il diario di un utente
      * @param user_id
      * @return 
      */
     @Override
     public ArrayList<Document> getDiary(int user_id) {
         
-        String dirName = sr.getServletContext().getRealPath("Resources/"+user_id+"/");
+        //String dirName = sr.getServletContext().getRealPath("Resources/"+user_id+"/");
+        String dirName = pathServer+"/"+user_id+"/";
+        log.error(dirName);
+        
         String sql = "SELECT * FROM Document NATURAL JOIN Diary WHERE user_id = ?";
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,user_id);

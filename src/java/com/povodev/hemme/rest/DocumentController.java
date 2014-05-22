@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.apache.log4j.Logger;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Classe controller per filtrare correttamente le richieste in input
+ * @author Babol
+ */
 @Controller
 public class DocumentController{
     
@@ -43,8 +46,6 @@ public class DocumentController{
         log.warn("asdWarn");
         log.error("asdErrorasddasdsadsTrace");
         log.fatal("asdFatal");
-        
-        
         return documentJdbcDao.getDocument(document_id);
     }
 
@@ -55,7 +56,10 @@ public class DocumentController{
             @RequestParam("file") MultipartFile file,
             @RequestParam("idu") int user_id,
             @RequestParam("nota") String nota) throws IOException{
-        String dirName = sr.getServletContext().getRealPath("Resources/");
+        
+        //String dirName = sr.getServletContext().getRealPath("Resources/");
+        String dirName = "http://172.24.200.12:8080/data/hemme/context";
+        
         File file1 = new File(dirName);
         if (!file1.exists()){
             file1.mkdir();

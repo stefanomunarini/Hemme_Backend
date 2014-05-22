@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-
+/**
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
+ */
 public class HasTpJdbcDao implements HasTpDao{
 
     @Autowired
@@ -19,6 +22,11 @@ public class HasTpJdbcDao implements HasTpDao{
 
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
 
+   /**
+    * Restituisco la lista di pazienti di un tutor
+    * @param tutor_id
+    * @return 
+    */
     @Override
     public ArrayList<User> patientList(int tutor_id) {
 

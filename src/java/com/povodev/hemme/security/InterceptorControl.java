@@ -11,11 +11,24 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
  
+
+/**
+ * Classe per filtrare le chiamate al server. Controllo della password contenuta nello header della richiesta
+ * @author Babol
+ */
 public class InterceptorControl implements HandlerInterceptor  {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
+    /**
+     * Funzioni da eseguire prima di continuare la richiesta
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception 
+     */
     @Override
     public boolean preHandle(HttpServletRequest request,
             HttpServletResponse response, Object handler) throws Exception {
@@ -32,7 +45,6 @@ public class InterceptorControl implements HandlerInterceptor  {
             if(key.equals("salt")){
                 salt = value;
             }
-//            System.err.println(key + "---" + value);
 	}
         
         //controllo che la stringa passata come HAS(salt) corrispona alla HAS("povodevforhemmeABC")
@@ -44,22 +56,18 @@ public class InterceptorControl implements HandlerInterceptor  {
             System.err.println("Hash NON CORRETTA");
             return false;
         }
-        
-        //Stampa tutti i valori presenti nello header della richiesta
-        //System.err.println("----" + map);
     }
+    
     
     @Override
     public void postHandle(HttpServletRequest request,
             HttpServletResponse response, Object handler,
             ModelAndView modelAndView) throws Exception {
-        System.out.println("Post-handle");
     }
     
     @Override
     public void afterCompletion(HttpServletRequest request,
             HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        System.out.println("After completion handle");
     }
 }

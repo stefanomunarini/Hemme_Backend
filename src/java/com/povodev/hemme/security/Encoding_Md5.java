@@ -4,7 +4,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-
+/**
+ * Classe per la creazione e controllo della hash
+ * @author Babol
+ */
 public class Encoding_Md5 {
     
     JdbcTemplate jdbcTemplate;
@@ -12,6 +15,12 @@ public class Encoding_Md5 {
     Encoding_Md5(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
+    /**
+     * Controllo autenticità password + salt
+     * @param salt
+     * @return
+     * @throws NoSuchAlgorithmException 
+     */
     public boolean authHash(String salt) throws NoSuchAlgorithmException{
      
         String password = "povodevforhemme"+salt;
@@ -44,6 +53,13 @@ public class Encoding_Md5 {
         
     }
     
+    
+    /**
+     * Controllo nel database che la password sia corretta. 
+     * Avere la password nel database consente di poter impostare più password
+     * @param hex
+     * @return 
+     */
     private boolean dbin(String hex){
     
         String sql = "SELECT COUNT(*) FROM hash_table WHERE hash = '" + hex + "' ";

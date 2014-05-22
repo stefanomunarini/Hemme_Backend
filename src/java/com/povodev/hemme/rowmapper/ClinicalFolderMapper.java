@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe mapper che consente di gestire result multipli di query SQL
+ * @author Babol
+ */
 public class ClinicalFolderMapper {
     
+    /**
+     * Ritorna l'inieme di eventi
+     * @param rows
+     * @return 
+     */
     public static ArrayList<ClinicalEvent> getClinicalFolderMap (List<Map<String, Object>> rows){
         ArrayList<ClinicalEvent> clinicalFolder = new ArrayList();
         for (Map row : rows) {

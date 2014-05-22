@@ -4,13 +4,16 @@ import com.povodev.hemme.bean.PatientDoctorItem;
 import com.povodev.hemme.bean.User;
 import com.povodev.hemme.jdbcdao.HasDpJdbcDao;
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * Classe controller per filtrare correttamente le richieste in input
+ * @author Babol
+ */
 @Controller
 public class HasDpController {
     

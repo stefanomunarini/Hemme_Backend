@@ -12,7 +12,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-
+/**
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
+ */
 public class AccessJdbcDao implements AccessDao{
 
     @Autowired
@@ -20,6 +23,15 @@ public class AccessJdbcDao implements AccessDao{
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
 
+    /**
+     * Inserimento associazione dispositivo
+     * @param email
+     * @param password
+     * @param imei
+     * @param role
+     * @param status
+     * @return 
+     */
     @Override
     public boolean registrationAccess(String email, String password, String imei, int role, int status) {
 
@@ -36,7 +48,11 @@ public class AccessJdbcDao implements AccessDao{
     }
 
     
-    
+    /**
+     * Seleziona singolo accesso
+     * @param access_id
+     * @return 
+     */
     @Override
     public Access getAccess(int access_id) {
 
@@ -56,6 +72,11 @@ public class AccessJdbcDao implements AccessDao{
         return access;
     }
 
+    /**
+     * modifica di accesso
+     * @param access
+     * @return 
+     */
     @Override
     public boolean editAccess(Access access) {
         try{
@@ -71,7 +92,11 @@ public class AccessJdbcDao implements AccessDao{
     }
 
     
-    
+    /**
+     * elimina un record di accesso
+     * @param access_id
+     * @return 
+     */
     @Override
     public boolean deleteAccess(int access_id) {
         
@@ -87,6 +112,12 @@ public class AccessJdbcDao implements AccessDao{
         return true;
     }
 
+    /**
+     * Ritorna la lista di device
+     * @param email
+     * @param password
+     * @return 
+     */
     @Override
     public ArrayList<Access> getDevicesList(String email, String password) {
     

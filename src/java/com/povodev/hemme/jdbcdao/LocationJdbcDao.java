@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.povodev.hemme.jdbcdao;
 
-import com.povodev.hemme.bean.ClinicalEvent;
 import com.povodev.hemme.bean.LocationCoordinates;
 import com.povodev.hemme.dao.LocationDao;
 import static com.povodev.hemme.jdbcdao.ClinicalEventJdbcDao.log;
@@ -20,8 +13,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 /**
- *
- * @author Stefano
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
  */
 public class LocationJdbcDao implements LocationDao {
     
@@ -32,6 +25,12 @@ public class LocationJdbcDao implements LocationDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * Setto le coordinate associate an un paziente
+     * @param values
+     * @param user_id
+     * @return 
+     */
     @Override
     public boolean setCoordinates(final LocationCoordinates values, final int user_id) {
         final String query = "UPDATE Location SET latitude = ?, longitude = ?, radius = ? WHERE user_id = ?";
@@ -57,6 +56,11 @@ public class LocationJdbcDao implements LocationDao {
         return true;
     }
 
+   /**
+    * Recupero le coordinate associate ad un paziente
+    * @param user_id
+    * @return 
+    */
     @Override
     public LocationCoordinates getCoordinates(int user_id) {
                 
@@ -78,6 +82,11 @@ public class LocationJdbcDao implements LocationDao {
         return locationCoordinates;
     }
 
+    /**
+     * Inserisco nuove coordinate di un paziente
+     * @param user_id
+     * @return 
+     */
     @Override
     public boolean addNewPatient(final int user_id) {
         final String query = "INSERT INTO Location (user_id, latitude, longitude, radius) VALUES (?,0,0,0)";

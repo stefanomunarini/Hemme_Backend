@@ -1,4 +1,3 @@
-
 package com.povodev.hemme.dao;
 
 import com.povodev.hemme.bean.Document;
@@ -6,6 +5,10 @@ import java.io.File;
 import java.util.ArrayList;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Interfaccia Dao contenente la dichiarazione dei metodi
+ * @author Babol
+ */
 public interface DocumentDao {
     
     public Document getDocument(int document_id);
@@ -14,6 +17,5 @@ public interface DocumentDao {
     public boolean deleteDocument(int document_id);
     public ArrayList<Document> getDiary(int user_id);
     public boolean uploadDocument(File file);
-
     
 }

@@ -22,7 +22,8 @@ import org.springframework.jdbc.support.KeyHolder;
 
 
 /**
- * JdbcDao implementation for User
+ * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
+ * @author Babol
  */
 public class UserJdbcDao implements UserDao{
     
@@ -34,6 +35,11 @@ public class UserJdbcDao implements UserDao{
     
     static org.apache.log4j.Logger log = Logger.getLogger(UserJdbcDao.class);
     
+    /**
+     * Preso in input l'id restituisce l'utente associato
+     * @param user_id
+     * @return 
+     */
     @Override
     public User getUser(int user_id) {
         User user;
@@ -47,7 +53,12 @@ public class UserJdbcDao implements UserDao{
         return user;
     }
 
-    
+
+    /**
+     * Funzione di registrazione 
+     * @param user
+     * @return 
+     */
     @Override
     public boolean registration(final User user) {
         
@@ -95,6 +106,13 @@ public class UserJdbcDao implements UserDao{
         }
     }
     
+    /**
+     * Funzione di login
+     * @param email
+     * @param password
+     * @param imei
+     * @return 
+     */
     @Override
     public User login(String email,String password,String imei) {
                 
@@ -133,6 +151,12 @@ public class UserJdbcDao implements UserDao{
         }
     }
 
+    /**
+     * Ricerca di un utente all'interno del database attraverso il suo IMEI
+     * @param jdbcTemplate
+     * @param imei
+     * @return 
+     */
     private User catchUserFromImei(JdbcTemplate jdbcTemplate,String imei){
         User user;
         String sql = "SELECT * FROM User WHERE imei = ?";
@@ -141,13 +165,23 @@ public class UserJdbcDao implements UserDao{
         return user;  
     }
     
+    /**
+     * Ricerca dell'autore per id
+     * @param user_id
+     * @return 
+     */
     @Override
     public String getAuthor(int user_id) {
         User user = getUser(user_id);
         return user.getName() + " " + user.getSurname();
     }
 
-    
+    /**
+     * Presi in input i rispettivi ID associo il un tutore a un paziente
+     * @param tutore
+     * @param paziente
+     * @return 
+     */
     @Override
     public boolean associaTutorPaziente(int tutore, int paziente){
         String query = "INSERT INTO TP (tutor_id,patient_id) VALUES (?,?)";
@@ -158,7 +192,11 @@ public class UserJdbcDao implements UserDao{
     }
     
     
-    
+    /**
+     * Seleziono la password associata all'email passata come parametro
+     * @param email
+     * @return 
+     */
     @Override
     public String passwordRecovery(String email) {        
         String password;
@@ -175,6 +213,13 @@ public class UserJdbcDao implements UserDao{
         return password;
     }
 
+    /**
+     * Quando associo un nuovo dispositivo copio i collegamenti gia presenti nel database
+     * Questa funzione si appoggia alla successiva passando la lista del tutore/dottore in questione
+     * @param old_tutor_id
+     * @param IMEI
+     * @return 
+     */
     @Override
     public boolean addNewLinkTutorPatient(int old_tutor_id, String IMEI) {
         
@@ -200,6 +245,13 @@ public class UserJdbcDao implements UserDao{
         return true;
     }
     
+    /**
+     * Funzione collegata alla precedente. Inserisce la relazione tutor-paziente
+     * @param paziente_id
+     * @param old_tutor_id
+     * @param jdbcTemplate
+     * @return 
+     */
     public boolean insertConnection(int paziente_id,int old_tutor_id, JdbcTemplate jdbcTemplate){
     
         String query = "INSERT INTO TP (tutor_id,patient_id) values (?, ?)";
@@ -209,6 +261,11 @@ public class UserJdbcDao implements UserDao{
         return true;
     }
 
+    /**
+     * Recupero email di un tutore
+     * @param patient_id
+     * @return 
+     */
     @Override
     public String getTutorEmail(int patient_id) {
         String query = "SELECT tutor_id FROM TP where patient_id = ?";
