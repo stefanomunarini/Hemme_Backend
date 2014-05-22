@@ -1,9 +1,11 @@
 package com.povodev.hemme.jdbcdao;
 
+import com.povodev.hemme.bean.PatientDoctorItem;
 import com.povodev.hemme.bean.User;
 import com.povodev.hemme.dao.HasDpDao;
 import com.povodev.hemme.rowmapper.HasMapper;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -40,6 +42,22 @@ public class HasDpJdbcDao implements HasDpDao{
 	try{
             List<Map<String, Object>> rows = this.jdbcTemplate.queryForList(sql,doctor_id);
             return HasMapper.getListPatient(rows, this.jdbcTemplate);
+        }catch (DataAccessException runtimeException){
+            log.error("***Dao::create list of patient HasTp, RuntimeException occurred, message follows.");
+            log.error(runtimeException);
+            throw runtimeException;
+        }
+    }
+
+    @Override
+    public ArrayList<PatientDoctorItem> getPatientDoctorList(int tutor_id) {
+        String query1 = "SELECT * FROM DP JOIN `User` ON patient_id = `User`.id WHERE patient_id IN (SELECT patient_id FROM TP WHERE tutor_id = " + tutor_id + ");";
+        String query2 = "SELECT * FROM DP JOIN `User` ON doctor_id = `User`.id WHERE patient_id IN (SELECT patient_id FROM TP WHERE tutor_id = " + tutor_id + ");";
+	try{
+            List patient_list = this.jdbcTemplate.queryForList(query1);
+            List doctor_list = this.jdbcTemplate.queryForList(query2);
+            
+            return HasMapper.getPatientDoctorList(patient_list, doctor_list);
         }catch (DataAccessException runtimeException){
             log.error("***Dao::create list of patient HasTp, RuntimeException occurred, message follows.");
             log.error(runtimeException);

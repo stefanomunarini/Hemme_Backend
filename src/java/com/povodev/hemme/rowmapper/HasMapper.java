@@ -1,7 +1,10 @@
 package com.povodev.hemme.rowmapper;
 
+import com.povodev.hemme.bean.PatientDoctorItem;
 import com.povodev.hemme.bean.User;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.springframework.dao.DataAccessException;
@@ -32,6 +35,22 @@ public class HasMapper {
                 new BeanPropertyRowMapper(User.class));
         }catch (DataAccessException dae){throw dae;}    
         return user;
+    }
+    
+    public static ArrayList<PatientDoctorItem> getPatientDoctorList(List<Map<String, Object>> patient_list, List<Map<String, Object>> doctor_list){
+        ArrayList<PatientDoctorItem> result = new ArrayList();
+        
+        for (int i=0; i<patient_list.size(); i++) {
+            PatientDoctorItem item = new PatientDoctorItem();
+            
+            item.setPatient_name( (String) patient_list.get(i).get("name"));
+            item.setPatient_surname( (String) patient_list.get(i).get("surname"));
+            item.setDoctor_name( (String)doctor_list.get(i).get("name"));
+            item.setDoctor_surname((String)doctor_list.get(i).get("surname"));
+            
+            result.add(item);
+        }
+        return result;
     }
 
 
