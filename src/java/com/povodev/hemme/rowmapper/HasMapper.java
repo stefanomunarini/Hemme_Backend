@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Classe mapper che consente di gestire result multipli di query SQL
- * @author Babol
+ * @author Povodev
  */
 public class HasMapper {
  

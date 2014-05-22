@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
- * @author Babol
+ * @author Povodev
  */
 public class TutorJdbcDao implements TutorDao{
 

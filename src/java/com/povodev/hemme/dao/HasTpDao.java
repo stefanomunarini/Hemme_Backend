@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface HasTpDao {       
     public ArrayList<User> patientList(int tutor_id);

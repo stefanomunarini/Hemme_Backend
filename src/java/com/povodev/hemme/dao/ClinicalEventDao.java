@@ -4,7 +4,7 @@ import com.povodev.hemme.bean.ClinicalEvent;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface ClinicalEventDao {
     public ClinicalEvent getClinicalEvent(int clinicalEvent_id);

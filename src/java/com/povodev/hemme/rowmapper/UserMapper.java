@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * Classe mapper che consente di gestire result multipli di query SQL
- * @author Babol
+ * @author Povodev
  */
 public class UserMapper {
     

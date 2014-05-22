@@ -4,7 +4,7 @@ import com.povodev.hemme.bean.LocationCoordinates;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */public interface LocationDao {
     
     public boolean setCoordinates (LocationCoordinates values, int user_id);

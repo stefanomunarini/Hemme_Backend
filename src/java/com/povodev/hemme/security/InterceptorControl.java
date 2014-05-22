@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Classe per filtrare le chiamate al server. Controllo della password contenuta nello header della richiesta
- * @author Babol
+ * @author Povodev
  */
 public class InterceptorControl implements HandlerInterceptor  {
 

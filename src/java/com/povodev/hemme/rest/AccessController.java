@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Classe controller per filtrare correttamente le richieste in input
- * @author Babol
+ * @author Povodev
  */
 @Controller
 public class AccessController {

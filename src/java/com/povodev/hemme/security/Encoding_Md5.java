@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  * Classe per la creazione e controllo della hash
- * @author Babol
+ * @author Povodev
  */
 public class Encoding_Md5 {
     

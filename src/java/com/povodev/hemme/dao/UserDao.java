@@ -4,7 +4,7 @@ import com.povodev.hemme.bean.User;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface UserDao {
     

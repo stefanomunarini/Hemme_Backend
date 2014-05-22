@@ -4,7 +4,7 @@ import com.povodev.hemme.bean.Result;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface ResultDao {
     

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 
 /**
  * Classe controller per filtrare correttamente le richieste in input
- * @author Babol
+ * @author Povodev
  */
 @Controller
 public class DiaryController {

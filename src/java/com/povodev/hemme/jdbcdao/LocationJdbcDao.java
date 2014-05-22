@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 
 /**
  * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
- * @author Babol
+ * @author Povodev
  */
 public class LocationJdbcDao implements LocationDao {
     

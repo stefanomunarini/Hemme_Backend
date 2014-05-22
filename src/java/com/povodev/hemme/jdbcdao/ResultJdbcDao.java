@@ -18,7 +18,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 /**
  * Classe JdbcDao che implementa il corpo di tutte le funzioni dichiarate nell'interfaccia
- * @author Babol
+ * @author Povodev
  */
 public class ResultJdbcDao implements ResultDao{
     

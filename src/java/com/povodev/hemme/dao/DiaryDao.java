@@ -2,7 +2,7 @@ package com.povodev.hemme.dao;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface DiaryDao{
     

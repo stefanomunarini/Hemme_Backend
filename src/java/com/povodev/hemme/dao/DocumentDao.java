@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface DocumentDao {
     

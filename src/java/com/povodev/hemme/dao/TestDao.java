@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Interfaccia Dao contenente la dichiarazione dei metodi
- * @author Babol
+ * @author Povodev
  */
 public interface TestDao {
     
